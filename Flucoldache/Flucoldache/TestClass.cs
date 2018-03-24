@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Flucoldache
 {
-	public class TestClass
+	public class TestClass : GameObj
 	{
-		public void Update()
+		public override void Update()
 		{
 			Console.WriteLine("f" + Game.CurrentKeyChar);
 			if (Game.CheckKeyboard(ConsoleKey.S))

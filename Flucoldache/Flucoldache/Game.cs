@@ -79,7 +79,7 @@ namespace Flucoldache
 
 
 				// Main game loop code.
-				test.Update();
+				ObjCntrl.Update();
 				// Main game loop code.
 
 
