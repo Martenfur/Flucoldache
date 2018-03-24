@@ -43,6 +43,8 @@ namespace Flucoldache
 		/// </summary>
 		public static char CurrentKeyChar = '\0';
 		
+		public static int WindowW = 96;
+		public static int WindowH = 32;
 
 
 		/// <summary>
@@ -50,7 +52,10 @@ namespace Flucoldache
 		/// </summary>
 		public static void Run()
 		{
-			
+			Console.CursorVisible = false;
+			Console.SetWindowSize(WindowW, WindowH);
+			Console.SetBufferSize(WindowW, WindowH);
+
 			TestClass test = new TestClass();
 			
 			while(true)
@@ -79,6 +84,7 @@ namespace Flucoldache
 
 
 				// Main game loop code.
+				//DrawCntrl.ClearScreen();
 				ObjCntrl.Update();
 				// Main game loop code.
 

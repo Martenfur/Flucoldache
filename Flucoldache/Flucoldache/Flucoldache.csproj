@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawCntrl.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameObj.cs" />
     <Compile Include="ObjCntrl.cs" />
