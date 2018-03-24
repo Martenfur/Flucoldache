@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:57a970a766130e931b2b6322a74e0f08:9095d8a86967ef89b617909956d5c1b2:0250f7dcf38342c9a80bd82e93bc7763$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="texture_0.png" width="126" height="213">
+    <sprite n="font_000" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_001" x="11" y="109" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_002" x="58" y="195" w="8" h="8" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_003" x="1" y="199" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_004" x="1" y="1" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_005" x="39" y="185" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_006" x="50" y="18" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_007" x="99" y="189" w="5" h="7" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_008" x="11" y="124" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_009" x="119" y="99" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_010" x="39" y="196" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="3" oW="8" oH="16"/>
+    <sprite n="font_011" x="11" y="199" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="3" oW="8" oH="16"/>
+    <sprite n="font_012" x="99" y="189" w="5" h="7" pX="0.5" pY="0.5" oX="1" oY="8" oW="8" oH="16"/>
+    <sprite n="font_013" x="103" y="207" w="8" h="3" pX="0.5" pY="0.5" oX="0" oY="6" oW="8" oH="16"/>
+    <sprite n="font_014" x="49" y="208" w="4" h="4" pX="0.5" pY="0.5" oX="2" oY="10" oW="8" oH="16"/>
+    <sprite n="font_015" x="59" y="123" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="2" oW="8" oH="16"/>
+    <sprite n="font_016" x="60" y="18" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_017" x="80" y="1" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_018" x="90" y="1" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_019" x="100" y="1" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_020" x="110" y="1" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_021" x="80" y="16" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_022" x="70" y="19" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_023" x="50" y="33" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_024" x="40" y="34" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_025" x="30" y="36" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_026" x="120" y="85" w="4" h="12" pX="0.5" pY="0.5" oX="2" oY="2" oW="8" oH="16"/>
+    <sprite n="font_027" x="120" y="55" w="5" h="13" pX="0.5" pY="0.5" oX="1" oY="2" oW="8" oH="16"/>
+    <sprite n="font_028" x="108" y="134" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="2" oW="8" oH="16"/>
+    <sprite n="font_029" x="58" y="205" w="8" h="6" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_030" x="108" y="147" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="2" oW="8" oH="16"/>
+    <sprite n="font_031" x="60" y="33" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_032" x="90" y="16" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_033" x="100" y="16" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_034" x="110" y="16" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_035" x="80" y="31" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_036" x="70" y="34" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_037" x="50" y="48" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_038" x="40" y="49" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_039" x="60" y="48" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_040" x="19" y="51" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_041" x="119" y="114" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_042" x="29" y="51" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_043" x="90" y="31" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_044" x="100" y="31" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_045" x="110" y="31" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_046" x="80" y="46" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_047" x="70" y="49" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_048" x="50" y="63" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_049" x="60" y="63" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_050" x="39" y="64" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_051" x="19" y="66" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_052" x="29" y="66" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_053" x="90" y="46" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_054" x="100" y="46" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_055" x="110" y="46" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_056" x="80" y="61" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_057" x="70" y="64" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_058" x="49" y="78" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_059" x="119" y="129" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_060" x="49" y="123" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="2" oW="8" oH="16"/>
+    <sprite n="font_061" x="118" y="144" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_062" x="78" y="194" w="8" h="6" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_063" x="88" y="195" w="8" h="4" pX="0.5" pY="0.5" oX="0" oY="12" oW="8" oH="16"/>
+    <sprite n="font_064" x="98" y="198" w="5" h="5" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_065" x="69" y="123" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_066" x="39" y="79" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_067" x="59" y="135" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_068" x="59" y="78" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_069" x="49" y="136" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_070" x="99" y="134" w="7" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_071" x="69" y="109" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_072" x="19" y="81" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_073" x="118" y="159" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_074" x="31" y="1" w="8" h="15" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_075" x="29" y="81" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_076" x="99" y="149" w="6" h="13" pX="0.5" pY="0.5" oX="1" oY="1" oW="8" oH="16"/>
+    <sprite n="font_077" x="39" y="137" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_078" x="69" y="135" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_079" x="79" y="135" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_080" x="89" y="106" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_081" x="99" y="106" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_082" x="59" y="147" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_083" x="49" y="148" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_084" x="90" y="61" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_085" x="69" y="147" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_086" x="79" y="147" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_087" x="89" y="148" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_088" x="107" y="160" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_089" x="109" y="106" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_090" x="59" y="159" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_091" x="1" y="19" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_092" x="120" y="70" w="4" h="13" pX="0.5" pY="0.5" oX="2" oY="1" oW="8" oH="16"/>
+    <sprite n="font_093" x="1" y="37" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_094" x="88" y="201" w="8" h="4" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_095" x="69" y="159" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="3" oW="8" oH="16"/>
+    <sprite n="font_096" x="100" y="16" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_097" x="100" y="61" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_098" x="110" y="61" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_099" x="80" y="76" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_100" x="41" y="1" w="8" h="15" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_101" x="69" y="79" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_102" x="49" y="93" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_103" x="100" y="1" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_104" x="39" y="94" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_105" x="20" y="19" w="8" h="14" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_106" x="59" y="93" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_107" x="19" y="96" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_108" x="29" y="96" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_109" x="90" y="76" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_110" x="70" y="49" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_111" x="100" y="76" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_112" x="50" y="63" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_113" x="80" y="31" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_114" x="29" y="66" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_115" x="110" y="76" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_116" x="79" y="91" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_117" x="80" y="61" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_118" x="51" y="1" w="8" h="15" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_119" x="69" y="94" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_120" x="49" y="108" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_121" x="61" y="1" w="8" h="15" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_122" x="39" y="109" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_123" x="59" y="108" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_124" x="19" y="111" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_125" x="29" y="111" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_126" x="89" y="91" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_127" x="99" y="91" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_128" x="69" y="123" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_129" x="20" y="35" w="8" h="14" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_130" x="79" y="159" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_131" x="89" y="160" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_132" x="89" y="120" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_133" x="107" y="172" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_134" x="117" y="174" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_135" x="11" y="139" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_136" x="21" y="139" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_137" x="109" y="91" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_138" x="39" y="149" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_139" x="49" y="160" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_140" x="11" y="151" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_141" x="21" y="151" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_142" x="79" y="135" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_143" x="39" y="161" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_144" x="79" y="121" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_145" x="59" y="135" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_146" x="11" y="163" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_147" x="109" y="106" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_148" x="99" y="120" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_149" x="107" y="160" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_150" x="109" y="120" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_151" x="21" y="163" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_152" x="11" y="175" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_153" x="89" y="134" w="8" h="12" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_154" x="21" y="175" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_155" x="59" y="171" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_156" x="49" y="172" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_157" x="39" y="173" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_158" x="11" y="187" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_159" x="21" y="187" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="4" oW="8" oH="16"/>
+    <sprite n="font_160" x="40" y="18" w="8" h="14" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_161" x="79" y="106" w="8" h="13" pX="0.5" pY="0.5" oX="0" oY="1" oW="8" oH="16"/>
+    <sprite n="font_162" x="1" y="55" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_163" x="1" y="73" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_164" x="1" y="91" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_165" x="120" y="37" w="4" h="16" pX="0.5" pY="0.5" oX="2" oY="0" oW="8" oH="16"/>
+    <sprite n="font_166" x="11" y="37" w="6" h="16" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_167" x="11" y="55" w="6" h="16" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_168" x="1" y="109" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_169" x="21" y="199" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_170" x="99" y="164" w="6" h="11" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_171" x="1" y="127" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_172" x="71" y="1" w="7" h="16" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_173" x="39" y="124" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_174" x="69" y="171" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_175" x="79" y="171" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_176" x="31" y="152" w="6" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_177" x="31" y="188" w="6" h="9" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_178" x="31" y="164" w="6" h="10" pX="0.5" pY="0.5" oX="2" oY="0" oW="8" oH="16"/>
+    <sprite n="font_179" x="89" y="172" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_180" x="69" y="183" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_181" x="11" y="73" w="6" h="16" pX="0.5" pY="0.5" oX="2" oY="0" oW="8" oH="16"/>
+    <sprite n="font_182" x="78" y="202" w="8" h="3" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_183" x="1" y="145" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_184" x="11" y="91" w="6" h="16" pX="0.5" pY="0.5" oX="2" oY="0" oW="8" oH="16"/>
+    <sprite n="font_185" x="31" y="18" w="7" h="16" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_186" x="116" y="198" w="7" h="10" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_187" x="49" y="184" w="7" h="11" pX="0.5" pY="0.5" oX="1" oY="5" oW="8" oH="16"/>
+    <sprite n="font_188" x="107" y="184" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_189" x="19" y="126" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_190" x="11" y="19" w="7" h="16" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_191" x="39" y="207" w="8" h="5" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_192" x="1" y="163" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_193" x="117" y="186" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_194" x="59" y="183" w="8" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_195" x="29" y="126" w="8" h="11" pX="0.5" pY="0.5" oX="0" oY="5" oW="8" oH="16"/>
+    <sprite n="font_196" x="79" y="183" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_197" x="69" y="194" w="7" h="10" pX="0.5" pY="0.5" oX="1" oY="0" oW="8" oH="16"/>
+    <sprite n="font_198" x="31" y="176" w="6" h="10" pX="0.5" pY="0.5" oX="2" oY="0" oW="8" oH="16"/>
+    <sprite n="font_199" x="31" y="139" w="6" h="11" pX="0.5" pY="0.5" oX="2" oY="5" oW="8" oH="16"/>
+    <sprite n="font_200" x="49" y="197" w="7" h="9" pX="0.5" pY="0.5" oX="1" oY="7" oW="8" oH="16"/>
+    <sprite n="font_201" x="1" y="181" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_202" x="11" y="1" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_203" x="99" y="177" w="6" h="10" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_204" x="31" y="199" w="6" h="9" pX="0.5" pY="0.5" oX="2" oY="7" oW="8" oH="16"/>
+    <sprite n="font_205" x="21" y="1" w="8" h="16" pX="0.5" pY="0.5"/>
+    <sprite n="font_206" x="89" y="184" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="7" oW="8" oH="16"/>
+    <sprite n="font_207" x="120" y="1" w="5" h="16" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_208" x="120" y="19" w="5" h="16" pX="0.5" pY="0.5" oX="3" oY="0" oW="8" oH="16"/>
+    <sprite n="font_209" x="106" y="196" w="8" h="9" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_210" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_211" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_212" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_213" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_214" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_215" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_216" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_217" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_218" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_219" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_220" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_221" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_222" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+    <sprite n="font_223" x="98" y="205" w="3" h="3" pX="0.5" pY="0.5" oX="0" oY="0" oW="8" oH="16"/>
+</TextureAtlas>

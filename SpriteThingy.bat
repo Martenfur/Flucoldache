@@ -1,0 +1,1 @@
+SpriteThingy \Graphics\ \Flucoldache\Flucoldache\Content\Atlasses\ \Graphics\Sprites_template.cs \Flucoldache\Flucoldache\Engine\Drawing\Sprites.cs "TexturePacker --format xml --disable-rotation --multipack --trim-sprite-names --algorithm MaxRects --data <output_dir>texture_{n}.xml <input_dir>"

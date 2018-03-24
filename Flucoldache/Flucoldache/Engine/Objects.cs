@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Monofoxe.Engine;
 
-namespace Flucoldache
+
+
+namespace Monofoxe.Engine
 {
-	public static class ObjCntrl
+	public static class Objects
 	{
 		
 		/// <summary>
@@ -26,13 +32,11 @@ namespace Flucoldache
 		private static double _fixedUpdateAl = 0;
 
 
-		public static void Update()
+		public static void Update(GameTime gameTime)
 		{
 			// Clearing main list from destroyed objects.
 			for(var i = 0; i < _destroyedGameObjects.Count; i += 1)
-			{
-				GameObjects.Remove(_destroyedGameObjects[i]);
-			}
+			{GameObjects.Remove(_destroyedGameObjects[i]);}
 			_destroyedGameObjects.Clear();
 			// Clearing main list from destroyed objects.
 
@@ -43,40 +47,67 @@ namespace Flucoldache
 			// Adding new objects to the list.
 
 
+			// Fixed updates.
+			_fixedUpdateAl += gameTime.ElapsedGameTime.TotalSeconds;
+
+			if (_fixedUpdateAl >= GameCntrl.FixedUpdateRate)
+			{
+				var overflow = (int)(_fixedUpdateAl / GameCntrl.FixedUpdateRate); // In case of lags.
+				_fixedUpdateAl -= GameCntrl.FixedUpdateRate * overflow;	
+				
+				foreach(GameObj obj in GameObjects)
+				{
+					if (obj.Active)
+					{obj.FixedUpdateBegin();}
+				}
+
+				foreach(GameObj obj in GameObjects)
+				{
+					if (obj.Active)
+					{obj.FixedUpdate();}
+				}
+
+				foreach(GameObj obj in GameObjects)
+				{
+					if (obj.Active)
+					{obj.FixedUpdateEnd();}
+				}
+			}
+			// Fixed updates.
+
+
 			// Normal updates.
 			foreach(GameObj obj in GameObjects)
 			{
 				if (obj.Active)
-				{
-					obj.UpdateBegin();
-				}
+				{obj.UpdateBegin();}
 			}
 
 			foreach(GameObj obj in GameObjects)
 			{
 				if (obj.Active)
-				{
-					obj.Update();
-				}
+				{obj.Update();}
 			}
 		
 			foreach(GameObj obj in GameObjects)
 			{
 				if (obj.Active)
-				{
-					obj.UpdateEnd();
-				}
+				{obj.UpdateEnd();}
 			}
 			// Normal updates.
-		}
 
+		}
+		
+
+		
 
 
 		/// <summary>
 		/// Adds object to object list.
 		/// </summary>
 		/// <param name="obj"></param>
-		public static void AddObject(GameObj obj) => _newGameObjects.Add(obj);
+		public static void AddObject(GameObj obj)
+		{_newGameObjects.Add(obj);}
 
 
 		#region user functions 
@@ -85,7 +116,8 @@ namespace Flucoldache
 		/// Returns list of objects of certain type.
 		/// </summary>
 		/// <typeparam name="T">Object type.</typeparam>
-		public static List<T> GetList<T>() => (List<T>)(GameObjects.OfType<T>());
+		public static List<T> GetList<T>()
+		{return (List<T>)(GameObjects.OfType<T>());}
 
 
 		/// <summary>
@@ -93,7 +125,8 @@ namespace Flucoldache
 		/// </summary>
 		/// <typeparam name="T">Object type.</typeparam>
 		/// <returns>Returns amount of objects.</returns>
-		public static int Count<T>() => GameObjects.OfType<T>().Count();
+		public static int Count<T>()
+		{return GameObjects.OfType<T>().Count();}
 
 
 		/// <summary>
@@ -103,9 +136,7 @@ namespace Flucoldache
 		public static void Destroy(GameObj obj)
 		{
 			if (!_destroyedGameObjects.Contains(obj))
-			{
-				_destroyedGameObjects.Add(obj);
-			}
+			{_destroyedGameObjects.Add(obj);}
 		}
 
 
@@ -118,9 +149,7 @@ namespace Flucoldache
 			foreach(GameObj obj1 in GameObjects)
 			{
 				if (obj == obj1)
-				{
-					return true;
-				}
+				{return true;}
 			}
 			return false;
 		}
@@ -139,9 +168,7 @@ namespace Flucoldache
 			foreach(GameObj obj in GameObjects)
 			{
 				if (counter >= count && obj is T)
-				{
-					return obj;
-				}
+				{return obj;}
 				counter += 1;
 			}
 			return null;
