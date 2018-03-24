@@ -11,14 +11,7 @@ namespace Flucoldache
 	{
 		static void Main(string[] args)
 		{
-			
-			Console.WriteLine("Foxes are fluffers. ╦════════");
-			
-			while(true)
-			{
-				char ch = Console.ReadKey(true).KeyChar;
-				Console.Write(ch.ToString());
-			}
+			Game.Run();
 		}
 	}
 }
