@@ -13,7 +13,7 @@ namespace Flucoldache
 
 		public override void Update()
 		{
-			DrawCntrl.DrawChar('^', x, y, ConsoleColor.Green, ConsoleColor.DarkGreen);
+			DrawCntrl.DrawChar(' ', x, y);
 
 			if (Game.CheckKeyboard(ConsoleKey.A))
 			{
@@ -35,8 +35,8 @@ namespace Flucoldache
 				y += 1;
 			}
 
-			DrawCntrl.DrawChar('@', x, y, ConsoleColor.Gray, ConsoleColor.Black);
-			
+			DrawCntrl.DrawChar('@', x, y);
+			DrawCntrl.DrawFrame(0, Game.WindowH - 16, Game.WindowW - 1, 16);
 		}
 	}
 }

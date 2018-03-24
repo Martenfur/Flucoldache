@@ -36,7 +36,6 @@ namespace Flucoldache
 
 			if (handle != IntPtr.Zero)
 			{
-				DeleteMenu(sysMenu, SC_CLOSE, MF_BYCOMMAND);
 				DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
 				DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
 			}
