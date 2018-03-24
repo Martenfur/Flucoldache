@@ -21,7 +21,7 @@ namespace Monofoxe
 		RenderTarget2D surf;
 
 		
-		Camera cam = new Camera(800, 480);
+		Camera cam = new Camera(Game1.WindowW, Game1.WindowH);
 		
 		Random r = new Random();
 
@@ -31,7 +31,7 @@ namespace Monofoxe
 			GameCntrl.MaxGameSpeed = 60;
 			
 
-			cam.BackgroundColor = Color.AliceBlue;
+			cam.BackgroundColor = Color.Black;
 
 			
 			cam.OffsetX = cam.W / 2;
@@ -45,6 +45,7 @@ namespace Monofoxe
 			rasterizerState.ScissorTestEnable = false;
 			rasterizerState.FillMode = FillMode.Solid;
 			DrawCntrl.Rasterizer = rasterizerState;
+			DrawCntrl.Sampler = SamplerState.PointClamp;
 		}
 
 		public override void Update()
@@ -101,9 +102,16 @@ namespace Monofoxe
 		
 		public override void Draw()
 		{	
-			DrawCntrl.CurrentColor = Color.Black;
+			//DrawCntrl.CurrentColor = Color.Black;
 			DrawCntrl.CurrentFont = Fonts.Font;
-			DrawCntrl.DrawText("foxes are FLUFFERS! АИта правда. ░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀", 32, 32);
+			DrawCntrl.DrawText("fps: " + GameCntrl.Fps, 0, -32);
+			for(var ix = 0; ix < 96; ix += 1)
+			{
+				for(var iy = 0; iy < 32; iy += 1)
+				{
+					DrawCntrl.DrawSprite(Sprites.Font, 32, ix * 8, iy * 16);
+				}	
+			}
 		}
 
 		public override void DrawGUI()

@@ -295,7 +295,7 @@ namespace Monofoxe.Engine
 			CurrentCamera = null;
 			CurrentTransformMatrix = Matrix.CreateTranslation(0, 0, 0);
 			BasicEffect.View = CurrentTransformMatrix;
-			BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, 800, 480, 0, 0, 1); // TODO: Set actual backbuffer size here.
+			BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, Game1.WindowW, Game1.WindowH, 0, 0, 1); // TODO: Set actual backbuffer size here.
 			// Resetting camera and transform matrix.
 			
 
@@ -372,7 +372,7 @@ namespace Monofoxe.Engine
 				{
 					Device.ScissorRectangle = _scissorRectangle;
 					
-					Batch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
+					Batch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
 				}
 				_currentPipelineMode = mode;
 				_currentTexture = texture;

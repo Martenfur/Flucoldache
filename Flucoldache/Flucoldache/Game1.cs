@@ -17,7 +17,9 @@ namespace Monofoxe
 	public class Game1 : Game
 	{
 		public GraphicsDeviceManager graphics;
-		
+		public static readonly int WindowW = 768;
+		public static readonly int WindowH = 512;
+
 		public Game1()
 		{
 			graphics = new GraphicsDeviceManager(this);
@@ -35,7 +37,11 @@ namespace Monofoxe
 			GameCntrl.MyGame = this;
 			
 			GameCntrl.MaxGameSpeed = 60.0;
-			
+
+			graphics.PreferredBackBufferWidth = WindowW;
+			graphics.PreferredBackBufferHeight = WindowH;
+			graphics.ApplyChanges();
+
 			Window.TextInput += Input.TextInput;
 
 			base.Initialize();
