@@ -151,9 +151,13 @@ namespace Monofoxe.Engine
 			ElapsedTimeTotal = gameTime.TotalGameTime.TotalSeconds;
 
 			if (1.0 / MinGameSpeed >= gameTime.ElapsedGameTime.TotalSeconds)
-			{ElapsedTime = gameTime.ElapsedGameTime.TotalSeconds;}
+			{
+				ElapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
+			}
 			else
-			{ElapsedTime = 1.0 / MinGameSpeed;}
+			{
+				ElapsedTime = 1.0 / MinGameSpeed;
+			}
 			// Elapsed time counters.
 			
 			_tpsCounter.Update(gameTime);

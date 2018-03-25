@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using Flucoldache;
+using Flucoldache.Overworld;
+
 
 namespace Monofoxe
 {
@@ -25,8 +27,7 @@ namespace Monofoxe
 
 		public TestObj()
 		{
-			
-			GameCntrl.MaxGameSpeed = 60;
+			new Player(new Vector2(8, 8));
 			
 			GameConsole.Camera.BackgroundColor = Color.Black;
 
@@ -38,6 +39,7 @@ namespace Monofoxe
 			DrawCntrl.Rasterizer = rasterizerState;
 			DrawCntrl.Sampler = SamplerState.PointClamp;
 		}
+
 		float progress = 1;
 		public override void Update()
 		{
@@ -82,9 +84,9 @@ namespace Monofoxe
 
 			//GameConsole.DrawText((int)(progress* 100) + "%", 16, 15);
 			GameConsole.ForegroundColor = Color.Gray;
-			GameConsole.DrawFrame(15, 15, 18, 3);
+			//GameConsole.DrawFrame(15, 15, 18, 3);
 			GameConsole.ForegroundColor = Color.Red;			
-			GameConsole.DrawProgressBar(16, 16, 64, progress);
+			//GameConsole.DrawProgressBar(16, 16, 64, progress);
 
 			//GameConsole.DrawFrame(0, 0, (int)x, (int)y);
 
