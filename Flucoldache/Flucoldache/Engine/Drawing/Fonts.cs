@@ -25,7 +25,7 @@ namespace Monofoxe.Engine.Drawing
 		public static IFont Font;
 		
 		public static void Load(ContentManager content)
-		{Debug.WriteLine(ascii.Length);
+		{
 			Font = new TextureFont(Sprites.Font, 0, 0, ascii, true);
 		}
 

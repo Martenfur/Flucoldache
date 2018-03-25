@@ -7,7 +7,7 @@ using System.IO;
 using Monofoxe.Engine.Drawing;
 using System.Xml;
 using System.Diagnostics;
-
+using Flucoldache;
 
 namespace Monofoxe.Engine
 {
@@ -36,6 +36,7 @@ namespace Monofoxe.Engine
 		
 
 		public static Game MyGame = null;	
+		public static GameWindow Window = null;
 
 		public static double ElapsedTimeTotal {get; private set;} = 0;
 		public static double ElapsedTime {get; private set;} = 0;
@@ -91,7 +92,9 @@ namespace Monofoxe.Engine
 		public static double MinGameSpeed // After this point game will slow down instead of skipping frames.
 		{
 			get
-			{return _minGameSpeed;}
+			{
+				return _minGameSpeed;
+			}
 
 			set
 			{
@@ -127,9 +130,16 @@ namespace Monofoxe.Engine
 		}
 
 
+		public static void Init(Game game)
+		{
+			MyGame = game;
+			Window = game.Window;
+		}
+
 
 		public static void Begin()
 		{
+			GameConsole.Init(Fonts.Font, 96, 32);
 			new TestObj();
 		}
 

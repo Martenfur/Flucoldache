@@ -136,6 +136,12 @@ namespace Monofoxe.Engine.Drawing
 		}
 		
 
+		public Dictionary<char, Frame> GetFrames()
+		{
+			return _frames;
+		}
+		
+
 		/// <summary>
 		/// Measures width and height of the text.
 		/// </summary>

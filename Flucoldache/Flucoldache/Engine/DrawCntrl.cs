@@ -264,8 +264,11 @@ namespace Monofoxe.Engine
 
 					SetSurfaceTarget(camera.ViewSurface, camera.TransformMatrix);
 
-					Device.Clear(camera.BackgroundColor);
-					
+					if (camera.ClearBackground)
+					{
+						Device.Clear(camera.BackgroundColor);
+					}
+
 					foreach(GameObj obj in depthSortedObjects)
 					{
 						if (obj.Active)
@@ -372,7 +375,7 @@ namespace Monofoxe.Engine
 				{
 					Device.ScissorRectangle = _scissorRectangle;
 					
-					Batch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
+					Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
 				}
 				_currentPipelineMode = mode;
 				_currentTexture = texture;
@@ -566,17 +569,17 @@ namespace Monofoxe.Engine
 		#region sprites
 		
 
-		private static void DrawSpriteUnsafe(Sprite sprite, int frame, Vector2 pos, Vector2 scale, float rotation, Vector2 offset, Color color, SpriteEffects effect)
+		public static void DrawFrame(Frame frame, Vector2 pos, Vector2 scale, float rotation, Vector2 offset, Color color, SpriteEffects effect)
 		{
 			SwitchPipelineMode(PipelineMode.Sprites, null);
 
 			Batch.Draw(
-				sprite.Frames[frame].Texture, 
+				frame.Texture, 
 				pos, 
-				sprite.Frames[frame].TexturePosition, 
+				frame.TexturePosition, 
 				color, 
 				MathHelper.ToRadians(rotation), 
-				sprite.Origin - sprite.Frames[frame].Origin + offset,
+				offset - frame.Origin,
 				scale,
 				effect, 
 				0
@@ -593,14 +596,14 @@ namespace Monofoxe.Engine
 
 		public static void DrawSprite(Sprite sprite, Vector2 pos)
 		{
-			DrawSpriteUnsafe(sprite, 0, pos, Vector2.One, 0, Vector2.Zero, CurrentColor, SpriteEffects.None);
+			DrawFrame(sprite.Frames[0], pos, Vector2.One, 0, sprite.Origin, CurrentColor, SpriteEffects.None);
 		}
 		
 		public static void DrawSprite(Sprite sprite, float frameId, Vector2 pos)
 		{			
 			int frame = CalculateSpriteFrame(sprite, frameId);
 			
-			DrawSpriteUnsafe(sprite, frame, pos, Vector2.One, 0, Vector2.Zero, CurrentColor, SpriteEffects.None);
+			DrawFrame(sprite.Frames[frame], pos, Vector2.One, 0, sprite.Origin, CurrentColor, SpriteEffects.None);
 		}
 
 
@@ -630,8 +633,7 @@ namespace Monofoxe.Engine
 			}
 			// Proper negative scaling.
 
-			
-			DrawSpriteUnsafe(sprite, frame, pos, scale, rotation, offset, color, mirroring);
+			DrawFrame(sprite.Frames[frame], pos, scale, rotation, sprite.Origin + offset, color, mirroring);
 		}
 		
 		// Vectors.
