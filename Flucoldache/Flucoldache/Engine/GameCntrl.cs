@@ -139,8 +139,7 @@ namespace Monofoxe.Engine
 
 		public static void Begin()
 		{
-			GameConsole.Init(Fonts.Font, 96, 32);
-			new TestObj();
+			new GameplayController();
 		}
 
 
@@ -176,7 +175,9 @@ namespace Monofoxe.Engine
 
 
 		public static double Time(double val)
-		{return val * ElapsedTime * GameSpeedMultiplier;}
+		{
+			return val * ElapsedTime * GameSpeedMultiplier;
+		}
 
 
 

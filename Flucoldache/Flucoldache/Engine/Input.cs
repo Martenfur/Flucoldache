@@ -22,7 +22,8 @@ namespace Monofoxe.Engine
 		public static Vector2 MousePos {get; private set;} = new Vector2(0, 0);
 
 
-		private static List<MB> _mouseButtons, _previousMouseButtons;
+		private static List<MB> _mouseButtons = new List<MB>();
+		private static List<MB> _previousMouseButtons = new List<MB>();
 		
 		/// <summary>
 		/// Scrollwheel value. Can be -1, 0 or 1.
@@ -133,8 +134,9 @@ namespace Monofoxe.Engine
 			
 			ScreenMousePos = new Vector2(mouseState.X, mouseState.Y);
 
-			_previousMouseButtons = _mouseButtons;
-			_mouseButtons = new List<MB>();
+			_previousMouseButtons.Clear();
+			_previousMouseButtons.AddRange(_mouseButtons);
+			_mouseButtons.Clear();
 			
 			if (mouseState.LeftButton == ButtonState.Pressed)
 			{_mouseButtons.Add(MB.Left);}
@@ -239,10 +241,14 @@ namespace Monofoxe.Engine
 		/// <returns>Returns if button is down.</returns>
 		public static bool MouseCheck(MB button)
 		{
-			try
-			{return _mouseButtons.Contains(button);}
-			catch(Exception)
-			{return false;}
+			if (_mouseButtons.Count > 0)
+			{
+				return _mouseButtons.Contains(button);
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 
@@ -253,10 +259,14 @@ namespace Monofoxe.Engine
 		/// <returns>Returns if button is pressed.</returns>
 		public static bool MouseCheckPress(MB button)
 		{
-			try
-			{return (_mouseButtons.Contains(button) && !_previousMouseButtons.Contains(button));}
-			catch(Exception)
-			{return false;}
+			if (_mouseButtons.Count > 0)
+			{
+				return (_mouseButtons.Contains(button) && !_previousMouseButtons.Contains(button));
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 
@@ -267,10 +277,14 @@ namespace Monofoxe.Engine
 		/// <returns>Returns if button is released.</returns>
 		public static bool MouseCheckRelease(MB button)
 		{
-			try
-			{return (!_mouseButtons.Contains(button) && _previousMouseButtons.Contains(button));}
-			catch(Exception)
-			{return false;}
+			if (_mouseButtons.Count > 0)
+			{
+				return (!_mouseButtons.Contains(button) && _previousMouseButtons.Contains(button));
+			}
+			else
+			{
+				return false;
+			}
 		}
 		
 
@@ -279,8 +293,8 @@ namespace Monofoxe.Engine
 		/// </summary>
 		public static void MouseClear()
 		{
-			_mouseButtons = null;
-			_previousMouseButtons = null;
+			_mouseButtons.Clear();
+			_previousMouseButtons.Clear();
 		}
 
 
@@ -308,7 +322,14 @@ namespace Monofoxe.Engine
 		/// <param name="key">Key to check.</param>
 		public static bool KeyboardCheck(Keys key)
 		{
-			return _currentKeys.Contains(key);
+			try
+			{
+				return _currentKeys.Contains(key);
+			}
+			catch(Exception)
+			{
+				return false;
+			}
 		}
 
 		
@@ -319,9 +340,13 @@ namespace Monofoxe.Engine
 		public static bool KeyboardCheckPress(Keys key)
 		{
 			try
-			{return (_currentKeys.Contains<Keys>(key)) && (!_previousKeys.Contains<Keys>(key));}
+			{
+				return (_currentKeys.Contains(key)) && (!_previousKeys.Contains(key));
+			}
 			catch(Exception)
-			{return false;}
+			{
+				return false;
+			}
 		}
 		
 
@@ -332,9 +357,13 @@ namespace Monofoxe.Engine
 		public static bool KeyboardCheckRelease(Keys key)
 		{
 			try
-			{return (!_currentKeys.Contains<Keys>(key)) && (_previousKeys.Contains<Keys>(key));}
+			{
+				return (!_currentKeys.Contains(key)) && (_previousKeys.Contains(key));
+			}
 			catch(Exception)
-			{return false;}
+			{
+				return false;
+			}
 		}
 
 

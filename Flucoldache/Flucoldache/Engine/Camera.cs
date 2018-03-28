@@ -122,6 +122,13 @@ namespace Monofoxe.Engine
                                            DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 		}
 
+		public Vector2 GetMousePos()
+		{
+			Matrix m = Matrix.Invert(TransformMatrix);
+			
+			Vector3 buffer = Vector3.Transform(new Vector3(Input.ScreenMousePos.X, Input.ScreenMousePos.Y, 0), m);
+			return new Vector2(buffer.X - PortX, buffer.Y - PortY);
+		}
 
 		public void Destroy()
 		{

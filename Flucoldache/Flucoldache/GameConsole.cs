@@ -56,6 +56,10 @@ namespace Flucoldache
 
 		}
 
+		public static void DrawChar(char ch, Vector2 pos)
+		{
+			DrawChar(ch, (int)pos.X, (int)pos.Y);
+		}
 
 		public static void DrawChar(char ch, int x, int y)
 		{
@@ -78,6 +82,12 @@ namespace Flucoldache
 			}
 		}
 
+		
+		public static void DrawFrame(Vector2 pos, Vector2 size)
+		{
+			DrawFrame((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+		}
+		
 
 		public static void DrawFrame(int x, int y, int w, int h)
 		{
@@ -109,6 +119,11 @@ namespace Flucoldache
 		}
 
 
+		public static void DrawRectangle(Vector2 pos, Vector2 size)
+		{
+			DrawCntrl.DrawSprite(Sprites.Font, _fillerFrame, pos * CharSize, size, 0, BackgroundColor);
+		}
+		
 
 		public static void DrawRectangle(int x1, int y1, int w, int h)
 		{
