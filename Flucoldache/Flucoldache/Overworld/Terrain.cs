@@ -18,8 +18,11 @@ namespace Flucoldache.Overworld
 		
 		public bool DisplaySolids = false;
 
+		public Tile DefaultTile;
+
 		public Terrain(int w, int h)
 		{
+			DefaultTile = new Tile();
 			
 			TileMap = new Tile[w, h];
 			for(var x = 0; x < TileMap.GetLength(0); x += 1)
@@ -63,14 +66,16 @@ namespace Flucoldache.Overworld
 
 		public Tile GetTile(Vector2 pos)
 		{
-			try
+			if (pos.X >= 0 && pos.Y >= 0 && pos.X < TileMap.GetLength(0) && pos.Y < TileMap.GetLength(1))
 			{
 				return TileMap[(int)pos.X, (int)pos.Y];
 			}
-			catch(Exception)
-			{
-				return null;
-			}
+			return DefaultTile;
+		}
+
+		public bool InBounds(Vector2 pos)
+		{
+			return (pos.X >= 0 && pos.Y >= 0 && pos.X < TileMap.GetLength(0) && pos.Y < TileMap.GetLength(1));
 		}
 
 		public void Resize(Vector2 newSize, Vector2 offset)

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using System.IO;
 
 namespace Flucoldache.Overworld
 {
@@ -52,6 +53,10 @@ namespace Flucoldache.Overworld
 			LMB + Alt - Color only.
 			C - Choose color set.
 			H - Choose char.
+			LMB + P - Pick tile under cursor.
+		Object mode:
+			A - Edit argument.
+			O - Select object.
 		*/
 
 		public enum Mode
@@ -63,6 +68,7 @@ namespace Flucoldache.Overworld
 
 		Color UIFgColor = Color.Gray;
 		Color UIBgColor = new Color(45, 61, 61);
+		Color UIImportantColor = Color.White;
 
 		Mode CurrentMode = Mode.Tiles;
 
@@ -88,6 +94,11 @@ namespace Flucoldache.Overworld
 		Keys CollisionModeHotkey = Keys.C;
 		Keys ObjectModeHotkey = Keys.O;
 		Keys ToggleSolidDisplayHotkey = Keys.L;
+		Keys ObjArgumentHotkey = Keys.A;
+		Keys ObjSelectHotkey = Keys.O;
+		Keys SaveHotkey = Keys.S;
+		Keys LoadHotkey = Keys.L;
+		Keys TilePickHotkey = Keys.P;
 
 		int CurrentPalette = 0;
 		char CurrentChar = 'a';
@@ -98,16 +109,41 @@ namespace Flucoldache.Overworld
 
 		Alarm _movementAlarm = new Alarm();
 
-
 		/// <summary>
 		/// Blocks mouse until button release.
 		/// </summary>
 		bool ClickBlock = false;
 
+
+		
+		OverworldObj CurrentObject;
+		Type[] ObjectTypes = 
+		{
+			Type.GetType("Flucoldache.Overworld.Player"),
+			Type.GetType("Flucoldache.Overworld.DialogueTrigger"),
+		};
+		int CurrentObjectType = 0;
+
+		bool ObjectDragged;
+
+		bool ObjArgumentMenuActive = false;
+		Vector2 ObjArgumentMenuSize = new Vector2(GameConsole.W - 4, 1);
+		Vector2 ObjArgumentMenuPos = new Vector2(2, 2);
+
+		bool ObjSelectMenuActive = false;
+		Vector2 ObjSelectMenuSize;
+		Vector2 ObjSelectMenuPos = new Vector2(2, 2);
+
+
 		public MapEditor()
 		{
 			Terrain = new Terrain(32, 16);
-			
+
+			DrawCntrl.Cameras[0].X = -GameConsole.CharSize.X;
+			DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
+
+			ObjSelectMenuSize = new Vector2(24, ObjectTypes.Length);
+
 		}
 
 		public override void UpdateBegin()
@@ -136,6 +172,7 @@ namespace Flucoldache.Overworld
 				if (Input.KeyboardCheckPress(ObjectModeHotkey))
 				{
 					CurrentMode = Mode.Objects;
+					Input.KeyboardClear();
 				}
 				if (Input.KeyboardCheckPress(CollisionModeHotkey))
 				{
@@ -147,9 +184,27 @@ namespace Flucoldache.Overworld
 			#endregion Mode selection
 
 
+			#region Saving/Loading
+
+			if (Input.KeyboardCheck(Keys.LeftControl))
+			{
+				if (Input.KeyboardCheckPress(SaveHotkey))
+				{
+					SaveMap();
+				}
+				if (Input.KeyboardCheckPress(LoadHotkey))
+				{
+					LoadMap();
+					DrawCntrl.Cameras[0].X = -GameConsole.CharSize.X;
+					DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
+				}
+			}
+
+			#endregion Saving/Loading
+
 			MoveCamera();
 			
-
+			// Menus and stuff.
 			#region Selection menu
 			if (SelectionMenuActive)
 			{
@@ -216,7 +271,60 @@ namespace Flucoldache.Overworld
 			}
 			#endregion Selection menu
 
+			#region Argument menu
 
+			if (ObjArgumentMenuActive)
+			{
+				foreach(char ch in Input.KeyboardString)
+				{
+					if (ch == (char)Keys.Back)
+					{
+						if (CurrentObject.Argument.Length > 0)
+						{
+							CurrentObject.Argument = CurrentObject.Argument.Remove(CurrentObject.Argument.Length - 1, 1);
+						}
+					}
+					else
+					{
+						if (!Char.IsControl(ch))
+						{
+							CurrentObject.Argument += ch;
+						}
+					}
+				}
+
+				if (Input.KeyboardCheck(Keys.Enter) || Input.KeyboardCheck(Keys.Escape) || Input.MouseCheck(Input.MB.Left))
+				{
+					ClickBlock = true;
+					ObjArgumentMenuActive = false;
+				}
+
+				Input.IOClear();
+			}
+
+			#endregion Argument menu
+
+			#region Object menu
+
+			if (ObjSelectMenuActive)
+			{
+				if (Input.MouseCheckPress(Input.MB.Left))
+				{
+					if (TileScreenMousePos.X >= ObjSelectMenuPos.X
+					&& TileScreenMousePos.X < ObjSelectMenuPos.X + ObjSelectMenuSize.X
+					&& TileScreenMousePos.Y >= ObjSelectMenuPos.Y
+					&& TileScreenMousePos.Y < ObjSelectMenuPos.Y + ObjSelectMenuSize.Y)
+					{
+						CurrentObjectType = (int)(TileScreenMousePos.Y - ObjSelectMenuPos.Y);
+					}
+					ClickBlock = true;
+					ObjSelectMenuActive = false;
+					Input.MouseClear();
+				}
+			}
+
+			#endregion Object menu
+			// Menus and stuff.
 
 		}
 
@@ -228,16 +336,33 @@ namespace Flucoldache.Overworld
 				if ((Input.MouseCheck(Input.MB.Left) && !Input.KeyboardCheck(Keys.LeftControl))
 				|| Input.MouseCheckPress(Input.MB.Left))
 				{	
-					Tile tile = Terrain.GetTile(TileMousePos);
-					
-					if (tile != null)
+					if (Terrain.InBounds(TileMousePos))
 					{
-						if (!Input.KeyboardCheck(Keys.LeftAlt))
+						Tile tile = Terrain.GetTile(TileMousePos);
+
+						if (Input.KeyboardCheck(TilePickHotkey))
 						{
-							tile.Char = CurrentChar;
+							CurrentChar = tile.Char;
+							
+							for(var i = 0; i < Palettes.Length; i += 1)
+							{
+								if (Palettes[i][0] == tile.ForegroundColor && Palettes[i][1] == tile.BackgroundColor)
+								{
+									CurrentPalette = i;
+									break;
+								}
+							}
+							ClickBlock = true;
 						}
-						tile.ForegroundColor = Palettes[CurrentPalette][0];
-						tile.BackgroundColor = Palettes[CurrentPalette][1];
+						else
+						{
+							if (!Input.KeyboardCheck(Keys.LeftAlt))
+							{
+								tile.Char = CurrentChar;
+							}
+							tile.ForegroundColor = Palettes[CurrentPalette][0];
+							tile.BackgroundColor = Palettes[CurrentPalette][1];
+						}
 					}
 					else
 					{
@@ -260,16 +385,18 @@ namespace Flucoldache.Overworld
 			}
 			#endregion Tiles
 
-
+			
 
 			#region Collision
 			if (CurrentMode == Mode.Collision)
 			{
 				if (Input.MouseCheck(Input.MB.Left) || Input.MouseCheck(Input.MB.Right))
 				{	
-					Tile tile = Terrain.GetTile(TileMousePos);
-					if (tile == null)
+					
+					if (Terrain.InBounds(TileMousePos))
 					{
+						Tile tile = Terrain.GetTile(TileMousePos);
+						
 						if (Input.MouseCheck(Input.MB.Left))
 						{
 							tile.Type = Tile.TileType.Solid;
@@ -293,10 +420,76 @@ namespace Flucoldache.Overworld
 			#endregion Collision
 
 			
+
 			#region Objects
+			if (CurrentMode == Mode.Objects)
+			{
+				// Creating object.
+				if (Input.MouseCheckPress(Input.MB.Left))
+				{
+					ObjectDragged = false;
+					foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+					{
+						if (obj.Pos == TileMousePos)
+						{
+							CurrentObject = obj;
+							ObjectDragged = true;
+							break;
+						}
+					}
+			
+					if (!ObjectDragged)
+					{
+						OverworldObj obj = CreateObj(ObjectTypes[CurrentObjectType], TileMousePos);
+						CurrentObject = obj;
+						ObjectDragged = true;
+					}
+					
+				}
+				// Creating object.
+
+				// Moving object.
+				if (ObjectDragged && CurrentObject != null)
+				{
+					if (Input.MouseCheck(Input.MB.Left))
+					{
+						CurrentObject.Pos = TileMousePos;
+					}
+					else
+					{
+						ObjectDragged = false;
+					}
+				}
+				// Moving object.
+
+				// Deleting object.
+				if (Input.MouseCheckPress(Input.MB.Right))
+				{
+					ObjectDragged = false;
+					foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+					{
+						if (obj.Pos == TileMousePos)
+						{
+							Objects.Destroy(obj);
+							CurrentObject = null;
+						}
+					}
+				}
+				// Deleting object.
 
 
 
+				if (Input.KeyboardCheckPress(ObjArgumentHotkey) && CurrentObject != null)
+				{ 
+					ObjArgumentMenuActive = true;
+				}
+
+				if (Input.KeyboardCheckPress(ObjSelectHotkey))
+				{ 
+					ObjSelectMenuActive = true;
+				}
+
+			}
 			#endregion Objects
 		}
 
@@ -309,15 +502,23 @@ namespace Flucoldache.Overworld
 
 		public override void DrawEnd()
 		{
+			if (CurrentMode == Mode.Objects)
+			{
+				DrawObjectOverlays();
+			}
+
+
 			DrawCntrl.CurrentColor = UIBgColor;
 			DrawCntrl.DrawRectangle(0, 0, Terrain.TileMap.GetLength(0) * GameConsole.CharSize.X, Terrain.TileMap.GetLength(1) * GameConsole.CharSize.Y, true);
+
+			
 
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 
 			GameConsole.ForegroundColor = UIFgColor;
 			GameConsole.BackgroundColor = UIBgColor;
 			GameConsole.DrawFrame(0, 0, GameConsole.W, GameConsole.H);
-			
+
 			string mode = "";
 			if (CurrentMode == Mode.Tiles)
 			{
@@ -342,10 +543,27 @@ namespace Flucoldache.Overworld
 			+ " | ";
 
 			GameConsole.DrawText(caption, 1, 0);
-			GameConsole.ForegroundColor = Palettes[CurrentPalette][0];
-			GameConsole.BackgroundColor = Palettes[CurrentPalette][1];
-			GameConsole.DrawText("Char: " + CurrentChar, caption.Length + 1, 0);
+
+			if (CurrentMode == Mode.Tiles)
+			{
+				GameConsole.ForegroundColor = Palettes[CurrentPalette][0];
+				GameConsole.BackgroundColor = Palettes[CurrentPalette][1];
+				GameConsole.DrawText("Char: " + CurrentChar, caption.Length + 1, 0);
+			}
 			
+
+			if (CurrentMode == Mode.Objects)
+			{
+				string className = ObjectTypes[CurrentObjectType].ToString().Split('.').Last();
+				GameConsole.DrawText("Obj: " + className, caption.Length + 1, 0);
+
+				if (CurrentObject != null)
+				{
+					className = CurrentObject.ToString().Split('.').Last();
+					GameConsole.DrawText("Selected: " + className + " | " + CurrentObject.ArgumentName + ": " + CurrentObject.Argument, 1, GameConsole.H - 1);
+				}
+			}
+
 
 			if (SelectionMenuActive)
 			{
@@ -358,15 +576,30 @@ namespace Flucoldache.Overworld
 					DrawCharSelectionMenu();
 				}
 			}
+
+			if (ObjArgumentMenuActive)
+			{
+				DrawObjArgumentMenu();
+			}
 			
+			if (ObjSelectMenuActive)
+			{
+				DrawObjSelectMenu();
+			}
+
+			
+
 			DrawCntrl.CurrentColor = Color.White;
 			DrawCntrl.DrawRectangle(TileScreenMousePos * GameConsole.CharSize, TileScreenMousePos * GameConsole.CharSize + GameConsole.CharSize, true);
 			
+			
+
 			DrawCntrl.ResetTransformMatrix();
 
 	
 			
 		}
+
 
 		void DrawPaletteSelectionMenu()
 		{
@@ -418,6 +651,64 @@ namespace Flucoldache.Overworld
 			}
 		}
 
+		void DrawObjArgumentMenu()
+		{
+			GameConsole.ForegroundColor = UIFgColor;
+			GameConsole.BackgroundColor = UIBgColor;
+			GameConsole.DrawFrame(ObjArgumentMenuPos - Vector2.One, ObjArgumentMenuSize + new Vector2(2, 2));
+			GameConsole.DrawText(CurrentObject.ArgumentName + ":", (int)ObjArgumentMenuPos.X, (int)ObjArgumentMenuPos.Y - 1);
+
+			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.DrawRectangle(ObjArgumentMenuPos, ObjArgumentMenuSize);
+			GameConsole.DrawText(CurrentObject.Argument, (int)ObjArgumentMenuPos.X, (int)ObjArgumentMenuPos.Y);
+		}
+
+		void DrawObjSelectMenu()
+		{
+			GameConsole.ForegroundColor = UIFgColor;
+			GameConsole.BackgroundColor = UIBgColor;
+			GameConsole.DrawFrame(ObjSelectMenuPos - Vector2.One, ObjSelectMenuSize + new Vector2(2, 2));
+
+			string className;
+			for(var i = 0; i < ObjSelectMenuSize.Y; i += 1)
+			{
+				className = ObjectTypes[i].ToString().Split('.').Last().PadRight((int)ObjSelectMenuSize.X);
+
+				if (TileScreenMousePos.Y == ObjSelectMenuPos.Y + i 
+				&& TileScreenMousePos.X >= ObjSelectMenuPos.X
+				&& TileScreenMousePos.X < ObjSelectMenuPos.X + ObjSelectMenuSize.X)
+				{
+					GameConsole.ForegroundColor = UIBgColor;
+					GameConsole.BackgroundColor = UIFgColor;
+				}
+				else
+				{
+					GameConsole.ForegroundColor = UIFgColor;
+					GameConsole.BackgroundColor = UIBgColor;
+				}
+
+				GameConsole.DrawText(className, (int)ObjSelectMenuPos.X, (int)ObjSelectMenuPos.Y + i);
+			}
+		}
+
+		void DrawObjectOverlays()
+		{
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				if (obj == CurrentObject)
+				{
+					DrawCntrl.CurrentColor = Color.Yellow;
+				}
+				else
+				{
+					DrawCntrl.CurrentColor = Color.Blue;
+				}
+
+				DrawCntrl.DrawRectangle(obj.Pos * GameConsole.CharSize, obj.Pos * GameConsole.CharSize + GameConsole.CharSize, true);
+			}
+		}
+
 
 
 		void MoveCamera()
@@ -427,10 +718,10 @@ namespace Flucoldache.Overworld
 			
 			if (Input.KeyboardCheckPress(ResetCameraHotkey))
 			{
-				DrawCntrl.Cameras[0].X = 0;
-				DrawCntrl.Cameras[0].Y = 0;
+				DrawCntrl.Cameras[0].X = -GameConsole.CharSize.X;
+				DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
 			}
-			/*
+			
 			if (Input.KeyboardCheck(GameplayController.KeyUp))
 			{
 				movement.Y += -1;
@@ -447,7 +738,7 @@ namespace Flucoldache.Overworld
 			{
 				movement.X += 1;
 			}
-			*/
+			
 			_movementAlarm.Update();
 			if (movement != Vector2.Zero)
 			{
@@ -526,6 +817,195 @@ namespace Flucoldache.Overworld
 				obj.Pos += newOffset;
 			}
 
+		}
+
+
+
+		OverworldObj CreateObj(Type type, Vector2 pos)
+		{
+			OverworldObj obj = (OverworldObj)Activator.CreateInstance(type);
+			obj.Pos = pos;
+			obj.EditorMode = true;
+			
+			return obj;
+		}
+
+
+		void SaveMap()
+		{
+			System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+			dialog.Title = "Save map file";
+			dialog.Filter = "Map File|*.map";
+			dialog.ShowDialog();
+
+			Debug.WriteLine(dialog.FileName);
+
+			if (dialog.FileName != "")
+			{
+				List<byte> bytes = new List<byte>();
+				
+				#region Saving terrain
+				
+				bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(0)));
+				bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(1)));
+				
+				foreach(Tile tile in Terrain.TileMap)
+				{
+					bytes.AddRange(BitConverter.GetBytes((int)tile.Type));
+					bytes.AddRange(BitConverter.GetBytes(tile.Char));
+					bytes.AddRange(BitConverter.GetBytes(tile.ForegroundColor.PackedValue));
+					bytes.AddRange(BitConverter.GetBytes(tile.BackgroundColor.PackedValue));
+				}
+
+				#endregion Saving terrain
+
+
+				#region Saving objects
+				
+				List<OverworldObj> objects = Objects.GetList<OverworldObj>();
+
+				bytes.AddRange(BitConverter.GetBytes(objects.Count));
+
+				foreach(OverworldObj obj in objects)
+				{
+					// Class name.
+					byte[] serializedStr = Encoding.Unicode.GetBytes(obj.GetType().ToString());
+					bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
+					bytes.AddRange(serializedStr);
+
+					// Position.
+					bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.X));
+					bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.Y));
+					
+
+					// Argument.
+					serializedStr = Encoding.Unicode.GetBytes(obj.Argument);
+					bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
+					bytes.AddRange(serializedStr);
+
+				}
+
+				#endregion Saving objects
+				
+				Stream file = dialog.OpenFile();
+				file.Write(bytes.ToArray(), 0, bytes.Count);	
+				file.Close();
+
+			}
+		}
+
+		void LoadMap()
+		{
+			System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+			dialog.Title = "Save map file";
+			dialog.Filter = "Map File|*.map";
+			dialog.ShowDialog();
+
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				Objects.Destroy(obj);
+			}
+			foreach(Terrain obj in Objects.GetList<Terrain>())
+			{
+				Objects.Destroy(obj);
+			}
+			
+
+			Stream file = dialog.OpenFile();
+			byte[] buffer = new byte[file.Length];
+			if (dialog.FileName != "")
+			{
+				file.Read(buffer, 0, (int)file.Length);
+				file.Close();
+			}
+
+			int pointer = 0;
+
+			#region Loading terrain
+			
+			int terrW, terrH;
+			
+			terrW = ReadInt(buffer, ref pointer);
+			terrH = ReadInt(buffer, ref pointer);
+
+			Terrain terrain = new Terrain(terrW, terrH);
+
+			for(var x = 0; x < terrW; x += 1)	
+			{
+				for(var y = 0; y < terrH; y += 1)	
+				{
+					terrain.TileMap[x, y].Type = (Tile.TileType)ReadInt(buffer, ref pointer);
+					terrain.TileMap[x, y].Char = ReadChar(buffer, ref pointer);
+					terrain.TileMap[x, y].ForegroundColor = new Color(ReadUInt(buffer, ref pointer));
+					terrain.TileMap[x, y].BackgroundColor = new Color(ReadUInt(buffer, ref pointer));
+				}
+			}
+
+			Terrain = terrain;
+
+			#endregion Loading terrain
+			
+
+			#region Loading objects
+			
+			int objCount = ReadInt(buffer, ref pointer);
+
+			for(var i = 0; i < objCount; i += 1)
+			{
+				int strLen = ReadInt(buffer, ref pointer); // Class string length.
+				string className = ReadString(buffer, ref pointer, strLen);
+
+				Vector2 pos = Vector2.Zero;
+
+				pos.X = ReadInt(buffer, ref pointer);
+				pos.Y = ReadInt(buffer, ref pointer);
+
+				strLen = ReadInt(buffer, ref pointer); // Class string length.
+				string argument = ReadString(buffer, ref pointer, strLen);
+
+				OverworldObj obj = (OverworldObj)Activator.CreateInstance(Type.GetType(className));
+				obj.Pos = pos;
+				obj.EditorMode = true;
+				obj.Argument = argument;
+			}
+
+			#endregion Loading objects
+				
+			
+			
+
+		}
+
+		int ReadInt(byte[] buffer, ref int pointer)
+		{
+			byte[] intBuffer = new byte[4];
+			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
+			pointer += 4;
+			return BitConverter.ToInt32(intBuffer, 0);
+		}
+
+		uint ReadUInt(byte[] buffer, ref int pointer)
+		{
+			byte[] intBuffer = new byte[4];
+			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
+			pointer += 4;
+			return BitConverter.ToUInt32(intBuffer, 0);
+		}
+
+		char ReadChar(byte[] buffer, ref int pointer)
+		{
+			byte[] intBuffer = new byte[2];
+			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
+			pointer += 2;
+			return BitConverter.ToChar(intBuffer, 0);
+		}
+
+		string ReadString(byte[] buffer, ref int pointer, int count)
+		{
+			byte[] intBuffer = new byte[count];
+			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
+			pointer += count;
+			return Encoding.Unicode.GetString(intBuffer);
 		}
 
 	}

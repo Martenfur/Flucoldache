@@ -322,14 +322,12 @@ namespace Monofoxe.Engine
 		/// <param name="key">Key to check.</param>
 		public static bool KeyboardCheck(Keys key)
 		{
-			try
+			if (_currentKeys != null)
 			{
 				return _currentKeys.Contains(key);
 			}
-			catch(Exception)
-			{
-				return false;
-			}
+			
+			return false;
 		}
 
 		
@@ -339,14 +337,11 @@ namespace Monofoxe.Engine
 		/// <param name="key">Key to check.</param>
 		public static bool KeyboardCheckPress(Keys key)
 		{
-			try
+			if (_currentKeys != null && _previousKeys != null)
 			{
 				return (_currentKeys.Contains(key)) && (!_previousKeys.Contains(key));
 			}
-			catch(Exception)
-			{
-				return false;
-			}
+			return false;
 		}
 		
 
@@ -356,14 +351,11 @@ namespace Monofoxe.Engine
 		/// <param name="key">Key to check.</param>
 		public static bool KeyboardCheckRelease(Keys key)
 		{
-			try
+			if (_currentKeys != null && _previousKeys != null)
 			{
 				return (!_currentKeys.Contains(key)) && (_previousKeys.Contains(key));
 			}
-			catch(Exception)
-			{
-				return false;
-			}
+			return false;
 		}
 
 
@@ -373,10 +365,11 @@ namespace Monofoxe.Engine
 		/// <returns></returns>
 		public static bool KeyboardCheckAnyKey()
 		{
-			try
-			{return _currentKeys.Length > 0;}
-			catch(Exception)
-			{return false;}
+			if (_currentKeys != null)
+			{
+				return _currentKeys.Length > 0;
+			}
+			return false;
 		}
 
 		

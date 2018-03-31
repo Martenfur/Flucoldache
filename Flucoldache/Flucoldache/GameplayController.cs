@@ -39,8 +39,7 @@ namespace Flucoldache
 			rasterizerState.FillMode = FillMode.Solid;
 			DrawCntrl.Rasterizer = rasterizerState;
 			DrawCntrl.Sampler = SamplerState.PointClamp;
-
-			new Player(new Vector2(8, 8));
+			
 			//new Terrain(96, 32);
 			new MapEditor();
 		}

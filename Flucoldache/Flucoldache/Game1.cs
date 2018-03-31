@@ -35,13 +35,12 @@ namespace Monofoxe
 		protected override void Initialize()
 		{
 			GameCntrl.Init(this);
-			
 			GameCntrl.MaxGameSpeed = 60.0;
 			
 			graphics.PreferredBackBufferWidth = WindowW;
 			graphics.PreferredBackBufferHeight = WindowH;
 			graphics.ApplyChanges();
-
+			
 			Window.TextInput += Input.TextInput;
 
 			base.Initialize();

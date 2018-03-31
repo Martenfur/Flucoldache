@@ -59,6 +59,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameplayController.cs" />
+    <Compile Include="Overworld\DialogueTrigger.cs" />
     <Compile Include="Overworld\MapEditor.cs" />
     <Compile Include="Overworld\OverworldObj.cs" />
     <Compile Include="Overworld\Player.cs" />
@@ -72,6 +73,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

@@ -21,6 +21,8 @@ namespace Flucoldache.Overworld
 
 		Terrain Terr;
 
+		public Player() {}
+
 		public Player(Vector2 pos)
 		{
 			Pos = pos;
@@ -30,63 +32,65 @@ namespace Flucoldache.Overworld
 		{
 			Terr = (Terrain)Objects.ObjFind<Terrain>(0);
 
-			Vector2 movement = Vector2.Zero;
+			if (!EditorMode)
+			{				
+				Vector2 movement = Vector2.Zero;
 
-			// Movement.
-			if (Input.KeyboardCheck(GameplayController.KeyUp))
-			{
-				movement.Y += -1;
-			}
-
-			if (Input.KeyboardCheck(GameplayController.KeyDown))
-			{
-				movement.Y += 1;
-			}
-
-			if (Input.KeyboardCheck(GameplayController.KeyLeft))
-			{
-				movement.X += -1;
-			}
-
-			if (Input.KeyboardCheck(GameplayController.KeyRight))
-			{
-				movement.X += 1;
-			}
-			// Movement.
-
-			_movementAlarm.Update();
-			if (movement != Vector2.Zero)
-			{
-				if (!_movementAlarm.Active)
+				// Movement.
+				if (Input.KeyboardCheck(GameplayController.KeyUp))
 				{
-					_movementAlarm.Set(1f / WalkSpd);
-					_movementAlarm.Triggered = true;
-				}
-			}
-			else
-			{
-				_movementAlarm.Reset();
-			}
-			
-			if (_movementAlarm.Triggered)
-			{
-				if (Terr.TileMap[(int)(Pos.X + movement.X), (int)(Pos.Y)].IsPassable())
-				{
-					Pos.X += movement.X;
+					movement.Y += -1;
 				}
 
-				if (Terr.TileMap[(int)(Pos.X), (int)(Pos.Y + movement.Y)].IsPassable())
+				if (Input.KeyboardCheck(GameplayController.KeyDown))
 				{
-					Pos.Y += movement.Y;
+					movement.Y += 1;
+				}
+
+				if (Input.KeyboardCheck(GameplayController.KeyLeft))
+				{
+					movement.X += -1;
+				}
+
+				if (Input.KeyboardCheck(GameplayController.KeyRight))
+				{
+					movement.X += 1;
+				}
+				// Movement.
+
+				_movementAlarm.Update();
+				if (movement != Vector2.Zero)
+				{
+					if (!_movementAlarm.Active)
+					{
+						_movementAlarm.Set(1f / WalkSpd);
+						_movementAlarm.Triggered = true;
+					}
+				}
+				else
+				{
+					_movementAlarm.Reset();
+				}
+
+				if (_movementAlarm.Triggered)
+				{
+					if (Terr.GetTile(new Vector2(Pos.X + movement.X, Pos.Y)).IsPassable())
+					{
+						Pos.X += movement.X;
+					}
+
+					if (Terr.GetTile(new Vector2(Pos.X, Pos.Y + movement.Y)).IsPassable())
+					{
+						Pos.Y += movement.Y;
+					}
 				}
 			}
-
 		}
 
 		public override void Draw()
 		{
 			GameConsole.ForegroundColor = Color.White;
-			GameConsole.BackgroundColor = Terr.TileMap[(int)Pos.X, (int)Pos.Y].BackgroundColor;
+			GameConsole.BackgroundColor = Terr.GetTile(Pos).BackgroundColor;
 			GameConsole.DrawChar(Char, (int)Pos.X, (int)Pos.Y);
 		}
 

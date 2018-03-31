@@ -11,5 +11,16 @@ namespace Flucoldache.Overworld
 	public class OverworldObj : GameObj
 	{
 		public Vector2 Pos;
+
+		/// <summary>
+		/// Used in the editor. 
+		/// </summary>
+		public string Argument = "";
+		public string ArgumentName = "argument";
+		
+		/// <summary>
+		/// In editor mode overwold objects should be inactive.
+		/// </summary>
+		public bool EditorMode = false;
 	}
 }
