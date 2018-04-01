@@ -67,6 +67,11 @@ namespace Flucoldache
 			DrawCntrl.DrawFrame(_fontChars[ch], new Vector2(x, y) * CharSize, Vector2.One, 0, Vector2.Zero, ForegroundColor, SpriteEffects.None);
 		}
 
+		public static void DrawText(string text, Vector2 pos)
+		{
+			DrawText(text, (int)pos.X, (int)pos.Y);
+		}
+
 		public static void DrawText(string text, int x, int y)
 		{
 			DrawCntrl.CurrentFont = Font;

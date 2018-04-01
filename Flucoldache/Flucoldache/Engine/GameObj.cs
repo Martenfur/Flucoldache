@@ -86,5 +86,11 @@ namespace Monofoxe.Engine
 		///	Drawing on a GUI layer. 
 		/// </summary>
 		public virtual void DrawGUI() {}
+
+		/// <summary>
+		///	Triggers right before destruction, if object is active. 
+		/// </summary>
+		public virtual void Destroy() {}
+
 	}
 }

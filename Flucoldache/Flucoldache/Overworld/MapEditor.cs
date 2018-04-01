@@ -59,6 +59,20 @@ namespace Flucoldache.Overworld
 			O - Select object.
 		*/
 
+		Keys PalettesHotkey = Keys.C;
+		Keys CharsHotkey = Keys.H;
+		Keys ResetCameraHotkey = Keys.Q;
+		Keys TileModeHotkey = Keys.T;
+		Keys CollisionModeHotkey = Keys.C;
+		Keys ObjectModeHotkey = Keys.O;
+		Keys ToggleSolidDisplayHotkey = Keys.L;
+		Keys ObjArgumentHotkey = Keys.A;
+		Keys ObjSelectHotkey = Keys.O;
+		Keys SaveHotkey = Keys.S;
+		Keys LoadHotkey = Keys.L;
+		Keys TilePickHotkey = Keys.P;
+		Keys ExitHotkey = Keys.Escape;
+
 		public enum Mode
 		{
 			Tiles,
@@ -83,26 +97,11 @@ namespace Flucoldache.Overworld
 		{
 			new Color[]{Color.Gray, Color.Black},
 			new Color[]{Color.Black, Color.White},
-			new Color[]{Color.Black, Color.White},
+			new Color[]{Color.White, Color.Green},
 		};
-
-
-		Keys PalettesHotkey = Keys.C;
-		Keys CharsHotkey = Keys.H;
-		Keys ResetCameraHotkey = Keys.Q;
-		Keys TileModeHotkey = Keys.T;
-		Keys CollisionModeHotkey = Keys.C;
-		Keys ObjectModeHotkey = Keys.O;
-		Keys ToggleSolidDisplayHotkey = Keys.L;
-		Keys ObjArgumentHotkey = Keys.A;
-		Keys ObjSelectHotkey = Keys.O;
-		Keys SaveHotkey = Keys.S;
-		Keys LoadHotkey = Keys.L;
-		Keys TilePickHotkey = Keys.P;
 
 		int CurrentPalette = 0;
 		char CurrentChar = 'a';
-
 		
 		Vector2 TileMousePos;
 		Vector2 TileScreenMousePos;
@@ -114,7 +113,7 @@ namespace Flucoldache.Overworld
 		/// </summary>
 		bool ClickBlock = false;
 
-
+		string MapFileName = "";
 		
 		OverworldObj CurrentObject;
 		Type[] ObjectTypes = 
@@ -134,6 +133,7 @@ namespace Flucoldache.Overworld
 		Vector2 ObjSelectMenuSize;
 		Vector2 ObjSelectMenuPos = new Vector2(2, 2);
 
+		Alarm ExitAlarm = new Alarm();
 
 		public MapEditor()
 		{
@@ -190,17 +190,58 @@ namespace Flucoldache.Overworld
 			{
 				if (Input.KeyboardCheckPress(SaveHotkey))
 				{
-					SaveMap();
+					string filename = MapFileName;
+					if (Input.KeyboardCheck(Keys.LeftShift) || filename == "")
+					{
+						System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+						dialog.Title = "Save map file";
+						dialog.Filter = "Map File|*.map";
+						dialog.ShowDialog();
+						filename = dialog.FileName;
+					}
+			
+					if (filename != "")
+					{
+						SaveMap(filename);
+						MapFileName = filename;
+					}
 				}
+
 				if (Input.KeyboardCheckPress(LoadHotkey))
 				{
-					LoadMap();
-					DrawCntrl.Cameras[0].X = -GameConsole.CharSize.X;
-					DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
+					
+					System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
+					dialog.Title = "Save map file";
+					dialog.Filter = "Map File|*.map";
+					dialog.ShowDialog();
+					if (dialog.FileName != "")
+					{
+						Terrain = LoadMap(dialog.FileName, true);
+						DrawCntrl.Cameras[0].X = -GameConsole.CharSize.X;
+						DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
+						MapFileName = dialog.FileName;
+					}
 				}
 			}
 
 			#endregion Saving/Loading
+
+
+			#region Exiting
+			ExitAlarm.Update();
+			if (Input.KeyboardCheckPress(ExitHotkey))
+			{
+				ExitAlarm.Set(2);
+			}
+			if (!Input.KeyboardCheck(ExitHotkey))
+			{
+				ExitAlarm.Reset();
+			}
+			if (ExitAlarm.Triggered)
+			{
+				Objects.Destroy(this);
+			}
+			#endregion Exiting
 
 			MoveCamera();
 			
@@ -600,6 +641,18 @@ namespace Flucoldache.Overworld
 			
 		}
 
+		public override void Destroy()
+		{
+			new MainMenu();
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				Objects.Destroy(obj);
+			}
+			foreach(Terrain obj in Objects.GetList<Terrain>())
+			{
+				Objects.Destroy(obj);
+			}
+		}
 
 		void DrawPaletteSelectionMenu()
 		{
@@ -831,75 +884,61 @@ namespace Flucoldache.Overworld
 		}
 
 
-		void SaveMap()
+		void SaveMap(string filename)
 		{
-			System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
-			dialog.Title = "Save map file";
-			dialog.Filter = "Map File|*.map";
-			dialog.ShowDialog();
 
-			Debug.WriteLine(dialog.FileName);
+			List<byte> bytes = new List<byte>();
 
-			if (dialog.FileName != "")
+			#region Saving terrain
+
+			bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(0)));
+			bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(1)));
+
+			foreach (Tile tile in Terrain.TileMap)
 			{
-				List<byte> bytes = new List<byte>();
-				
-				#region Saving terrain
-				
-				bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(0)));
-				bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(1)));
-				
-				foreach(Tile tile in Terrain.TileMap)
-				{
-					bytes.AddRange(BitConverter.GetBytes((int)tile.Type));
-					bytes.AddRange(BitConverter.GetBytes(tile.Char));
-					bytes.AddRange(BitConverter.GetBytes(tile.ForegroundColor.PackedValue));
-					bytes.AddRange(BitConverter.GetBytes(tile.BackgroundColor.PackedValue));
-				}
+				bytes.AddRange(BitConverter.GetBytes((int)tile.Type));
+				bytes.AddRange(BitConverter.GetBytes(tile.Char));
+				bytes.AddRange(BitConverter.GetBytes(tile.ForegroundColor.PackedValue));
+				bytes.AddRange(BitConverter.GetBytes(tile.BackgroundColor.PackedValue));
+			}
 
-				#endregion Saving terrain
+			#endregion Saving terrain
 
 
-				#region Saving objects
-				
-				List<OverworldObj> objects = Objects.GetList<OverworldObj>();
+			#region Saving objects
 
-				bytes.AddRange(BitConverter.GetBytes(objects.Count));
+			List<OverworldObj> objects = Objects.GetList<OverworldObj>();
 
-				foreach(OverworldObj obj in objects)
-				{
-					// Class name.
-					byte[] serializedStr = Encoding.Unicode.GetBytes(obj.GetType().ToString());
-					bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
-					bytes.AddRange(serializedStr);
+			bytes.AddRange(BitConverter.GetBytes(objects.Count));
 
-					// Position.
-					bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.X));
-					bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.Y));
-					
+			foreach (OverworldObj obj in objects)
+			{
+				// Class name.
+				byte[] serializedStr = Encoding.Unicode.GetBytes(obj.GetType().ToString());
+				bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
+				bytes.AddRange(serializedStr);
 
-					// Argument.
-					serializedStr = Encoding.Unicode.GetBytes(obj.Argument);
-					bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
-					bytes.AddRange(serializedStr);
+				// Position.
+				bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.X));
+				bytes.AddRange(BitConverter.GetBytes((int)obj.Pos.Y));
 
-				}
 
-				#endregion Saving objects
-				
-				Stream file = dialog.OpenFile();
-				file.Write(bytes.ToArray(), 0, bytes.Count);	
-				file.Close();
+				// Argument.
+				serializedStr = Encoding.Unicode.GetBytes(obj.Argument);
+				bytes.AddRange(BitConverter.GetBytes(serializedStr.Length));
+				bytes.AddRange(serializedStr);
 
 			}
+
+			#endregion Saving objects
+
+			File.WriteAllBytes(filename, bytes.ToArray());
+
+
 		}
 
-		void LoadMap()
+		public static Terrain LoadMap(string fileName, bool editorMode)
 		{
-			System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
-			dialog.Title = "Save map file";
-			dialog.Filter = "Map File|*.map";
-			dialog.ShowDialog();
 
 			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
 			{
@@ -911,13 +950,7 @@ namespace Flucoldache.Overworld
 			}
 			
 
-			Stream file = dialog.OpenFile();
-			byte[] buffer = new byte[file.Length];
-			if (dialog.FileName != "")
-			{
-				file.Read(buffer, 0, (int)file.Length);
-				file.Close();
-			}
+			byte[] buffer = File.ReadAllBytes(fileName);
 
 			int pointer = 0;
 
@@ -941,8 +974,6 @@ namespace Flucoldache.Overworld
 				}
 			}
 
-			Terrain = terrain;
-
 			#endregion Loading terrain
 			
 
@@ -965,18 +996,16 @@ namespace Flucoldache.Overworld
 
 				OverworldObj obj = (OverworldObj)Activator.CreateInstance(Type.GetType(className));
 				obj.Pos = pos;
-				obj.EditorMode = true;
+				obj.EditorMode = editorMode;
 				obj.Argument = argument;
 			}
 
 			#endregion Loading objects
-				
 			
-			
-
+			return terrain;
 		}
 
-		int ReadInt(byte[] buffer, ref int pointer)
+		static int ReadInt(byte[] buffer, ref int pointer)
 		{
 			byte[] intBuffer = new byte[4];
 			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
@@ -984,7 +1013,7 @@ namespace Flucoldache.Overworld
 			return BitConverter.ToInt32(intBuffer, 0);
 		}
 
-		uint ReadUInt(byte[] buffer, ref int pointer)
+		static uint ReadUInt(byte[] buffer, ref int pointer)
 		{
 			byte[] intBuffer = new byte[4];
 			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
@@ -992,7 +1021,7 @@ namespace Flucoldache.Overworld
 			return BitConverter.ToUInt32(intBuffer, 0);
 		}
 
-		char ReadChar(byte[] buffer, ref int pointer)
+		static char ReadChar(byte[] buffer, ref int pointer)
 		{
 			byte[] intBuffer = new byte[2];
 			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);
@@ -1000,7 +1029,7 @@ namespace Flucoldache.Overworld
 			return BitConverter.ToChar(intBuffer, 0);
 		}
 
-		string ReadString(byte[] buffer, ref int pointer, int count)
+		static string ReadString(byte[] buffer, ref int pointer, int count)
 		{
 			byte[] intBuffer = new byte[count];
 			Array.Copy(buffer, pointer, intBuffer, 0, intBuffer.Length);

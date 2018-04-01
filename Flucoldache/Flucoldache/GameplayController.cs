@@ -41,7 +41,8 @@ namespace Flucoldache
 			DrawCntrl.Sampler = SamplerState.PointClamp;
 			
 			//new Terrain(96, 32);
-			new MapEditor();
+			//new MapEditor();
+			new MainMenu();
 		}
 
 		public override void Update()
