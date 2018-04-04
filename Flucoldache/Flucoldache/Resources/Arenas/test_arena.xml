@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Arena music="sometrack.mp3">
+  <objects>
+    <object x="0" y="0" classname="classname"/>
+    <object x="32" y="32" classname="classname1"/>
+  </objects>
+
+  <enemies>
+    <enemy type="evil_guy"/>
+    <enemy type="very_evil_guy"/>
+  </enemies>
+</Arena>

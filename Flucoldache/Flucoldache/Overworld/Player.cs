@@ -37,26 +37,29 @@ namespace Flucoldache.Overworld
 				Vector2 movement = Vector2.Zero;
 
 				// Movement.
-				if (Input.KeyboardCheck(GameplayController.KeyUp))
+				if (Controls.KeyCheck(Controls.KeyUp))
 				{
 					movement.Y += -1;
 				}
 
-				if (Input.KeyboardCheck(GameplayController.KeyDown))
+				if (Controls.KeyCheck(Controls.KeyDown))
 				{
 					movement.Y += 1;
 				}
 
-				if (Input.KeyboardCheck(GameplayController.KeyLeft))
+				if (Controls.KeyCheck(Controls.KeyLeft))
 				{
 					movement.X += -1;
 				}
 
-				if (Input.KeyboardCheck(GameplayController.KeyRight))
+				if (Controls.KeyCheck(Controls.KeyRight))
 				{
 					movement.X += 1;
 				}
 				// Movement.
+				
+				if (Controls.KeyCheckPress(Controls.KeyA))
+				{new Dialogue("toast.txt");}
 
 				_movementAlarm.Update();
 				if (movement != Vector2.Zero)

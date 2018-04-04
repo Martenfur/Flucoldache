@@ -2,23 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Monofoxe.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Flucoldache.Overworld;
+using Flucoldache.Battle;
+
 
 namespace Flucoldache
 {
 	public class MainMenu : GameObj
 	{
-		
+		Inventory inv = new Inventory();
+			
 		public MainMenu()
 		{
-			
-			new Dialogue("test_dialogue.txt");
-		}
+			new Arena("test_arena.xml");
+			inv.AddItem("fox", 32);
+			inv.AddItem("testitem", 2);
+			inv.AddItem("testitem", 1);
+		
+			inv.AddPotion("fox", 2);
+			string[] items = {"foxes", "are", "fluffers"};
 
+			//new SelectionMenu("Инвентарь", items, Vector2.One, new Vector2(10, 10));
+		}
 		public override void Update()
 		{
 			if (Input.KeyboardCheckPress(Keys.E))
@@ -39,12 +48,28 @@ namespace Flucoldache
 				}
 			}
 
+			if (Input.KeyboardCheckPress(Keys.Z))
+			{
+				inv.ShowItems();
+			}
+			if (Input.KeyboardCheckPress(Keys.X))
+			{
+				inv.ShowPotions();
+			}
+			
+			
+
 		}
 
 		public override void Draw()
 		{
 			GameConsole.DrawText("Press E to open editor. Press L to load a map in gameplay mode.", 8, 8);
 
+		}
+
+		public void Test()
+		{
+			Debug.WriteLine("test");
 		}
 	}
 }

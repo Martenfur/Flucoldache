@@ -19,14 +19,6 @@ namespace Flucoldache
 	public class GameplayController : GameObj
 	{
 		
-		public static Keys KeyUp = Keys.Up;
-		public static Keys KeyDown = Keys.Down;
-		public static Keys KeyLeft = Keys.Left;
-		public static Keys KeyRight = Keys.Right;
-		public static Keys KeyA = Keys.Z;
-		public static Keys KeyB = Keys.X;
-
-		
 		public GameplayController()
 		{
 			GameConsole.Init(Fonts.Font, 96, 32);

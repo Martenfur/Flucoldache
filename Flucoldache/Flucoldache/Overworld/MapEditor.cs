@@ -775,19 +775,19 @@ namespace Flucoldache.Overworld
 				DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
 			}
 			
-			if (Input.KeyboardCheck(GameplayController.KeyUp))
+			if (Input.KeyboardCheck(Controls.KeyUp))
 			{
 				movement.Y += -1;
 			}
-			if (Input.KeyboardCheck(GameplayController.KeyDown))
+			if (Input.KeyboardCheck(Controls.KeyDown))
 			{
 				movement.Y += 1;
 			}
-			if (Input.KeyboardCheck(GameplayController.KeyLeft))
+			if (Input.KeyboardCheck(Controls.KeyLeft))
 			{
 				movement.X += -1;
 			}
-			if (Input.KeyboardCheck(GameplayController.KeyRight))
+			if (Input.KeyboardCheck(Controls.KeyRight))
 			{
 				movement.X += 1;
 			}
