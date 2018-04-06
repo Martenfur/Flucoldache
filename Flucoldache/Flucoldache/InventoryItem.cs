@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace Flucoldache
 {
-	public enum InventoryItemType
-	{
-		Default,
-		Spendable,
-		Usable
-	}
-
 	public class InventoryItem
 	{
 		public string Token;
@@ -20,7 +13,7 @@ namespace Flucoldache
 		public string Description;
 		public int Stack;
 		public int Amount;
-		public InventoryItemType Type;
+		public bool Spendable;
 
 		public InventoryItem() {}
 
@@ -31,7 +24,7 @@ namespace Flucoldache
 			Description = item.Description;
 			Stack = item.Stack;
 			Amount = item.Amount;
-			Type = item.Type;
+			Spendable = item.Spendable;
 		}
 	}
 }

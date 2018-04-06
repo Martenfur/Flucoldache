@@ -8,34 +8,102 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Flucoldache.Overworld;
 using Flucoldache.Battle;
-
+using System.IO;
 
 namespace Flucoldache
 {
 	public class MainMenu : GameObj
 	{
-		Inventory inv = new Inventory();
-			
+		public string[] Items = {"Новая игра", "Загрузка", "Редактор карт", "Загрузить карту", "Выход"};
+		public int SelectedItem = 0;
+		public Vector2 Pos = new Vector2(0, 24);
+		
 		public MainMenu()
 		{
-			new Arena("test_arena.xml");
-			inv.AddItem("fox", 32);
-			inv.AddItem("testitem", 2);
-			inv.AddItem("testitem", 1);
-		
-			inv.AddPotion("fox", 2);
-			string[] items = {"foxes", "are", "fluffers"};
-
-			//new SelectionMenu("Инвентарь", items, Vector2.One, new Vector2(10, 10));
+			//new Arena("test_arena.xml");
 		}
+
 		public override void Update()
 		{
-			if (Input.KeyboardCheckPress(Keys.E))
+			if (Input.KeyboardCheckPress(Controls.KeyUp))
+			{
+				SelectedItem -= 1;
+			}
+			if (Input.KeyboardCheckPress(Controls.KeyDown))
+			{
+				SelectedItem += 1;
+			}
+
+			// Wrapping cursor.
+			if (SelectedItem < 0)
+			{
+				SelectedItem += Items.Length;
+			}
+			if (SelectedItem >= Items.Length)
+			{
+				SelectedItem -= Items.Length;
+			}
+			// Wrapping cursor.
+
+			if (Input.KeyboardCheckPress(Controls.KeyA))
+			{
+				ItemActivate();
+			}
+		}
+
+		public override void Draw()
+		{
+			
+			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.BackgroundColor = Color.Black;
+
+			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
+			string itemStr;
+			for(var i = 0; i < Items.Length; i += 1)
+			{
+				if (i == SelectedItem)
+				{
+					itemStr = "> " + Items[i];
+				}
+				else
+				{
+					itemStr = Items[i];
+				}
+				GameConsole.DrawText(itemStr, Pos + Vector2.UnitY * i);
+			}
+			DrawCntrl.ResetTransformMatrix();
+		}
+
+		void ItemActivate()
+		{
+			// New game.
+			if (SelectedItem == 0)
+			{
+				
+			}
+			// New game.
+
+			// Load game.
+			if (SelectedItem == 1)
+			{
+				if (File.Exists(Environment.CurrentDirectory + '/' + GameplayController.SaveDir + "/save.map"))
+				{	
+					GameplayController.LoadGame();
+					Objects.Destroy(this);
+				}
+			}
+			// Load game.
+
+			// Open editor.
+			if (SelectedItem == 2)
 			{
 				new MapEditor();
 				Objects.Destroy(this);
 			}
-			if (Input.KeyboardCheckPress(Keys.L))
+			// Open editor.
+
+			// Load map.
+			if (SelectedItem == 3)
 			{
 				System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
 				dialog.Title = "Save map file";
@@ -44,32 +112,20 @@ namespace Flucoldache
 				if (dialog.FileName != "")
 				{
 					MapEditor.LoadMap(dialog.FileName, false);	
+					Inventory inv = new Inventory();
+					inv.AddPotion("fox", 2);
+
 					Objects.Destroy(this);
 				}
 			}
+			// Load map.
 
-			if (Input.KeyboardCheckPress(Keys.Z))
+			// Exit.
+			if (SelectedItem == 4)
 			{
-				inv.ShowItems();
+				GameCntrl.MyGame.Exit();
 			}
-			if (Input.KeyboardCheckPress(Keys.X))
-			{
-				inv.ShowPotions();
-			}
-			
-			
-
-		}
-
-		public override void Draw()
-		{
-			GameConsole.DrawText("Press E to open editor. Press L to load a map in gameplay mode.", 8, 8);
-
-		}
-
-		public void Test()
-		{
-			Debug.WriteLine("test");
+			// Exit.
 		}
 	}
 }

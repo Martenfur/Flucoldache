@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Monofoxe.Engine;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System.IO;
@@ -23,6 +24,14 @@ namespace Flucoldache.Overworld
 
 		public Player() {}
 
+		Vector2[] _rotation = {Vector2.UnitX, -Vector2.UnitY, -Vector2.UnitX, Vector2.UnitY};
+
+		SelectionMenu _menu;
+		string[] _menuOptions = {"Инвентарь", "Зелья", "Назад"};
+		Vector2 _menuPos = new Vector2(1, 1);
+		Vector2 _menuSize = new Vector2(12, 3);
+
+
 		public Player(Vector2 pos)
 		{
 			Pos = pos;
@@ -31,9 +40,17 @@ namespace Flucoldache.Overworld
 		public override void Update()
 		{
 			Terr = (Terrain)Objects.ObjFind<Terrain>(0);
+			
+			
+
 
 			if (!EditorMode)
 			{				
+
+			if (Controls.KeyCheckPress(Keys.A))
+			{
+				GameplayController.SaveGame();
+			}
 				Vector2 movement = Vector2.Zero;
 
 				// Movement.
@@ -58,9 +75,6 @@ namespace Flucoldache.Overworld
 				}
 				// Movement.
 				
-				if (Controls.KeyCheckPress(Controls.KeyA))
-				{new Dialogue("toast.txt");}
-
 				_movementAlarm.Update();
 				if (movement != Vector2.Zero)
 				{
@@ -75,8 +89,11 @@ namespace Flucoldache.Overworld
 					_movementAlarm.Reset();
 				}
 
+				
 				if (_movementAlarm.Triggered)
 				{
+					TryTriggeringObjects(Pos + movement);
+					
 					if (Terr.GetTile(new Vector2(Pos.X + movement.X, Pos.Y)).IsPassable())
 					{
 						Pos.X += movement.X;
@@ -87,8 +104,42 @@ namespace Flucoldache.Overworld
 						Pos.Y += movement.Y;
 					}
 				}
+
+				if (Controls.KeyCheckPress(Controls.KeyA))
+				{
+					foreach(Vector2 rot in _rotation)
+					{
+						TryTriggeringObjects(Pos + rot);
+					}
+				}
+
+				#region Menu
+				if (Controls.KeyCheckPress(Controls.KeyB))
+				{
+					_menu = new SelectionMenu("Меню", _menuOptions, _menuPos, _menuSize);
+				}
+
+				if (_menu != null && _menu.Activated)
+				{
+					Inventory inv = (Inventory)Objects.ObjFind<Inventory>(0);
+					Objects.Destroy(_menu);
+
+					switch(_menu.SelectedItem)
+					{
+						case 0:	
+						inv.ShowItems();
+						break;
+						case 1:	
+						inv.ShowPotions();
+						break;
+					}
+					_menu = null;
+				}
+				#endregion Menu
 			}
 		}
+
+
 
 		public override void Draw()
 		{
@@ -97,11 +148,19 @@ namespace Flucoldache.Overworld
 			GameConsole.DrawChar(Char, (int)Pos.X, (int)Pos.Y);
 		}
 
-		public override void DrawGUI()
+		void TryTriggeringObjects(Vector2 pos)
 		{
-			
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				if (pos == obj.Pos)
+				{
+					if (obj.TriggerAction())
+					{
+						return;
+					}
+				}
+			}
 		}
-		
 
 	}
 }

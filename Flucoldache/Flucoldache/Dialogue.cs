@@ -22,14 +22,27 @@ namespace Flucoldache
 		string[] _dialogueNames;
 		string[] _dialogueLines;
 
-		public int LineId;
+		public int LineId = 0;
 		
+		StringBuilder _typedText = new StringBuilder();
+		Alarm _typeAlarm = new Alarm();
+		float _typeSpeed = 1f / 20f;
+
+		public Dialogue(string[] dialogueNames, string[] dialogueLines)
+		{
+			Controls.Enabled = false;
+			
+			_dialogueLines = new string[dialogueLines.Length];
+			Array.Copy(dialogueLines, _dialogueLines, dialogueLines.Length);
+			_dialogueNames = new string[dialogueNames.Length];
+			Array.Copy(dialogueNames, _dialogueNames, dialogueNames.Length);
+			
+		}
+
 		public Dialogue(string fileName)
 		{
 			Controls.Enabled = false;
 			
-			LineId = 0;
-
 			// Loading dialogue file.
 			string[] lines = File.ReadAllLines(_rootDir + fileName);
 
@@ -55,12 +68,46 @@ namespace Flucoldache
 		{
 			if (Input.KeyboardCheckPress(Controls.KeyA) || Input.KeyboardCheckPress(Controls.KeyB))
 			{
-				LineId += 1;
-				if (LineId >= _dialogueLines.Length)
+				if (_dialogueLines[LineId].Length != _typedText.ToString().Length)
 				{
-					LineId = _dialogueLines.Length - 1;
-					Controls.Enabled = true;
-					Objects.Destroy(this);
+					_typedText = new StringBuilder(_dialogueLines[LineId]);
+				}
+				else
+				{
+					LineId += 1;
+					_typedText.Clear();
+					if (LineId >= _dialogueLines.Length)
+					{
+						LineId = _dialogueLines.Length - 1;
+						Controls.Enabled = true;
+						Objects.Destroy(this);
+						Input.KeyboardClear();
+					}
+				}
+			}
+
+			if (_dialogueLines[LineId].Length != _typedText.ToString().Length)
+			{
+				_typeAlarm.Update();
+				if (!_typeAlarm.Active)
+				{
+					_typeAlarm.Set(_typeSpeed);
+				}
+				if (_typeAlarm.Triggered)
+				{
+					_typedText.Append(_dialogueLines[LineId].ElementAt(_typedText.Length));
+					if (_dialogueLines[LineId].Length - 1 > _typedText.Length)
+					{
+						char nextCh = _dialogueLines[LineId].ElementAt(_typedText.Length);
+						if (nextCh == ' ')
+						{
+							_typedText.Append(' ');
+						}
+						if (nextCh == Environment.NewLine.ElementAt(0))
+						{
+							_typedText.Append(Environment.NewLine);
+						}
+					}
 				}
 			}
 		}
@@ -69,12 +116,14 @@ namespace Flucoldache
 		{
 			GameConsole.BackgroundColor = Color.Black;
 			GameConsole.ForegroundColor = Color.Gray;
+
+			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 			GameConsole.DrawRectangle(Pos, Size);
 			GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
 			
-			
-			GameConsole.DrawText('╣' + _dialogueNames[LineId] + '╠', Pos + new Vector2(1, -1));
-			GameConsole.DrawText(_dialogueLines[LineId], Pos);
+			GameConsole.DrawText(_dialogueNames[LineId], Pos + new Vector2(1, -1));
+			GameConsole.DrawText(_typedText.ToString(), Pos);
+			DrawCntrl.ResetTransformMatrix();
 		}
 
 

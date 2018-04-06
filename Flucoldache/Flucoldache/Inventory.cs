@@ -19,7 +19,7 @@ namespace Flucoldache
 		/// <summary>
 		/// Contatins samples of each inventory item.
 		/// </summary>
-		Dictionary<string, InventoryItem> _itemPool;
+		public Dictionary<string, InventoryItem> ItemPool;
 
 		Dictionary<string, InventoryItem> Items = new Dictionary<string, InventoryItem>();
 		Dictionary<string, InventoryItem> Potions= new Dictionary<string, InventoryItem>();
@@ -33,12 +33,12 @@ namespace Flucoldache
 
 		public Inventory()
 		{
-			LoadItems();
+			LoadItemPool();
 			_listSize = new Vector2(32, GameConsole.H - Dialogue.Size.Y - 4);
 			_listPos = new Vector2(GameConsole.W - _listSize.X - 1, 1);
 
 			_itemActions.Add("testitem", ItemTestAction);
-			_itemActions.Add("fox", ItemFoxAction);
+			_itemActions.Add("fox", NothingHappenedAction);
 
 		}
 
@@ -52,7 +52,6 @@ namespace Flucoldache
 					if (_currentSelectionMenu.SelectedItem >= _currentInventory.Count)
 					{
 						// Back button.
-						
 						Objects.Destroy(_currentSelectionMenu);
 						_currentSelectionMenu = null;
 						_currentInventory = null;
@@ -64,7 +63,7 @@ namespace Flucoldache
 						InventoryItem item =  _currentInventory.ElementAt(_currentSelectionMenu.SelectedItem).Value;
 						bool invoke = true;
 
-						if (item.Type == InventoryItemType.Spendable)
+						if (item.Spendable)
 						{
 							item.Amount -= 1;
 							
@@ -86,9 +85,6 @@ namespace Flucoldache
 							}
 							
 						}
-
-						
-
 						
 						if (invoke)
 						{
@@ -132,9 +128,9 @@ namespace Flucoldache
 		/// <summary>
 		/// Loads item info from data file.
 		/// </summary>
-		private void LoadItems()
+		private void LoadItemPool()
 		{
-			_itemPool = new Dictionary<string, InventoryItem>();
+			ItemPool = new Dictionary<string, InventoryItem>();
 
 			XmlDocument xml = new XmlDocument();
 			xml.Load(_invItemsFile);
@@ -149,18 +145,7 @@ namespace Flucoldache
 				item.Token = node.SelectSingleNode("token").FirstChild.Value;
 				
 				item.Name = node.SelectSingleNode("name").FirstChild.Value;
-				switch(node.SelectSingleNode("type").FirstChild.Value)
-				{
-					case "default":
-						item.Type = InventoryItemType.Default;
-						break;
-					case "spendable":
-						item.Type = InventoryItemType.Spendable;
-						break;
-					case "usable":
-						item.Type = InventoryItemType.Usable;
-						break;
-				}
+				item.Spendable = (node.SelectSingleNode("type").FirstChild.Value == "spendable");
 
 				item.Stack = Int32.Parse(node.SelectSingleNode("stack").FirstChild.Value);
 				item.Description = node.SelectSingleNode("description").FirstChild.Value.Replace("\t", "");
@@ -169,8 +154,7 @@ namespace Flucoldache
 					item.Description = item.Description.Remove(0, Environment.NewLine.Length);
 				}
 
-				_itemPool.Add(item.Token, item);
-				Debug.WriteLine("Desc:" + item.Description);
+				ItemPool.Add(item.Token, item);
 			}
 		}
 	
@@ -189,7 +173,7 @@ namespace Flucoldache
 
 		private void AddToInventory(Dictionary<string, InventoryItem> inv, string token, int amount)
 		{
-			if (_itemPool.ContainsKey(token))
+			if (ItemPool.ContainsKey(token))
 			{
 				if (inv.ContainsKey(token))
 				{
@@ -197,7 +181,7 @@ namespace Flucoldache
 				}
 				else
 				{
-					InventoryItem item = new InventoryItem(_itemPool[token]);
+					InventoryItem item = new InventoryItem(ItemPool[token]);
 					item.Amount = amount;
 					inv.Add(token, item);
 				}
@@ -211,6 +195,75 @@ namespace Flucoldache
 		}
 
 		
+		/// <summary>
+		/// Saves inventory into the file.
+		/// </summary>
+		/// <param name="path"></param>
+		public void SaveInventory(string path)
+		{
+			XmlDocument xml = new XmlDocument();
+
+			XmlElement root = xml.CreateElement("Inventory");
+			XmlElement itemList = xml.CreateElement("Items");
+			XmlElement potionList = xml.CreateElement("Potions");
+			
+			foreach(KeyValuePair<string, InventoryItem> item in Items)
+			{
+				XmlElement element = xml.CreateElement("item");
+				element.SetAttribute("token", item.Value.Token);
+				element.SetAttribute("amount", item.Value.Amount.ToString());
+				itemList.AppendChild(element);
+			}
+
+			foreach(KeyValuePair<string, InventoryItem> item in Potions)
+			{
+				XmlElement element = xml.CreateElement("item");
+				element.SetAttribute("token", item.Value.Token);
+				element.SetAttribute("amount", item.Value.Amount.ToString());
+				potionList.AppendChild(element);
+			}
+
+
+			root.AppendChild(itemList);
+			root.AppendChild(potionList);
+			xml.AppendChild(root);
+
+			xml.Save(Environment.CurrentDirectory + path + "/Inventory.xml");	
+		}
+
+		public void LoadInventory(string path)
+		{
+			Items.Clear();
+			Potions.Clear();
+
+			XmlDocument xml = new XmlDocument();
+			
+			try
+			{
+				xml.Load(path + "/Inventory.xml");
+			
+				XmlNodeList nodes = xml.DocumentElement.SelectNodes("loot");
+			
+				XmlNode items = xml.DocumentElement.SelectSingleNode("Items");
+			
+				foreach(XmlElement item in items.SelectNodes("item"))
+				{
+					AddItem(item.Attributes["token"].Value, Int32.Parse(item.Attributes["amount"].Value));
+				}
+
+				XmlNode potions = xml.DocumentElement.SelectSingleNode("Potions");
+
+				foreach(XmlElement item in potions.SelectNodes("item"))
+				{
+					AddPotion(item.Attributes["token"].Value, Int32.Parse(item.Attributes["amount"].Value));
+				}
+			}
+			catch(Exception) {}
+		}
+
+
+
+
 
 		public void ShowItems()
 		{
@@ -265,8 +318,18 @@ namespace Flucoldache
 
 		void ItemTestAction(InventoryItem item)
 		{
-			Debug.WriteLine("LE TEST!");
+			string[] names = {"", ""};
+			string[] lines = {"Вы использовали " + item.Name + ".", "В этот раз определённо что-то произошло. Но Вы не уверены, что."};
+			new Dialogue(names, lines);
 		}
+
+		void NothingHappenedAction(InventoryItem item)
+		{
+			string[] names = {"", ""};
+			string[] lines = {"Вы использовали " + item.Name + ".", "Ничего не произошло."};
+			new Dialogue(names, lines);
+		}
+
 
 		#endregion Item actions
 

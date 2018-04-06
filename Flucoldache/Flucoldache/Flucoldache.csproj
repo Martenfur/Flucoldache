@@ -67,6 +67,7 @@
     <Compile Include="InventoryItem.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Overworld\DialogueTrigger.cs" />
+    <Compile Include="Overworld\LootContainer.cs" />
     <Compile Include="Overworld\MapEditor.cs" />
     <Compile Include="Overworld\OverworldObj.cs" />
     <Compile Include="Overworld\Player.cs" />
@@ -157,6 +158,9 @@
     <Content Include="Resources\InventoryItems.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\LootTables\test_loot.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup />

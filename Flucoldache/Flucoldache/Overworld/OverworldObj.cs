@@ -22,5 +22,9 @@ namespace Flucoldache.Overworld
 		/// In editor mode overwold objects should be inactive.
 		/// </summary>
 		public bool EditorMode = false;
+
+		public virtual void ProccessArgument() {}
+
+		public virtual bool TriggerAction() => false;
 	}
 }

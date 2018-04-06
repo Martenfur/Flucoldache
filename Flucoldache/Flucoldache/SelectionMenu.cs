@@ -70,6 +70,8 @@ namespace Flucoldache
 		{
 			GameConsole.ForegroundColor = Color.Gray;
 			GameConsole.BackgroundColor = Color.Black;
+			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
+
 			GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
 			GameConsole.DrawRectangle(Pos, Size);
 			GameConsole.DrawText(Name, Pos - Vector2.UnitY);
@@ -87,6 +89,8 @@ namespace Flucoldache
 				}
 				GameConsole.DrawText(itemStr, Pos + Vector2.UnitY * i);
 			}
+			DrawCntrl.ResetTransformMatrix();
+
 		}
 
 

@@ -4,9 +4,8 @@
 token - System name. Used to identify item in code.
 name - Item name displayed in inventory.
 type - Item type
-  1. default - Cannot be used.
-  2. spendable - Can be used, gets spended with each use.
-  3. usable - Can be used, doesn't get spent.
+  1. spendable - Can be used, gets spended with each use.
+  2. usable - Can be used, doesn't get spent.
 stack - Max stack. Use "inf" if you don't want stacking.
 description - Item description.
 -->
@@ -25,8 +24,8 @@ description - Item description.
 	<item>
 		<token>fox</token>
 		<name>Лиса</name>
-		<type>spendable</type>
-		<stack>2</stack>
+		<type>usable</type>
+		<stack>3</stack>
 		<description>
 			Рыжая лиса.
 			Она жалобно уруркает в ожидании своей участи.

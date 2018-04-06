@@ -12,6 +12,13 @@ namespace Flucoldache
 {
 	public static class GameConsole
 	{
+		#region Colors
+		public static Color White = new Color(255, 253, 240);
+		public static Color Black = new Color(21, 10, 31);
+
+
+		#endregion Colors
+
 		public static Camera Camera;
 
 		/// <summary>

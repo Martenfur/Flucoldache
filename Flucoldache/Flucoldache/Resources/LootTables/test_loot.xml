@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Container name="сундук">
+	<loot token="fox" amount="1"/>
+	<loot token="testitem" amount="2"/>
+</Container>

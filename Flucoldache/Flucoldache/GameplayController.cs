@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Flucoldache.Overworld;
 using Monofoxe.Engine.Drawing;
-
+using System.IO;
 
 namespace Flucoldache
 {
@@ -18,7 +18,8 @@ namespace Flucoldache
 	/// </summary>
 	public class GameplayController : GameObj
 	{
-		
+		public static string SaveDir = "Save";	
+
 		public GameplayController()
 		{
 			GameConsole.Init(Fonts.Font, 96, 32);
@@ -40,6 +41,57 @@ namespace Flucoldache
 		public override void Update()
 		{
 			
+		}
+
+		public static void SaveGame()
+		{
+			
+			string path = "/" + SaveDir;
+			string fullPath = Environment.CurrentDirectory + path;
+
+			if (Directory.Exists(fullPath))
+			{
+				DirectoryInfo di = new DirectoryInfo(fullPath);
+
+				foreach(FileInfo file in di.GetFiles())
+				{
+					file.Delete(); 
+				}
+			}
+			else
+			{
+				Directory.CreateDirectory(fullPath);
+			}
+
+			var i = 0;
+			foreach(LootContainer container in Objects.GetList<LootContainer>())
+			{
+				container.GenerateLootTable(path, i);
+				i += 1;
+			}
+
+			foreach(Terrain terrain in Objects.GetList<Terrain>())
+			{
+				MapEditor.SaveMap(terrain, fullPath + "/save.map");
+				break;
+			}
+
+			foreach(Inventory inventory in Objects.GetList<Inventory>())
+			{
+				inventory.SaveInventory(path);
+			}
+
+		}
+
+		public static void LoadGame()
+		{
+			string path = "/" + SaveDir;
+			string fullPath = Environment.CurrentDirectory + path;
+
+			MapEditor.LoadMap(fullPath + "/save.map", false);
+			Inventory inv = new Inventory();
+
+			inv.LoadInventory(fullPath);
 		}
 
 	}

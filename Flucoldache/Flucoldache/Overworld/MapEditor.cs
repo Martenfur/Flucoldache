@@ -96,8 +96,8 @@ namespace Flucoldache.Overworld
 		Color[][] Palettes = 
 		{
 			new Color[]{Color.Gray, Color.Black},
-			new Color[]{Color.Black, Color.White},
-			new Color[]{Color.White, Color.Green},
+			new Color[]{Color.Black, Color.Gray},
+			new Color[]{Color.White, new Color(175, 93, 35)},
 		};
 
 		int CurrentPalette = 0;
@@ -120,6 +120,7 @@ namespace Flucoldache.Overworld
 		{
 			Type.GetType("Flucoldache.Overworld.Player"),
 			Type.GetType("Flucoldache.Overworld.DialogueTrigger"),
+			Type.GetType("Flucoldache.Overworld.LootContainer"),
 		};
 		int CurrentObjectType = 0;
 
@@ -143,7 +144,7 @@ namespace Flucoldache.Overworld
 			DrawCntrl.Cameras[0].Y = -GameConsole.CharSize.Y;
 
 			ObjSelectMenuSize = new Vector2(24, ObjectTypes.Length);
-
+			Depth = -9000;
 		}
 
 		public override void UpdateBegin()
@@ -202,7 +203,7 @@ namespace Flucoldache.Overworld
 			
 					if (filename != "")
 					{
-						SaveMap(filename);
+						SaveMap(Terrain, filename);
 						MapFileName = filename;
 					}
 				}
@@ -884,17 +885,17 @@ namespace Flucoldache.Overworld
 		}
 
 
-		void SaveMap(string filename)
+		public static void SaveMap(Terrain terrain, string filename)
 		{
 
 			List<byte> bytes = new List<byte>();
 
 			#region Saving terrain
 
-			bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(0)));
-			bytes.AddRange(BitConverter.GetBytes(Terrain.TileMap.GetLength(1)));
+			bytes.AddRange(BitConverter.GetBytes(terrain.TileMap.GetLength(0)));
+			bytes.AddRange(BitConverter.GetBytes(terrain.TileMap.GetLength(1)));
 
-			foreach (Tile tile in Terrain.TileMap)
+			foreach (Tile tile in terrain.TileMap)
 			{
 				bytes.AddRange(BitConverter.GetBytes((int)tile.Type));
 				bytes.AddRange(BitConverter.GetBytes(tile.Char));
@@ -933,8 +934,6 @@ namespace Flucoldache.Overworld
 			#endregion Saving objects
 
 			File.WriteAllBytes(filename, bytes.ToArray());
-
-
 		}
 
 		public static Terrain LoadMap(string fileName, bool editorMode)
@@ -998,6 +997,10 @@ namespace Flucoldache.Overworld
 				obj.Pos = pos;
 				obj.EditorMode = editorMode;
 				obj.Argument = argument;
+				if (!editorMode)
+				{
+					obj.ProccessArgument();
+				}
 			}
 
 			#endregion Loading objects
