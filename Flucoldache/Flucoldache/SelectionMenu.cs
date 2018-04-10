@@ -16,6 +16,7 @@ namespace Flucoldache
 		public Vector2 Pos;
 		public Vector2 Size;
 		public string Name;
+		public bool DisplayBorders = true;
 
 		public SelectionMenu(string name, string[] items, Vector2 pos, Vector2 size)
 		{
@@ -72,9 +73,12 @@ namespace Flucoldache
 			GameConsole.BackgroundColor = Color.Black;
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 
-			GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
-			GameConsole.DrawRectangle(Pos, Size);
-			GameConsole.DrawText(Name, Pos - Vector2.UnitY);
+			if (DisplayBorders)
+			{
+				GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
+				GameConsole.DrawRectangle(Pos, Size);
+				GameConsole.DrawText(Name, Pos - Vector2.UnitY);
+			}
 
 			string itemStr;
 			for(var i = 0; i < Items.Length; i += 1)

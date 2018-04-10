@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Flucoldache
 {
-	class Dialogue : GameObj
+	public class Dialogue : GameObj
 	{
 		
 		static string _rootDir = "Resources/Dialogues/";

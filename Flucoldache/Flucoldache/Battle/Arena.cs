@@ -10,6 +10,7 @@ using Monofoxe.Engine.Drawing;
 using System.Xml;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Flucoldache.Overworld;
 
 namespace Flucoldache.Battle
 {
@@ -25,13 +26,197 @@ namespace Flucoldache.Battle
 		/// </summary>
 		static int _formationH = 5;
 
+		public static Vector2 UnitSpacing = new Vector2(2, 1);
+
+		
+		public List<ArenaObj> Units;
+		public List<ArenaObj> UnitTurnOrderList;
+		public int CurrentUnit = 0;
+
+		Vector2 _center;
+		int _spacing = 8; // Space between player and other units.
+		
+		public Vector2 FormationPos;
+		public Vector2 FormationSize;
+		Vector2 _playerPos;
+		int _formationAlignY;
+
+		bool _win = false;
+		Dialogue _winDialogue;
+		bool _lose = false;
+		Dialogue _loseDialogue;
 
 		public Arena(string fileName)
 		{
+			Depth = 9000;
+
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				obj.Active = false;
+			}
+			foreach(Terrain obj in Objects.GetList<Terrain>())
+			{
+				obj.Active = false;
+			}
+
+
+			_center = new Vector2(GameConsole.W / 2 - 10, (GameConsole.H - Dialogue.Size.Y) / 2);
+			FormationPos = _center + new Vector2(_spacing, 0);
+			_playerPos = _center + new Vector2(-_spacing + 1, 0);
+
 			EnemyTypes = new Dictionary<string, Type>();
-			EnemyTypes.Add("enemy", Type.GetType("Flucoldache.Battle.Enemy"));
+			EnemyTypes.Add("dummy", Type.GetType("Flucoldache.Battle.DummyEnemy"));
 
 			LoadArena(_rootDir + fileName);
+
+			
+			UpdateUnitSpeedList();
+			UnitTurnOrderList[CurrentUnit].Initiative = true;
+		}
+
+		bool _blackscreenActivated = false;
+		float _blackscreenAlpha = 0;
+		float _blackscreenSpeed = 0.3f;
+
+		public override void Update()
+		{
+			base.Update();
+			if (_blackscreenActivated)
+			{
+				_blackscreenAlpha += (float)GameCntrl.Time(_blackscreenSpeed);
+			}
+		}
+
+		public override void UpdateEnd()
+		{
+			Units.RemoveAll(o => o.Destroyed);
+
+			if (_win)
+			{
+				UnitTurnOrderList[CurrentUnit].Initiative = false;
+				if (_winDialogue == null)
+				{
+					_winDialogue = new Dialogue(new string[]{""}, new string[]{"Вы победили!"});
+				}
+				else
+				{
+					if (_winDialogue.Destroyed)
+					{
+						Objects.Destroy(this);
+					}
+				}
+			}
+
+			ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+			
+			if (_lose)
+			{
+				_blackscreenActivated = true;
+				if (_loseDialogue == null)
+				{
+					_loseDialogue = new Dialogue(new string[]{""}, new string[]{"Вы проиграли. :с"});
+				}
+				else
+				{
+					if (_loseDialogue.Destroyed)
+					{
+						Objects.Destroy(this);
+						GameplayController.LoadGame();
+					}
+				}
+			}
+
+		}
+
+		public override void Destroy()
+		{
+			base.Destroy();
+			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			{
+				obj.Active = true;
+			}
+			foreach(Terrain obj in Objects.GetList<Terrain>())
+			{
+				obj.Active = true;
+			}
+
+			foreach(ArenaObj obj in Objects.GetList<ArenaObj>())
+			{
+				Objects.Destroy(obj);
+			}						
+			foreach(Dialogue obj in Objects.GetList<Dialogue>())
+			{
+				Objects.Destroy(obj);
+			}
+		}
+
+		public override void Draw()
+		{
+			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.DrawFrame(Dialogue.Pos - Vector2.One, Dialogue.Size + Vector2.One * 2);
+			GameConsole.DrawRectangle(Dialogue.Pos, Dialogue.Size);
+
+			ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+			Inventory inv = (Inventory)Objects.ObjFind<Inventory>(0);
+
+			if (player != null)
+			{
+				GameConsole.ForegroundColor = Color.Gray;
+				GameConsole.BackgroundColor = Color.Black;
+				
+				GameConsole.DrawText("HP: " + player.Health.ToString().PadLeft(3) + "/" + player.MaxHealth, Dialogue.Pos - Vector2.UnitY * 2);
+
+				GameConsole.ForegroundColor = Color.Red;
+				GameConsole.BackgroundColor = new Color(32, 0, 0);
+				GameConsole.DrawRectangle((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 2, 16, 1);
+				GameConsole.DrawProgressBar((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 2, 16, ((float)player.Health) / ((float)player.MaxHealth));
+				
+			}
+		}
+
+		public override void DrawEnd()
+		{
+			GameConsole.BackgroundColor = new Color(Color.Black, _blackscreenAlpha);
+			GameConsole.DrawRectangle(0, 0, GameConsole.W, GameConsole.H);
+		}
+
+		public void GiveInitiative()
+		{
+			UnitTurnOrderList[CurrentUnit].Initiative = false;
+			if (Units.Count == 1 && Units[0] is ArenaPlayer)
+			{
+				_win = true;
+				return;
+			}
+
+			ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+			if (player.Health <= 0)
+			{
+				_lose = true;
+				return;
+			}
+
+			do
+			{
+				CurrentUnit += 1;
+			}
+			while(CurrentUnit < UnitTurnOrderList.Count && UnitTurnOrderList[CurrentUnit].Destroyed);
+
+			if (CurrentUnit >= UnitTurnOrderList.Count)
+			{
+				// New turn.
+				CurrentUnit = 0;
+				UpdateUnitSpeedList();
+				// New turn.
+			}
+			
+			UnitTurnOrderList[CurrentUnit].ReceiveInitiative();
+		}
+
+		void UpdateUnitSpeedList()
+		{
+			UnitTurnOrderList = Units.OrderByDescending(o => o.Speed).ToList();
 		}
 
 		public void LoadArena(string arenaFile)
@@ -39,61 +224,86 @@ namespace Flucoldache.Battle
 			XmlDocument xml = new XmlDocument();
 			xml.Load(arenaFile);
 			
-			XmlNodeList nodes = xml.DocumentElement.ChildNodes;//xml.DocumentElement.SelectNodes("objects");
+			XmlNodeList nodes = xml.DocumentElement.ChildNodes;
 			
 			foreach(XmlNode node in nodes.Item(0).SelectNodes("object"))
 			{
 				Vector2 pos = new Vector2(Int32.Parse(node.Attributes["x"].Value), Int32.Parse(node.Attributes["y"].Value));
-				//Debug.WriteLine(pos + " " + node.Attributes["classname"].Value);
 			}
-				
-			//nodes = xml.DocumentElement.SelectNodes("enemies");
 			
+			Units = new List<ArenaObj>();
+
 			foreach(XmlNode node in nodes.Item(1).SelectNodes("enemy"))
 			{
-			//	Debug.WriteLine(node.Attributes["type"].Value);
+				ArenaObj enemy = (ArenaObj)Activator.CreateInstance(EnemyTypes[node.Attributes["type"].Value]);
+				Units.Add(enemy);
 			}
 
-			CreateFormation(47);
+
+			int[,] formation = CreateFormation(Units.Count);
+
+			FormationSize = new Vector2(formation.GetLength(0), formation.GetLength(1)) * (UnitSpacing + Vector2.One) - UnitSpacing;
+
+			int enemyId = 0;
+			_formationAlignY = formation.GetLength(1) * ((int)UnitSpacing.Y + 1) / 2 - 1;
+			for(var x = 0; x < formation.GetLength(0); x += 1)
+			{
+				for(var y = 0; y < formation.GetLength(1); y += 1)
+				{
+					if (formation[x, y] == 1)
+					{
+						Units[enemyId].Pos = FormationPos + new Vector2(x, y) * (UnitSpacing + Vector2.One) - new Vector2(0, _formationAlignY);
+						enemyId += 1;
+					}
+				}
+			}
+
+			ArenaPlayer player = new ArenaPlayer();
+			player.Pos = _playerPos;
+
+			Units.Add(player);
+
 		}
 
 		/// <summary>
 		/// Puts enemies into the formation.
 		/// </summary>
 		/// <param name="objCount"></param>
-		public void CreateFormation(int count)
+		public int[,] CreateFormation(int count)
 		{
 			int objCount = count;
 
 			int columnCount = (int)Math.Ceiling(objCount / (float)_formationH);
 			
-			string[] columns = new string[_formationH];
+			int[,] formation = new int[columnCount, _formationH];
 
-			for(var x = 0; x < columnCount - 1; x += 1)
+			for(var x = 1; x < columnCount; x += 1)
 			{
 				for(var y = 0; y < _formationH; y += 1)
 				{
-					columns[y] += 'a';
+					formation[x, y] = 1;
 					objCount -= 1;
 				}	
 			}
 
 			// Last row.
-			Debug.WriteLine(objCount);
+
+			int lastColumn = 0;
+
 			if (objCount % 2 == 0)
 			{
 				int lastColumnCount = objCount / 2 + 1;
 				for(var y = 0; y < _formationH / 2; y += 1)
 				{
-					columns[y * 2 + 1] += 'a';
+					formation[lastColumn, y * 2 + 1] = 1;
 					objCount -= 1;
 				}
 
 				var i = 0;
 				while(objCount > 0)
 				{
-					columns[i * 2] += 'a';
-					columns[(_formationH - 1) - (i * 2)] += 'a';
+					formation[lastColumn, i * 2] = 1;
+					formation[lastColumn, (_formationH - 1) - (i * 2)] = 1;
 					i += 1;
 					objCount -= 2;
 				}
@@ -109,11 +319,11 @@ namespace Flucoldache.Battle
 				var i = 0;
 				while(objCount > 0)
 				{
-					columns[center + i] += 'a';
+					formation[lastColumn, center + i] = 1;
 
 					if (i > 0)
 					{
-						columns[center - i] += 'a';
+						formation[lastColumn, center - i] = 1;
 						objCount -= 1;
 					}
 					
@@ -123,11 +333,17 @@ namespace Flucoldache.Battle
 			}
 			// Last row.
 
-			foreach(string row in columns)
-			{
-				Debug.WriteLine(row);
-			}
+			return formation;
 
+		}
+
+		public bool IsInFormationBounds(Vector2 pos)
+		{
+			return (pos.X >= FormationPos.X 
+				&& pos.Y >= FormationPos.Y - _formationAlignY
+				&& pos.X < FormationPos.X + FormationSize.X
+				&& pos.Y < FormationPos.Y + FormationSize.Y - _formationAlignY
+			);
 		}
 
 	}

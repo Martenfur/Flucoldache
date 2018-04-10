@@ -121,6 +121,8 @@ namespace Flucoldache.Overworld
 			Type.GetType("Flucoldache.Overworld.Player"),
 			Type.GetType("Flucoldache.Overworld.DialogueTrigger"),
 			Type.GetType("Flucoldache.Overworld.LootContainer"),
+			Type.GetType("Flucoldache.Overworld.Bonfire"),
+			Type.GetType("Flucoldache.Overworld.BattleTrigger"),
 		};
 		int CurrentObjectType = 0;
 

@@ -21,6 +21,7 @@ description - Item description.
 			Оно длинное.
 		</description>
 	</item>
+	
 	<item>
 		<token>fox</token>
 		<name>Лиса</name>
@@ -31,4 +32,28 @@ description - Item description.
 			Она жалобно уруркает в ожидании своей участи.
 		</description>
 	</item>
+
+	<item>
+		<token>chicken</token>
+		<name>Жареная курица</name>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Ещё тёплая жаренная курица.
+			Восстанавливает 50 HP.
+		</description>
+	</item>
+
+	<item>
+		<token>cold</token>
+		<name>Зелье простуды</name>
+		<type>spendable</type>
+		<stack>3</stack>
+		<description>
+			Модифицированная простуда.
+			Будучи заражённым, враг будет получать 3-5 урона каждый ход и
+			с вероятностью 20% заразит соседа.
+		</description>
+	</item>
+
 </Items>

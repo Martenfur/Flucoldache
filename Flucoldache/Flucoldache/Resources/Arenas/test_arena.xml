@@ -2,12 +2,17 @@
 
 <Arena music="sometrack.mp3">
   <objects>
-    <object x="0" y="0" classname="classname"/>
-    <object x="32" y="32" classname="classname1"/>
   </objects>
 
   <enemies>
-    <enemy type="evil_guy"/>
-    <enemy type="very_evil_guy"/>
+    <enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
+		<enemy type="dummy"/>
   </enemies>
 </Arena>

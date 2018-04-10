@@ -8,7 +8,6 @@ using Monofoxe.Engine;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
-using System.IO;
 
 namespace Flucoldache.Overworld
 {

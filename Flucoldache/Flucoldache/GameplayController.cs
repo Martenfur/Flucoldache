@@ -13,11 +13,14 @@ using System.IO;
 
 namespace Flucoldache
 {
+
 	/// <summary>
 	/// Main gameplay controller.
 	/// </summary>
 	public class GameplayController : GameObj
 	{
+		public static Random Random = new Random(DateTime.Now.Millisecond);
+	
 		public static string SaveDir = "Save";	
 
 		public GameplayController()
@@ -89,6 +92,12 @@ namespace Flucoldache
 			string fullPath = Environment.CurrentDirectory + path;
 
 			MapEditor.LoadMap(fullPath + "/save.map", false);
+			
+			foreach(Inventory inventory in Objects.GetList<Inventory>())
+			{
+				Objects.Destroy(inventory);
+			}
+
 			Inventory inv = new Inventory();
 
 			inv.LoadInventory(fullPath);

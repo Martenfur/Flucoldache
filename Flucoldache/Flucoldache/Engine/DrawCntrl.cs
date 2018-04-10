@@ -376,7 +376,7 @@ namespace Monofoxe.Engine
 				{
 					Device.ScissorRectangle = _scissorRectangle;
 					
-					Batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
+					Batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, _sampler, null, _rasterizer, null, CurrentTransformMatrix);
 				}
 				_currentPipelineMode = mode;
 				_currentTexture = texture;

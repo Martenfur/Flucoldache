@@ -157,6 +157,7 @@ namespace Monofoxe.Engine
 			if (!_destroyedGameObjects.Contains(obj))
 			{
 				_destroyedGameObjects.Add(obj);
+				obj.Destroyed = true;
 				if (obj.Active)
 				{
 					obj.Destroy();
@@ -168,12 +169,11 @@ namespace Monofoxe.Engine
 		/// <summary>
 		/// Checks if given instance exists.
 		/// </summary>
-		/// <param name="obj">Object to check.</param>
-		public static bool ObjExists(GameObj obj)
+		public static bool ObjExists<T>()
 		{
-			foreach (GameObj obj1 in GameObjects)
+			foreach (GameObj obj in GameObjects)
 			{
-				if (obj == obj1)
+				if (obj is T)
 				{
 					return true;
 				}

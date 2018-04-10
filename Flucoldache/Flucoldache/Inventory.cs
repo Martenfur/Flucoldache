@@ -7,6 +7,7 @@ using Monofoxe.Engine;
 using System.Xml;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Flucoldache.Battle;
 
 namespace Flucoldache
 {
@@ -21,9 +22,13 @@ namespace Flucoldache
 		/// </summary>
 		public Dictionary<string, InventoryItem> ItemPool;
 
-		Dictionary<string, InventoryItem> Items = new Dictionary<string, InventoryItem>();
-		Dictionary<string, InventoryItem> Potions= new Dictionary<string, InventoryItem>();
+		public Dictionary<string, InventoryItem> Items = new Dictionary<string, InventoryItem>();
+		public Dictionary<string, InventoryItem> Potions = new Dictionary<string, InventoryItem>();
 		
+		public int MaxHealth = 100;
+		public int Health = 100;
+		
+
 		SelectionMenu _currentSelectionMenu = null;
 		Dictionary<string, InventoryItem> _currentInventory = null;
 
@@ -39,7 +44,7 @@ namespace Flucoldache
 
 			_itemActions.Add("testitem", ItemTestAction);
 			_itemActions.Add("fox", NothingHappenedAction);
-
+			_itemActions.Add("chicken", UseChicken);
 		}
 
 		
@@ -76,11 +81,22 @@ namespace Flucoldache
 							}
 							else
 							{
-								if (item.Amount < 0)
+								if (Objects.ObjExists<Battle.Arena>())
 								{
-									item.Amount = 0;
+									if (item.Amount < 0)
+									{
+										item.Amount = 0;
+										invoke = false;
+										_currentSelectionMenu.Activated = false;
+									}
+								}
+								else
+								{
+									new Dialogue(new string[]{""}, new string[]{"Вы можете использовать зелья только в бою."});		
 									invoke = false;
-									_currentSelectionMenu.Activated = false;
+									Objects.Destroy(_currentSelectionMenu);
+									_currentSelectionMenu = null;
+									_currentInventory = null;
 								}
 							}
 							
@@ -204,6 +220,7 @@ namespace Flucoldache
 			XmlDocument xml = new XmlDocument();
 
 			XmlElement root = xml.CreateElement("Inventory");
+			root.SetAttribute("health", Health.ToString());
 			XmlElement itemList = xml.CreateElement("Items");
 			XmlElement potionList = xml.CreateElement("Potions");
 			
@@ -243,7 +260,13 @@ namespace Flucoldache
 				xml.Load(path + "/Inventory.xml");
 			
 				XmlNodeList nodes = xml.DocumentElement.SelectNodes("loot");
-			
+				
+				Health = Int32.Parse(xml.DocumentElement.Attributes["health"].Value);
+				if (Health > MaxHealth)
+				{
+					Health = MaxHealth;
+				}
+
 				XmlNode items = xml.DocumentElement.SelectSingleNode("Items");
 			
 				foreach(XmlElement item in items.SelectNodes("item"))
@@ -265,7 +288,7 @@ namespace Flucoldache
 
 
 
-		public void ShowItems()
+		public SelectionMenu ShowItems()
 		{
 			if (_currentSelectionMenu == null)
 			{
@@ -285,9 +308,11 @@ namespace Flucoldache
 				_currentSelectionMenu = new SelectionMenu("Инвентарь", menuItems, _listPos, _listSize);
 				_currentInventory = Items;
 			}
+
+			return _currentSelectionMenu;
 		}
 
-		public void ShowPotions()
+		public SelectionMenu ShowPotions()
 		{
 			if (_currentSelectionMenu == null)
 			{
@@ -305,8 +330,40 @@ namespace Flucoldache
 				_currentSelectionMenu = new SelectionMenu("Зелья", menuItems, _listPos, _listSize);
 				_currentInventory = Potions;
 			}
+
+			return _currentSelectionMenu;
 		}
 
+		void RestoreHealth(int health)
+		{
+			if (Objects.ObjExists<Arena>())
+			{
+				ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+				player.Health += health;
+				if (player.Health > player.MaxHealth)
+				{
+					player.Health = player.MaxHealth;
+				}
+			}
+			else
+			{
+				Health += health;
+				if (Health > MaxHealth)
+				{
+					Health = MaxHealth;
+				}
+			}
+		}
+
+		void PassDialogue(Dialogue dialogue)
+		{
+			ArenaPlayer player= (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+
+			if (player != null)
+			{
+				player.WaitForDialogue(dialogue);
+			}
+		}
 
 		#region Item actions
 
@@ -320,7 +377,8 @@ namespace Flucoldache
 		{
 			string[] names = {"", ""};
 			string[] lines = {"Вы использовали " + item.Name + ".", "В этот раз определённо что-то произошло. Но Вы не уверены, что."};
-			new Dialogue(names, lines);
+			Dialogue dialogue = new Dialogue(names, lines);
+			((ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0)).WaitForDialogue(dialogue);
 		}
 
 		void NothingHappenedAction(InventoryItem item)
@@ -330,6 +388,13 @@ namespace Flucoldache
 			new Dialogue(names, lines);
 		}
 
+		void UseChicken(InventoryItem item)
+		{
+			string[] names = {""};
+			string[] lines = {"Вы съели курицу и почувствовали себя лучше."};
+			PassDialogue(new Dialogue(names, lines));
+			RestoreHealth(50);
+		}
 
 		#endregion Item actions
 

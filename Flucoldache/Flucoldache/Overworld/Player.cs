@@ -24,7 +24,7 @@ namespace Flucoldache.Overworld
 
 		public Player() {}
 
-		Vector2[] _rotation = {Vector2.UnitX, -Vector2.UnitY, -Vector2.UnitX, Vector2.UnitY};
+		public static Vector2[] Rotation = {Vector2.UnitX, -Vector2.UnitY, -Vector2.UnitX, Vector2.UnitY};
 
 		SelectionMenu _menu;
 		string[] _menuOptions = {"Инвентарь", "Зелья", "Назад"};
@@ -47,10 +47,6 @@ namespace Flucoldache.Overworld
 			if (!EditorMode)
 			{				
 
-			if (Controls.KeyCheckPress(Keys.A))
-			{
-				GameplayController.SaveGame();
-			}
 				Vector2 movement = Vector2.Zero;
 
 				// Movement.
@@ -107,7 +103,7 @@ namespace Flucoldache.Overworld
 
 				if (Controls.KeyCheckPress(Controls.KeyA))
 				{
-					foreach(Vector2 rot in _rotation)
+					foreach(Vector2 rot in Rotation)
 					{
 						TryTriggeringObjects(Pos + rot);
 					}

@@ -17,7 +17,12 @@ namespace Monofoxe.Engine
 		/// Depth of Draw event. Objects with the lowest depth draw the last.
 		/// </summary>
 		public int Depth = 0;
-	
+		
+		/// <summary>
+		/// Tells f object was destroyed.
+		/// </summary>
+		public bool Destroyed = false;
+
 		/// <summary>
 		/// If false, Update and Draw events won't be executed.
 		/// </summary>
