@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Arena music="sometrack.mp3">
+  <objects>
+  </objects>
+
+  <enemies>
+    <enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+		<enemy type="villager"/>
+  </enemies>
+</Arena>
