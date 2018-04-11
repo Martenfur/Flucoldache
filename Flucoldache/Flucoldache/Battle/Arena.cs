@@ -48,6 +48,9 @@ namespace Flucoldache.Battle
 
 		public Arena(string fileName)
 		{
+			DrawCntrl.Cameras[0].X = 0;
+			DrawCntrl.Cameras[0].Y = 0;
+
 			Depth = 9000;
 
 			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
@@ -66,6 +69,7 @@ namespace Flucoldache.Battle
 
 			EnemyTypes = new Dictionary<string, Type>();
 			EnemyTypes.Add("dummy", Type.GetType("Flucoldache.Battle.DummyEnemy"));
+			EnemyTypes.Add("villager", Type.GetType("Flucoldache.Battle.Villager"));
 
 			LoadArena(_rootDir + fileName);
 
@@ -208,6 +212,13 @@ namespace Flucoldache.Battle
 				// New turn.
 				CurrentUnit = 0;
 				UpdateUnitSpeedList();
+				foreach(ArenaObj obj in Units)
+				{
+					foreach(StatEffect effect in obj.Effects)
+					{
+						effect.Infect();
+					}
+				}
 				// New turn.
 			}
 			

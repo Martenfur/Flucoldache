@@ -24,7 +24,7 @@ namespace Flucoldache.Overworld
 
 		public override bool TriggerAction()
 		{
-			new Arena(Argument);
+			new ArenaAppearEffect(Argument);
 			Objects.Destroy(this);
 			return true;
 		}

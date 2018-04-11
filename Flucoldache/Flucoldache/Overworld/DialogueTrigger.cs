@@ -20,5 +20,11 @@ namespace Flucoldache.Overworld
 				GameConsole.DrawChar('D', Pos);
 			}
 		}
+
+		public override bool TriggerAction()
+		{
+			new Dialogue(Argument);
+			return true;
+		}
 	}
 }

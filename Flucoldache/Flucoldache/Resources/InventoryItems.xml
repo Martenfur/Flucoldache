@@ -11,31 +11,45 @@ description - Item description.
 -->
 
 <Items>
+
 	<item>
-		<token>testitem</token>
-		<name>Итем</name>
-		<type>spendable</type>
-		<stack>64</stack>
-		<description>
-			Это описание итема.
-			Оно длинное.
-		</description>
-	</item>
-	
-	<item>
-		<token>fox</token>
-		<name>Лиса</name>
+		<token>book</token>
+		<name>Фолиант</name>
+		<name1>Фолиант</name1>
 		<type>usable</type>
-		<stack>3</stack>
+		<stack>1</stack>
 		<description>
-			Рыжая лиса.
-			Она жалобно уруркает в ожидании своей участи.
+			Фолиант "О хворях и их применении". Автор - И. Фон-Нейман.
+			Содержит описания множества способов экстракции и хранения различных болезней.
 		</description>
 	</item>
 
 	<item>
+		<token>lab</token>
+		<name>Переносная лаборатория</name>
+		<name1>Переносную лабораторию</name1>
+		<type>usable</type>
+		<stack>1</stack>
+		<description>
+			Миниатюрная лаборатория со всем необходимым для производства болезней.
+		</description>
+	</item>
+
+	<item>
+		<token>bread</token>
+		<name>Бутерброд с маслом</name>
+		<name1>Бутерброд с маслом</name1>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Восстанавливает 25 HP.
+		</description>
+	</item>
+	
+	<item>
 		<token>chicken</token>
 		<name>Жареная курица</name>
+		<name1>Жареную курицу</name1>
 		<type>spendable</type>
 		<stack>99</stack>
 		<description>
@@ -44,15 +58,54 @@ description - Item description.
 		</description>
 	</item>
 
+	
+	
+	
 	<item>
 		<token>cold</token>
 		<name>Зелье простуды</name>
+		<name1>Зелье простуды</name1>
+		<type>spendable</type>
+		<stack>10</stack>
+		<description>
+			Модифицированная простуда.
+			Будучи заражённым, враг будет получать 15 урона каждый ход и с большой вероятностью заразит
+			соседа.
+		</description>
+	</item>
+
+	<item>
+		<token>weakness</token>
+		<name>Зелье озноба</name>
+		<name1>Зелье озноба</name1>
+		<type>spendable</type>
+		<stack>10</stack>
+		<description>
+			Враги будут чувствовать постоянный озноб и не будут способны нормально атаковать и обороняться.
+			Очень заразно.
+		</description>
+	</item>
+
+	<item>
+		<token>flu</token>
+		<name>Зелье гриппа</name>
+		<name1>Зелье гриппа</name1>
+		<type>spendable</type>
+		<stack>10</stack>
+		<description>
+			Заражённые враги будут чувствовать себя очень плохо и не смогут сражаться.
+		</description>
+	</item>
+
+
+	<item>
+		<token>rabies</token>
+		<name>Зелье бешенства</name>
+		<name1>Зелье бешенства</name1>
 		<type>spendable</type>
 		<stack>3</stack>
 		<description>
-			Модифицированная простуда.
-			Будучи заражённым, враг будет получать 3-5 урона каждый ход и
-			с вероятностью 20% заразит соседа.
+			Враги будут беспорядочно атаковать всё подряд.
 		</description>
 	</item>
 

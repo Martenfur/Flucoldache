@@ -13,8 +13,9 @@ namespace Flucoldache.Battle
 		public DummyEnemy()
 		{
 			Name = "Чучело";
+			Name1 = "Чучело";
 
-			MaxHealth = 100;
+			MaxHealth = 30;
 			Health = MaxHealth;
 			MinAttack = 10;
 			MaxAttack = 20;
@@ -22,30 +23,15 @@ namespace Flucoldache.Battle
 			Speed = 1;
 		}
 
-		Dialogue _dialogue;
-
+		
 
 		public override void Update()
 		{
 			base.Update();
 			
-			if (Initiative)
+			if (Initiative && !Waiting)
 			{
-				if (_dialogue == null)
-				{
-					int dmg = Attack((ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0));
-					
-					_dialogue = new Dialogue(new string[]{""}, new string[]{"Чучело атакует и наносит " + dmg + " урона! О нет! :0"});
-				}
-				else
-				{
-					if (_dialogue.Destroyed)
-					{
-						_dialogue = null;
-						Arena arena = (Arena)Objects.ObjFind<Arena>(0);
-						arena.GiveInitiative();
-					}
-				}
+				PerformBasicAttack();
 			}
 		}
 

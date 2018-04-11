@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Flucoldache.Overworld;
 using Monofoxe.Engine.Drawing;
 using System.IO;
+using Flucoldache.Battle;
 
 namespace Flucoldache
 {
@@ -39,6 +40,9 @@ namespace Flucoldache
 			//new Terrain(96, 32);
 			//new MapEditor();
 			new MainMenu();
+
+			StatEffect.InitStatEffects();
+
 		}
 
 		public override void Update()

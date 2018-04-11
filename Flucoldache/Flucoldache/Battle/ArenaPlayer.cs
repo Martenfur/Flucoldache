@@ -15,14 +15,14 @@ namespace Flucoldache.Battle
 		Dialogue _dialogue;
 
 		
-		enum Modes
+		public enum Modes
 		{
 			Menu,
 			Items,
 			ChoosingEnemy,
 			Acting,
 		}
-		Modes _mode = Modes.Menu;
+		public Modes Mode = Modes.Menu;
 
 		SelectionMenu _menu;
 		string[] _menuItems = {"Атака", "Инвентарь", "Зелья"};
@@ -41,16 +41,19 @@ namespace Flucoldache.Battle
 
 		bool _attacking = false;
 
+		public StatEffect CurrentStatEffect;
+
 		public ArenaPlayer()
 		{
-			Name = "Игрок";
-			
+			Name = "Вы";
+			Name1 = "Вас";
+
 			MaxHealth = 100;
 
 			Health = _inv.Health;
-			MinAttack = 30003;
-			MaxAttack = 50000;
-			Defence = 5;
+			MinAttack = 10;
+			MaxAttack = 20;
+			Defence = 10;
 			Speed = 10;
 
 			ForegroundColor = Color.White;
@@ -62,9 +65,9 @@ namespace Flucoldache.Battle
 
 			_inv.Health = Health;
 
-			if (Initiative)
+			if (Initiative && !Waiting)
 			{
-				if (_mode == Modes.Menu)
+				if (Mode == Modes.Menu)
 				{
 					if (_menu == null)
 					{
@@ -78,19 +81,19 @@ namespace Flucoldache.Battle
 							if (_menu.SelectedItem == 0)
 							{
 								_attacking = true;
-								ChooseEnemiesInit(false);
+								ChooseEnemiesInit();
 							}
 
 							if (_menu.SelectedItem == 1)
 							{
 								_inventoryMenu = _inv.ShowItems();
-								_mode = Modes.Items;
+								Mode = Modes.Items;
 							}
 
 							if (_menu.SelectedItem == 2)
 							{
 								_inventoryMenu = _inv.ShowPotions();
-								_mode = Modes.Items;
+								Mode = Modes.Items;
 							}
 
 							Objects.Destroy(_menu);
@@ -100,30 +103,34 @@ namespace Flucoldache.Battle
 
 				}
 
-				if (_mode == Modes.Items)
+				if (Mode == Modes.Items)
 				{
 					if (_inventoryMenu.Activated && _inventoryMenu.SelectedItem == _inventoryMenu.Items.Length - 1)
 					{
 						_menu = new SelectionMenu("", _menuItems, Dialogue.Pos, Vector2.Zero);
 						_menu.DisplayBorders = false;
-						_mode = Modes.Menu;
+						Mode = Modes.Menu;
 					}
 				}
 
-				if (_mode == Modes.ChoosingEnemy)
+				if (Mode == Modes.ChoosingEnemy)
 				{
 					_chosenEnemy.Selected = true;
 
 					if (Controls.KeyCheckPress(Controls.KeyA))
 					{
 						ChoiceResult = _chosenEnemy;
-						_mode = Modes.Acting;
+						Mode = Modes.Acting;
 					}	
 
 					if (Controls.KeyCheckPress(Controls.KeyB))
 					{
-						Objects.Destroy(_chosenEnemy);
-						_chosenEnemy = (Enemy)Objects.ObjFind<Enemy>(0);
+						Mode = Modes.Menu;
+						if (!_attacking)
+						{
+							_inv.Potions[CurrentStatEffect.Token].Amount += 1;
+						}
+						_attacking = false;
 					}
 
 					Vector2 direction = Vector2.Zero;
@@ -202,7 +209,7 @@ namespace Flucoldache.Battle
 				
 				}
 
-				if (_mode == Modes.Acting)
+				if (Mode == Modes.Acting)
 				{
 					if (_attacking)
 					{
@@ -210,14 +217,24 @@ namespace Flucoldache.Battle
 						{
 							int dmg = Attack(ChoiceResult);
 							_waitingForDialogue = true;
-							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {"Вы бьёте со всей силы и " + ChoiceResult.Name + " получает " + dmg + " урона!"});
+							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {"Вы бьёте со всей силы и " + ChoiceResult.Name.ToLower() + " получает " + dmg + " урона!"});
+						}
+					}
+					else
+					{
+						if (_waitingDialogue == null)
+						{
+							ChoiceResult.AddStatEffect(CurrentStatEffect, 0);
+							_waitingForDialogue = true;
+							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {"Вы бросаете " + CurrentStatEffect.Name.ToLower() + " в " + ChoiceResult.Name1.ToLower() + "."});
+							CurrentStatEffect = null;
 						}
 					}
 				}
 			}
 			else
 			{
-				_mode = Modes.Menu;
+				Mode = Modes.Menu;
 				_attacking = false;
 			}
 
@@ -243,6 +260,14 @@ namespace Flucoldache.Battle
 			base.Draw();
 
 			GameConsole.DrawChar('@', Pos);
+
+			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.BackgroundColor = Color.Black;
+
+			if (Mode == Modes.ChoosingEnemy)
+			{
+				GameConsole.DrawText("Стрелки - смена цели, Z - выбор, X - назад.", Dialogue.Pos);
+			}
 		}
 
 		public void WaitForDialogue(Dialogue dialogue)
@@ -251,15 +276,14 @@ namespace Flucoldache.Battle
 			_waitingDialogue = dialogue;
 		}
 
-		public void ChooseEnemiesInit(bool frontOnly)
+		public void ChooseEnemiesInit()
 		{
 			_choosingEnemy = true;
 			if (_chosenEnemy == null || _chosenEnemy.Destroyed)
 			{
 				_chosenEnemy = (Enemy)Objects.ObjFind<Enemy>(0);
 			}
-			_choosingFrontOnly = frontOnly;
-			_mode = Modes.ChoosingEnemy;
+			Mode = Modes.ChoosingEnemy;
 		}
 
 

@@ -42,9 +42,16 @@ namespace Flucoldache
 			_listSize = new Vector2(32, GameConsole.H - Dialogue.Size.Y - 4);
 			_listPos = new Vector2(GameConsole.W - _listSize.X - 1, 1);
 
-			_itemActions.Add("testitem", ItemTestAction);
-			_itemActions.Add("fox", NothingHappenedAction);
+			_itemActions.Add("book", UseBook);
+			_itemActions.Add("lab", UseLab);
+
 			_itemActions.Add("chicken", UseChicken);
+			_itemActions.Add("bread", UseBread);
+
+			_itemActions.Add("cold", UsePotion);
+			_itemActions.Add("weakness", UsePotion);
+			_itemActions.Add("flu", UsePotion);
+			_itemActions.Add("rabies", UsePotion);
 		}
 
 		
@@ -92,9 +99,9 @@ namespace Flucoldache
 								}
 								else
 								{
-									new Dialogue(new string[]{""}, new string[]{"Вы можете использовать зелья только в бою."});		
-									invoke = false;
 									Objects.Destroy(_currentSelectionMenu);
+									new Dialogue(new string[]{""}, new string[]{"Вы можете использовать зелья только в бою."});		
+									invoke = false;						
 									_currentSelectionMenu = null;
 									_currentInventory = null;
 								}
@@ -120,6 +127,7 @@ namespace Flucoldache
 		{
 			if (_currentSelectionMenu != null)
 			{
+				DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 				GameConsole.BackgroundColor = Color.Black;
 				GameConsole.ForegroundColor = Color.Gray;
 				GameConsole.DrawRectangle(Dialogue.Pos, Dialogue.Size);
@@ -137,6 +145,7 @@ namespace Flucoldache
 				}
 
 				GameConsole.DrawText(desc, Dialogue.Pos);
+				DrawCntrl.ResetTransformMatrix();
 			}
 		}
 
@@ -161,6 +170,7 @@ namespace Flucoldache
 				item.Token = node.SelectSingleNode("token").FirstChild.Value;
 				
 				item.Name = node.SelectSingleNode("name").FirstChild.Value;
+				item.Name1 = node.SelectSingleNode("name1").FirstChild.Value;
 				item.Spendable = (node.SelectSingleNode("type").FirstChild.Value == "spendable");
 
 				item.Stack = Int32.Parse(node.SelectSingleNode("stack").FirstChild.Value);
@@ -285,9 +295,6 @@ namespace Flucoldache
 		}
 
 
-
-
-
 		public SelectionMenu ShowItems()
 		{
 			if (_currentSelectionMenu == null)
@@ -334,11 +341,17 @@ namespace Flucoldache
 			return _currentSelectionMenu;
 		}
 
-		void RestoreHealth(int health)
+		bool RestoreHealth(int health)
 		{
 			if (Objects.ObjExists<Arena>())
 			{
 				ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+
+				if (player.Health == player.MaxHealth)
+				{
+					return false;
+				}
+
 				player.Health += health;
 				if (player.Health > player.MaxHealth)
 				{
@@ -347,12 +360,18 @@ namespace Flucoldache
 			}
 			else
 			{
+				if (Health == MaxHealth)
+				{
+					return false;
+				}
+
 				Health += health;
 				if (Health > MaxHealth)
 				{
 					Health = MaxHealth;
 				}
 			}
+			return true;
 		}
 
 		void PassDialogue(Dialogue dialogue)
@@ -366,35 +385,69 @@ namespace Flucoldache
 		}
 
 		#region Item actions
-
-		void ItemFoxAction(InventoryItem item)
-		{
-			Debug.WriteLine("Welp. Got a " + item.Token);
-			//ShowPotions();
-		}
-
-		void ItemTestAction(InventoryItem item)
-		{
-			string[] names = {"", ""};
-			string[] lines = {"Вы использовали " + item.Name + ".", "В этот раз определённо что-то произошло. Но Вы не уверены, что."};
-			Dialogue dialogue = new Dialogue(names, lines);
-			((ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0)).WaitForDialogue(dialogue);
-		}
-
+		
 		void NothingHappenedAction(InventoryItem item)
 		{
 			string[] names = {"", ""};
-			string[] lines = {"Вы использовали " + item.Name + ".", "Ничего не произошло."};
-			new Dialogue(names, lines);
+			string[] lines = {"Вы использовали " + item.Name1.ToLower() + ".", "Ничего не произошло."};
+			PassDialogue(new Dialogue(names, lines));
 		}
+
+		void UseBook(InventoryItem item)
+		{
+			string[] names = {""};
+			string[] lines = {"Сейчас не время читать. Возможно, позднее."};
+			PassDialogue(new Dialogue(names, lines));
+		}
+
+		void UseLab(InventoryItem item)
+		{
+			string[] names = {""};
+			string[] lines = {"Для лаборатории необходим огонь. Вы не можете использовать её прямо здесь."};
+			PassDialogue(new Dialogue(names, lines));
+		}
+
+		#region Food
 
 		void UseChicken(InventoryItem item)
 		{
-			string[] names = {""};
-			string[] lines = {"Вы съели курицу и почувствовали себя лучше."};
-			PassDialogue(new Dialogue(names, lines));
-			RestoreHealth(50);
+			UseFood(item, 50);
 		}
+
+		void UseBread(InventoryItem item)
+		{
+			UseFood(item, 25);
+		}
+
+		void UseFood(InventoryItem item, int health)
+		{
+			string[] lines;
+
+			string[] names = {""};
+
+			if (RestoreHealth(health))
+			{	
+				lines = new string[]{"Вы съели " + item.Name1.ToLower() + " и почувствовали себя лучше."};
+			}
+			else
+			{
+				lines = new string[]{"Вы чувствуете себя достаточно хорошо, так что решили приберечь " + item.Name1.ToLower() + " на потом."};
+				item.Amount += 1;
+			}
+			PassDialogue(new Dialogue(names, lines));
+		}
+
+		#endregion Food
+
+
+		void UsePotion(InventoryItem item)
+		{
+			ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
+
+			player.ChooseEnemiesInit();
+			player.CurrentStatEffect = StatEffect.Effects[item.Token];
+		}
+
 
 		#endregion Item actions
 

@@ -67,7 +67,7 @@ namespace Flucoldache
 
 
 
-		public override void DrawEnd()
+		public override void Draw()
 		{
 			GameConsole.ForegroundColor = Color.Gray;
 			GameConsole.BackgroundColor = Color.Black;

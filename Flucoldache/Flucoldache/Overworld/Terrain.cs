@@ -14,6 +14,9 @@ namespace Flucoldache.Overworld
 	/// </summary>
 	public class Terrain : GameObj
 	{
+		public static int VerCamBorder = 15;
+		public static int HorCamBorder = 45;
+
 		public Tile[,] TileMap;
 		
 		public bool DisplaySolids = false;
@@ -49,7 +52,7 @@ namespace Flucoldache.Overworld
 
 			if (DisplaySolids)
 			{
-				DrawCntrl.CurrentColor = new Color(Color.Red, 0.1f);
+				DrawCntrl.CurrentColor = Color.Red;
 				for(var x = startX; x < Math.Min(startX + GameConsole.W, TileMap.GetLength(0)); x += 1)
 				{
 					for(var y = startY; y < Math.Min(startY + GameConsole.H, TileMap.GetLength(1)); y += 1)

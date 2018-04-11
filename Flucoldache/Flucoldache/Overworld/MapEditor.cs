@@ -98,6 +98,7 @@ namespace Flucoldache.Overworld
 			new Color[]{Color.Gray, Color.Black},
 			new Color[]{Color.Black, Color.Gray},
 			new Color[]{Color.White, new Color(175, 93, 35)},
+			new Color[]{Color.White, Color.Black},
 		};
 
 		int CurrentPalette = 0;
@@ -120,9 +121,14 @@ namespace Flucoldache.Overworld
 		{
 			Type.GetType("Flucoldache.Overworld.Player"),
 			Type.GetType("Flucoldache.Overworld.DialogueTrigger"),
+			Type.GetType("Flucoldache.Overworld.InstantDialogueTrigger"),
 			Type.GetType("Flucoldache.Overworld.LootContainer"),
+			Type.GetType("Flucoldache.Overworld.NextLevelTrigger"),
 			Type.GetType("Flucoldache.Overworld.Bonfire"),
 			Type.GetType("Flucoldache.Overworld.BattleTrigger"),
+			Type.GetType("Flucoldache.Overworld.StartLoot"),
+			Type.GetType("Flucoldache.Overworld.GateTrigger"),
+			Type.GetType("Flucoldache.Overworld.Crowd"),
 		};
 		int CurrentObjectType = 0;
 
