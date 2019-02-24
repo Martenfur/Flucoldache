@@ -58,9 +58,23 @@ description - Item description.
 		</description>
 	</item>
 
-	
-	
-	
+	<item>
+		<token>kingfood</token>
+		<name>Королевский ужин</name>
+		<name1>Королевский ужин</name1>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Рисовая каша, жареная курица, крылышки куропатки, грибной суп, свиной стейк с кровью, три 
+			литра борща, картофель в мундире, трижды прожаренная сельдь в пяти шубах, грибные горшочки, 
+			голубцы из настоящих голубей, хлебные палочки в шоколаде, торт "Наполеон", пятьдесят четыре
+			ванильные креветки, желатиновые мешочки и наливное яблочко.
+			Восстанавливает 100 HP.
+		</description>
+	</item>
+
+
+
 	<item>
 		<token>cold</token>
 		<name>Зелье простуды</name>
@@ -79,10 +93,10 @@ description - Item description.
 		<name>Зелье озноба</name>
 		<name1>Зелье озноба</name1>
 		<type>spendable</type>
-		<stack>10</stack>
+		<stack>8</stack>
 		<description>
-			Враги будут чувствовать постоянный озноб и не будут способны нормально атаковать и обороняться.
-			Очень заразно.
+			Враги будут чувствовать постоянный озноб и не будут способны нормально атаковать и 
+			обороняться.
 		</description>
 	</item>
 
@@ -91,7 +105,7 @@ description - Item description.
 		<name>Зелье гриппа</name>
 		<name1>Зелье гриппа</name1>
 		<type>spendable</type>
-		<stack>10</stack>
+		<stack>6</stack>
 		<description>
 			Заражённые враги будут чувствовать себя очень плохо и не смогут сражаться.
 		</description>

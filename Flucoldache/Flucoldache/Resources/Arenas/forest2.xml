@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Arena music="sometrack.mp3">
+	<objects>
+	</objects>
+	
+	<enemies>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="bear"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+		<enemy type="wolf"/>
+	</enemies>
+</Arena>

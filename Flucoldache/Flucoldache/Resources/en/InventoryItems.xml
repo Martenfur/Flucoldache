@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+token - System name. Used to identify item in code.
+name - Item name displayed in inventory.
+type - Item type
+  1. spendable - Can be used, gets spended with each use.
+  2. usable - Can be used, doesn't get spent.
+stack - Max stack. Use "inf" if you don't want stacking.
+description - Item description.
+-->
+
+<Items>
+
+	<item>
+		<token>book</token>
+		<name>Folio</name>
+		<name1>Folio</name1>
+		<type>usable</type>
+		<stack>1</stack>
+		<description>
+			Folio "Of illnesses and their use". Author - I. Von Neiman.
+			Describes methods of extraction and storage of various diseases.
+		</description>
+	</item>
+
+	<item>
+		<token>lab</token>
+		<name>Portable laboratory</name>
+		<name1>Portable laboratory</name1>
+		<type>usable</type>
+		<stack>1</stack>
+		<description>
+			Miniature laboratory with everything needed to brew potions.
+		</description>
+	</item>
+
+	<item>
+		<token>bread</token>
+		<name>Butter sandwich</name>
+		<name1>Butter sandwich</name1>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Restores 25 HP.
+		</description>
+	</item>
+
+	<item>
+		<token>chicken</token>
+		<name>Baked chicken</name>
+		<name1>Baked chicken</name1>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Baked chicken. Still warm.
+			Restores 50 HP.
+		</description>
+	</item>
+
+	<item>
+		<token>kingfood</token>
+		<name>Royal dinner</name>
+		<name1>Royal dinner</name1>
+		<type>spendable</type>
+		<stack>99</stack>
+		<description>
+			Rice, baked chicken, partridge wings, muchroom soup, blood steak, three liters of
+			borsch, jacket potatoes, triple-fried herring in five coats, mushroom potties,
+			cabbage rolls with real cabbages, chocolate-covered breadsticks, cake "Napoleon",
+			fifty four vanilla shrimps, jello pockets and nice apple.
+			Restores 100 HP.
+		</description>
+	</item>
+
+
+
+	<item>
+		<token>cold</token>
+		<name>Potion of cold</name>
+		<name1>Potion of cold</name1>
+		<type>spendable</type>
+		<stack>10</stack>
+		<description>
+			Modified common cold.
+			Infected enemy will receive 15 damage each turn and with high change will infect
+			neighbouring enemies.
+		</description>
+	</item>
+
+	<item>
+		<token>weakness</token>
+		<name>Potion of chills</name>
+		<name1>Potion of chills</name1>
+		<type>spendable</type>
+		<stack>8</stack>
+		<description>
+			Enemies will feel constant chills and won't be able to attack and defend as
+			effectively.
+		</description>
+	</item>
+
+	<item>
+		<token>flu</token>
+		<name>Potion of flu</name>
+		<name1>Potion of flu</name1>
+		<type>spendable</type>
+		<stack>6</stack>
+		<description>
+			Infected enemies will feel very sick and won't be able to fight.
+		</description>
+	</item>
+
+
+	<item>
+		<token>rabies</token>
+		<name>Potion of rabies</name>
+		<name1>Potion of rabies</name1>
+		<type>spendable</type>
+		<stack>3</stack>
+		<description>
+			Infected enemies will be attacking everything in sight.
+		</description>
+	</item>
+
+</Items>

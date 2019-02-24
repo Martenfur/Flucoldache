@@ -1,0 +1,48 @@
+﻿Flucoldache
+New game
+Load
+Map editor
+Load map
+Exit
+Arrows \ Z \ X
+gn Fur - Hellroom Jam #9
+Music by Brodux 
+Menu
+Inventory
+Potions
+Back
+Go back.
+You used {0}. Nothing happened.
+It's not the best time to read.
+You can use potions only in battle.
+You ate {0} and felt better.
+You feel healthy enough, so you've decided to keep {0} for later.
+The laboratory needs fire. You can't use it right here.
+You pulled the lever and the gates opened with a loud screech.
+You've rested near the bonfire and refilled your potions.
+After reading the folio you've learned how to brew {0}.
+Game saved.
+You've opened {0}.
+Inside were: 
+You've opened {0}, but there was nothing inside.
+Arrows - change target, Z - select, X - back.
+Attack
+You
+You
+You strike as hard as you can and {0} receives {1} damage!
+You throw {0} into {1}.
+You won!
+You were defeated.
+{0} doesn't feel good and skips their turn.
+Rabid {0} attacks {1} and deals {2} damage.
+{0} attacks and deals {1} damage.
+Bear
+Bear
+Knight
+Knight
+Exuberant rabbit
+Exuberant rabbit
+Villager
+Villager
+Wolf
+Wolf

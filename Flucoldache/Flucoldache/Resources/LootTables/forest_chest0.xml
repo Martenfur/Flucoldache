@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Container name="cундук">
+	<loot token="chicken" amount="10"/>
+	<loot token="kingfood" amount="1"/>
+</Container>

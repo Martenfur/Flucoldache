@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Arena music="sometrack.mp3">
+	<objects>
+	</objects>
+	
+	<enemies>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+		<enemy type="rabbit"/>
+	</enemies>
+</Arena>
