@@ -61,6 +61,10 @@
     <Compile Include="Battle\ArenaAppearEffect.cs" />
     <Compile Include="Battle\ArenaObj.cs" />
     <Compile Include="Battle\ArenaPlayer.cs" />
+    <Compile Include="Battle\Bear.cs" />
+    <Compile Include="Battle\Knight.cs" />
+    <Compile Include="Battle\Rabbit.cs" />
+    <Compile Include="Battle\Wolf.cs" />
     <Compile Include="Battle\Villager.cs" />
     <Compile Include="Battle\DummyEnemy.cs" />
     <Compile Include="Battle\Enemy.cs" />
@@ -89,6 +93,8 @@
     <Compile Include="MainMenu.cs" />
     <Compile Include="Overworld\BattleTrigger.cs" />
     <Compile Include="Overworld\Bonfire.cs" />
+    <Compile Include="Overworld\CameraRestrictor.cs" />
+    <Compile Include="Overworld\Army.cs" />
     <Compile Include="Overworld\Crowd.cs" />
     <Compile Include="Overworld\DialogueTrigger.cs" />
     <Compile Include="Overworld\GateTrigger.cs" />
@@ -98,6 +104,9 @@
     <Compile Include="Overworld\NextLevelTrigger.cs" />
     <Compile Include="Overworld\OverworldObj.cs" />
     <Compile Include="Overworld\Player.cs" />
+    <Compile Include="Overworld\RandomEncounterDisabler.cs" />
+    <Compile Include="Overworld\RandomEncounterEnabler.cs" />
+    <Compile Include="Overworld\Endgame.cs" />
     <Compile Include="Overworld\StartLoot.cs" />
     <Compile Include="Overworld\Terrain.cs" />
     <Compile Include="Overworld\Tile.cs" />
@@ -109,6 +118,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SelectionMenu.cs" />
+    <Compile Include="Strings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -174,6 +184,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\Maps\final.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Maps\forest.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Maps\mansion_outside.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -192,14 +208,42 @@
     <Content Include="Content\Atlasses\texture_0.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Arenas\final.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Arenas\forest3.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Arenas\forest2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Arenas\forest1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Arenas\forest0.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Arenas\arena_template.xml" />
+    <Content Include="Resources\Arenas\forest_pool1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Arenas\forest_pool0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Arenas\mansion_crowd.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Arenas\test_arena.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Dialogues\final.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Dialogues\intro.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Dialogues\knights.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Dialogues\mansion_crowd.txt">
@@ -208,17 +252,33 @@
     <Content Include="Resources\Dialogues\master_go.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\InventoryItems.xml">
+    <Content Include="Resources\en\InventoryItems.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Strings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\InventoryItems.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Resources\LootTables\forest_chest1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\LootTables\mansion_outside_bonus.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\LootTables\forest_chest0.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\LootTables\mansion_room1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\LootTables\test_loot.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\en\Strings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

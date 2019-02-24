@@ -70,6 +70,10 @@ namespace Flucoldache.Battle
 			EnemyTypes = new Dictionary<string, Type>();
 			EnemyTypes.Add("dummy", Type.GetType("Flucoldache.Battle.DummyEnemy"));
 			EnemyTypes.Add("villager", Type.GetType("Flucoldache.Battle.Villager"));
+			EnemyTypes.Add("wolf", Type.GetType("Flucoldache.Battle.Wolf"));
+			EnemyTypes.Add("bear", Type.GetType("Flucoldache.Battle.Bear"));
+			EnemyTypes.Add("rabbit", Type.GetType("Flucoldache.Battle.Rabbit"));
+			EnemyTypes.Add("knight", Type.GetType("Flucoldache.Battle.Knight"));
 
 			LoadArena(_rootDir + fileName);
 
@@ -89,6 +93,11 @@ namespace Flucoldache.Battle
 			{
 				_blackscreenAlpha += (float)GameCntrl.Time(_blackscreenSpeed);
 			}
+
+			if (Objects.GetList<Dialogue>().Count == 0 && Units.Count == 1 && Units[0] is ArenaPlayer)
+			{
+				_win = true;
+			}
 		}
 
 		public override void UpdateEnd()
@@ -100,7 +109,7 @@ namespace Flucoldache.Battle
 				UnitTurnOrderList[CurrentUnit].Initiative = false;
 				if (_winDialogue == null)
 				{
-					_winDialogue = new Dialogue(new string[]{""}, new string[]{"Вы победили!"});
+					_winDialogue = new Dialogue(new string[]{""}, new string[]{Strings.BattleWin});
 				}
 				else
 				{
@@ -118,7 +127,7 @@ namespace Flucoldache.Battle
 				_blackscreenActivated = true;
 				if (_loseDialogue == null)
 				{
-					_loseDialogue = new Dialogue(new string[]{""}, new string[]{"Вы проиграли. :с"});
+					_loseDialogue = new Dialogue(new string[]{""}, new string[]{Strings.BattleDefeat});
 				}
 				else
 				{

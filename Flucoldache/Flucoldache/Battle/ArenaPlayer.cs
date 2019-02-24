@@ -11,7 +11,6 @@ namespace Flucoldache.Battle
 {
 	public class ArenaPlayer : ArenaObj
 	{
-
 		Dialogue _dialogue;
 
 		
@@ -25,7 +24,7 @@ namespace Flucoldache.Battle
 		public Modes Mode = Modes.Menu;
 
 		SelectionMenu _menu;
-		string[] _menuItems = {"Атака", "Инвентарь", "Зелья"};
+		string[] _menuItems;
 
 		Inventory _inv = (Inventory)Objects.ObjFind<Inventory>(0);
 
@@ -45,8 +44,15 @@ namespace Flucoldache.Battle
 
 		public ArenaPlayer()
 		{
-			Name = "Вы";
-			Name1 = "Вас";
+			Name = Strings.PlayerName1;
+			Name1 = Strings.PlayerName2;
+
+			_menuItems = new string[]
+			{
+				Strings.Attack,
+				Strings.Inventory,
+				Strings.Potions
+			};
 
 			MaxHealth = 100;
 
@@ -217,16 +223,22 @@ namespace Flucoldache.Battle
 						{
 							int dmg = Attack(ChoiceResult);
 							_waitingForDialogue = true;
-							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {"Вы бьёте со всей силы и " + ChoiceResult.Name.ToLower() + " получает " + dmg + " урона!"});
+							var dialogueString = Strings.PlayerAttackDialogue
+								.Replace("{0}", ChoiceResult.Name.ToLower())
+								.Replace("{1}", dmg.ToString());
+							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {dialogueString});
 						}
 					}
 					else
 					{
-						if (_waitingDialogue == null)
+						if (_waitingDialogue == null && CurrentStatEffect != null)
 						{
 							ChoiceResult.AddStatEffect(CurrentStatEffect, 0);
 							_waitingForDialogue = true;
-							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {"Вы бросаете " + CurrentStatEffect.Name.ToLower() + " в " + ChoiceResult.Name1.ToLower() + "."});
+							var dialogueString = Strings.PlayerPotionDialogue
+								.Replace("{0}", CurrentStatEffect.Name.ToLower())
+								.Replace("{1}", ChoiceResult.Name1.ToLower());
+							_waitingDialogue = new Dialogue(new string[]{""}, new string[] {dialogueString});
 							CurrentStatEffect = null;
 						}
 					}
@@ -266,7 +278,7 @@ namespace Flucoldache.Battle
 
 			if (Mode == Modes.ChoosingEnemy)
 			{
-				GameConsole.DrawText("Стрелки - смена цели, Z - выбор, X - назад.", Dialogue.Pos);
+				GameConsole.DrawText(Strings.BattleTip, Dialogue.Pos);
 			}
 		}
 

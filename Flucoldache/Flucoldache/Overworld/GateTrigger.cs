@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using Monofoxe.Engine;
-using Microsoft.Xna.Framework;
 
 namespace Flucoldache.Overworld
 {
@@ -22,7 +21,7 @@ namespace Flucoldache.Overworld
 
 		public override bool TriggerAction()
 		{
-			new Dialogue(new string[]{""}, new string[]{"Вы повернули рычаг, и ворота со скрежетом открылись."});
+			new Dialogue(new string[]{""}, new string[]{Strings.OpenGateLine});
 			Terrain terr = (Terrain)Objects.ObjFind<Terrain>(0);
 			for(var x = 1; x <= 4; x += 1)
 			{

@@ -134,7 +134,7 @@ namespace Flucoldache.Battle
 
 			effect = new StatEffect();
 			effect.Token = "cold";
-			effect.Name = "Зелье простуды";
+			effect.Name = Inventory.ItemPool[effect.Token].Name;//"Зелье простуды";
 			effect.PoisonBuff = 15;
 			effect.Duration = 3;
 			effect.Color = Color.YellowGreen;
@@ -145,7 +145,7 @@ namespace Flucoldache.Battle
 
 			effect = new StatEffect();
 			effect.Token = "weakness";
-			effect.Name = "Зелье озноба";
+			effect.Name = Inventory.ItemPool[effect.Token].Name;
 			effect.Duration = 3;
 			effect.DefenceBuff = -10;
 			effect.AttackBuff = -10;
@@ -157,7 +157,7 @@ namespace Flucoldache.Battle
 
 			effect = new StatEffect();
 			effect.Token = "flu";
-			effect.Name = "Зелье гриппа";
+			effect.Name = Inventory.ItemPool[effect.Token].Name;
 			effect.Duration = 3;
 			effect.AttackBuff = -3;
 			effect.Color = Color.Yellow;
@@ -169,7 +169,7 @@ namespace Flucoldache.Battle
 
 			effect = new StatEffect();
 			effect.Token = "rabies";
-			effect.Name = "Зелье бешенства";
+			effect.Name = Inventory.ItemPool[effect.Token].Name;
 			effect.Duration = 3;
 			effect.AttackBuff = 10;
 			effect.Color = Color.Red;

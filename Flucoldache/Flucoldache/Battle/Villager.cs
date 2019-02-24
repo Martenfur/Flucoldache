@@ -12,13 +12,13 @@ namespace Flucoldache.Battle
 	{
 		public Villager()
 		{
-			Name = "Мужик";
-			Name1 = "Мужика";
+			Name = Strings.VillagerName1;
+			Name1 = Strings.VillagerName2;
 
 			MaxHealth = 30;
 			Health = MaxHealth;
 			MinAttack = 10;
-			MaxAttack = 20;
+			MaxAttack = 15;
 			Defence = 0;
 			Speed = 1;
 			ForegroundColor = Color.White;

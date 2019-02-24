@@ -75,11 +75,7 @@ namespace Monofoxe
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-			//if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-			//{
-		//		Exit();
-		//	}
-
+		
 			GameCntrl.Update(gameTime);
 			
 			base.Update(gameTime);

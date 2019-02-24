@@ -41,6 +41,7 @@ namespace Flucoldache
 			//new MapEditor();
 			new MainMenu();
 
+			Inventory.LoadItemPool();
 			StatEffect.InitStatEffects();
 
 		}

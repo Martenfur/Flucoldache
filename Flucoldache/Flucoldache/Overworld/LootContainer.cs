@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Flucoldache;
-using Monofoxe.Engine;
 using System.Xml;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
+using Monofoxe.Engine;
 
 namespace Flucoldache.Overworld
 {
@@ -95,7 +90,7 @@ namespace Flucoldache.Overworld
 			{
 				for(var i = 0; i < _loot.Length; i += 1)
 				{
-					lootStr.Append(inv.ItemPool[_loot[i]].Name);
+					lootStr.Append(Inventory.ItemPool[_loot[i]].Name);
 					if (_lootAmount[i] > 1)
 					{
 						lootStr.Append(" x" + _lootAmount[i]);
@@ -107,12 +102,12 @@ namespace Flucoldache.Overworld
 					inv.AddItem(_loot[i], _lootAmount[i]);
 				}
 				lootStr.Append(".");
-				lines[0] = "Вы открыли " + _name + "." + Environment.NewLine + "Внутри оказались: " + lootStr;
+				lines[0] = (Strings.OpenChestLine1 + Environment.NewLine + Strings.OpenChestLine2).Replace("{0}", _name) + lootStr;
 				_loot = null;
 			}
 			else
 			{
-				lines[0] = "Вы открыли " + _name + ", но внутри ничего не было.";
+				lines[0] = Strings.OpenEmptyChestLine.Replace("{0}", _name);
 			}
 
 			new Dialogue(new string[]{""}, lines);

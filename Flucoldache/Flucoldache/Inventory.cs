@@ -13,14 +13,14 @@ namespace Flucoldache
 {
 	public class Inventory : GameObj
 	{
-		string _invItemsFile = "Resources/InventoryItems.xml";
+		static string _invItemsFile;
 		Vector2 _listSize;
 		Vector2 _listPos;
 		
 		/// <summary>
 		/// Contatins samples of each inventory item.
 		/// </summary>
-		public Dictionary<string, InventoryItem> ItemPool;
+		public static Dictionary<string, InventoryItem> ItemPool;
 
 		public Dictionary<string, InventoryItem> Items = new Dictionary<string, InventoryItem>();
 		public Dictionary<string, InventoryItem> Potions = new Dictionary<string, InventoryItem>();
@@ -38,6 +38,7 @@ namespace Flucoldache
 
 		public Inventory()
 		{
+			
 			LoadItemPool();
 			_listSize = new Vector2(32, GameConsole.H - Dialogue.Size.Y - 4);
 			_listPos = new Vector2(GameConsole.W - _listSize.X - 1, 1);
@@ -47,6 +48,8 @@ namespace Flucoldache
 
 			_itemActions.Add("chicken", UseChicken);
 			_itemActions.Add("bread", UseBread);
+			_itemActions.Add("kingfood", UseKingfood);
+
 
 			_itemActions.Add("cold", UsePotion);
 			_itemActions.Add("weakness", UsePotion);
@@ -100,7 +103,7 @@ namespace Flucoldache
 								else
 								{
 									Objects.Destroy(_currentSelectionMenu);
-									new Dialogue(new string[]{""}, new string[]{"Вы можете использовать зелья только в бою."});		
+									new Dialogue(new string[]{""}, new string[]{Strings.CantUsePotionsNow});		
 									invoke = false;						
 									_currentSelectionMenu = null;
 									_currentInventory = null;
@@ -137,7 +140,7 @@ namespace Flucoldache
 
 				if (_currentSelectionMenu.SelectedItem >= _currentInventory.Count)
 				{
-					desc = "Вернуться назад.";
+					desc = Strings.BackTip;
 				}
 				else
 				{
@@ -153,8 +156,10 @@ namespace Flucoldache
 		/// <summary>
 		/// Loads item info from data file.
 		/// </summary>
-		private void LoadItemPool()
+		public static void LoadItemPool()
 		{
+			_invItemsFile = "Resources/" + Strings.Localization + "/InventoryItems.xml";
+
 			ItemPool = new Dictionary<string, InventoryItem>();
 
 			XmlDocument xml = new XmlDocument();
@@ -174,7 +179,9 @@ namespace Flucoldache
 				item.Spendable = (node.SelectSingleNode("type").FirstChild.Value == "spendable");
 
 				item.Stack = Int32.Parse(node.SelectSingleNode("stack").FirstChild.Value);
+
 				item.Description = node.SelectSingleNode("description").FirstChild.Value.Replace("\t", "");
+				
 				if (item.Description.StartsWith(Environment.NewLine))
 				{
 					item.Description = item.Description.Remove(0, Environment.NewLine.Length);
@@ -310,9 +317,9 @@ namespace Flucoldache
 					}
 					i += 1;
 				}
-				menuItems[i] = "Назад";
+				menuItems[i] = Strings.Back;
 
-				_currentSelectionMenu = new SelectionMenu("Инвентарь", menuItems, _listPos, _listSize);
+				_currentSelectionMenu = new SelectionMenu(Strings.Inventory, menuItems, _listPos, _listSize);
 				_currentInventory = Items;
 			}
 
@@ -332,9 +339,9 @@ namespace Flucoldache
 					
 					i += 1;
 				}
-				menuItems[i] = "Назад";
+				menuItems[i] = Strings.Back;
 
-				_currentSelectionMenu = new SelectionMenu("Зелья", menuItems, _listPos, _listSize);
+				_currentSelectionMenu = new SelectionMenu(Strings.Potions, menuItems, _listPos, _listSize);
 				_currentInventory = Potions;
 			}
 
@@ -389,21 +396,21 @@ namespace Flucoldache
 		void NothingHappenedAction(InventoryItem item)
 		{
 			string[] names = {"", ""};
-			string[] lines = {"Вы использовали " + item.Name1.ToLower() + ".", "Ничего не произошло."};
+			string[] lines = {Strings.NothingHappened.Replace("{0}", item.Name1.ToLower())};
 			PassDialogue(new Dialogue(names, lines));
 		}
 
 		void UseBook(InventoryItem item)
 		{
 			string[] names = {""};
-			string[] lines = {"Сейчас не время читать. Возможно, позднее."};
+			string[] lines = {Strings.CantUsePotionsNow};
 			PassDialogue(new Dialogue(names, lines));
 		}
 
 		void UseLab(InventoryItem item)
 		{
 			string[] names = {""};
-			string[] lines = {"Для лаборатории необходим огонь. Вы не можете использовать её прямо здесь."};
+			string[] lines = {Strings.CantUseLab};
 			PassDialogue(new Dialogue(names, lines));
 		}
 
@@ -419,6 +426,12 @@ namespace Flucoldache
 			UseFood(item, 25);
 		}
 
+		void UseKingfood(InventoryItem item)
+		{
+			UseFood(item, 100);
+		}
+
+
 		void UseFood(InventoryItem item, int health)
 		{
 			string[] lines;
@@ -427,11 +440,11 @@ namespace Flucoldache
 
 			if (RestoreHealth(health))
 			{	
-				lines = new string[]{"Вы съели " + item.Name1.ToLower() + " и почувствовали себя лучше."};
+				lines = new string[]{Strings.EatingFood.Replace("{0}", item.Name1.ToLower())};
 			}
 			else
 			{
-				lines = new string[]{"Вы чувствуете себя достаточно хорошо, так что решили приберечь " + item.Name1.ToLower() + " на потом."};
+				lines = new string[]{Strings.EatingDeny.Replace("{0}", item.Name1.ToLower())};
 				item.Amount += 1;
 			}
 			PassDialogue(new Dialogue(names, lines));

@@ -120,15 +120,19 @@ namespace Flucoldache.Overworld
 		Type[] ObjectTypes = 
 		{
 			Type.GetType("Flucoldache.Overworld.Player"),
+			Type.GetType("Flucoldache.Overworld.CameraRestrictor"),
 			Type.GetType("Flucoldache.Overworld.DialogueTrigger"),
 			Type.GetType("Flucoldache.Overworld.InstantDialogueTrigger"),
 			Type.GetType("Flucoldache.Overworld.LootContainer"),
 			Type.GetType("Flucoldache.Overworld.NextLevelTrigger"),
 			Type.GetType("Flucoldache.Overworld.Bonfire"),
 			Type.GetType("Flucoldache.Overworld.BattleTrigger"),
+			Type.GetType("Flucoldache.Overworld.RandomEncounterDisabler"),
+			Type.GetType("Flucoldache.Overworld.RandomEncounterEnabler"),
 			Type.GetType("Flucoldache.Overworld.StartLoot"),
 			Type.GetType("Flucoldache.Overworld.GateTrigger"),
 			Type.GetType("Flucoldache.Overworld.Crowd"),
+			Type.GetType("Flucoldache.Overworld.Army"),
 		};
 		int CurrentObjectType = 0;
 

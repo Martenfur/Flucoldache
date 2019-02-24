@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using Monofoxe.Engine;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Flucoldache.Overworld;
-using Flucoldache.Battle;
 using System.IO;
+using Flucoldache.Overworld;
+using Microsoft.Xna.Framework;
+using Monofoxe.Engine;
 
 namespace Flucoldache
 {
 	public class MainMenu : GameObj
 	{
-		public string[] Items = {"Новая игра", "Загрузка", "Редактор карт", "Загрузить карту", "Выход"};
+		public string[] Items;
 		public int SelectedItem = 0;
-		public Vector2 Pos = new Vector2(0, 24);
+		public Vector2 Pos = new Vector2(1, 24);
 		
 		public MainMenu()
 		{
-			//new Arena("test_arena.xml");
+			Strings.Load("en");
+
+			Items = new string[]{
+				Strings.MenuNewGame, 
+				Strings.MenuLoad, 
+				Strings.MenuMapEditor, 
+				Strings.MenuLoadMap, 
+				Strings.MenuExit
+			};
+		
 		}
 
 		public override void Update()
@@ -72,6 +75,13 @@ namespace Flucoldache
 				GameConsole.DrawText(itemStr, Pos + Vector2.UnitY * i);
 			}
 			DrawCntrl.ResetTransformMatrix();
+
+			GameConsole.DrawText(Strings.MenuTitle, Pos + Vector2.UnitY * -2);
+
+			GameConsole.DrawText(Strings.MenuControls, new Vector2(1, GameConsole.H - 2));
+			GameConsole.DrawText(Strings.MenuCredits1, new Vector2(70, GameConsole.H - 3));
+			GameConsole.DrawText(Strings.MenuCredits2, new Vector2(70, GameConsole.H - 2));
+		
 		}
 
 		void ItemActivate()
@@ -79,7 +89,9 @@ namespace Flucoldache
 			// New game.
 			if (SelectedItem == 0)
 			{
-				
+				MapEditor.LoadMap(Environment.CurrentDirectory + "/Resources/Maps/mansion_room0.map", false);
+				new Inventory();
+				Objects.Destroy(this);
 			}
 			// New game.
 
@@ -113,8 +125,7 @@ namespace Flucoldache
 				{
 					MapEditor.LoadMap(dialog.FileName, false);	
 					Inventory inv = new Inventory();
-					inv.AddPotion("fox", 2);
-
+					
 					Objects.Destroy(this);
 				}
 			}

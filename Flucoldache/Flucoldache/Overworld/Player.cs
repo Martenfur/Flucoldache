@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monofoxe.Engine;
-using Microsoft.Xna.Framework.Input;
+﻿using System.Collections.Generic;
+using Flucoldache.Battle;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
-using System.IO;
+using Monofoxe.Engine;
 
 namespace Flucoldache.Overworld
 {
 	public class Player : OverworldObj
 	{
-		
+		public List<string> RandomEncounterArenas;
+		public bool RandomEncountersEnabled;
+		public float RandomEncountersChance = 0.1f;
+		public int RandomEncountersMaxCooldown = 22;
+		public int RandomEncountersCooldown;
+
 		public float WalkSpd = 7; // Cells/second.
 
 		public const char Char = '@';
@@ -22,20 +21,37 @@ namespace Flucoldache.Overworld
 
 		Terrain Terr;
 
-		public Player() {}
-
 		public static Vector2[] Rotation = {Vector2.UnitX, -Vector2.UnitY, -Vector2.UnitX, Vector2.UnitY};
 
 		SelectionMenu _menu;
-		string[] _menuOptions = {"Инвентарь", "Зелья", "Назад"};
+		string[] _menuOptions;
 		Vector2 _menuPos = new Vector2(1, 1);
 		Vector2 _menuSize = new Vector2(12, 6);
 
 
+		public Player()
+		{
+			Depth = -9;
+
+			_menuOptions = new string[]
+			{
+				Strings.Inventory,
+				Strings.Potions,
+				Strings.Back
+			};
+		}
+
 		public Player(Vector2 pos)
 		{
 			Pos = pos;
-			Depth = -90000;
+			Depth = -9;
+
+			_menuOptions = new string[]
+			{
+				Strings.Inventory,
+				Strings.Potions,
+				Strings.Back
+			};
 		}
 
 		public override void Update()
@@ -100,6 +116,25 @@ namespace Flucoldache.Overworld
 					{
 						Pos.Y += movement.Y;
 					}
+
+
+					if (RandomEncountersEnabled && RandomEncountersCooldown <= 0)
+					{
+						if (GameplayController.Random.NextDouble() <= RandomEncountersChance)
+						{
+							int arenaId = (int) (GameplayController.Random.NextDouble() * RandomEncounterArenas.Count);
+							new ArenaAppearEffect(RandomEncounterArenas[arenaId]);
+							RandomEncountersCooldown = RandomEncountersMaxCooldown;
+						}
+					}
+
+					RandomEncountersCooldown -= 1;
+
+					if (RandomEncountersCooldown < 0)
+					{
+						RandomEncountersCooldown = 0;
+					}
+
 				}
 
 				if (Controls.KeyCheckPress(Controls.KeyA))
@@ -113,7 +148,7 @@ namespace Flucoldache.Overworld
 				#region Menu
 				if (Controls.KeyCheckPress(Controls.KeyB))
 				{
-					_menu = new SelectionMenu("Меню", _menuOptions, _menuPos, _menuSize);
+					_menu = new SelectionMenu(Strings.PlayerMenu, _menuOptions, _menuPos, _menuSize);
 				}
 
 				if (_menu != null && _menu.Activated)
@@ -160,10 +195,26 @@ namespace Flucoldache.Overworld
 				}
 
 
+				if (currentCamera.X / GameConsole.CharSize.X < Terrain.CamMinPos.X )
+				{
+					currentCamera.X = Terrain.CamMinPos.X * GameConsole.CharSize.X;
+				}
+				if (currentCamera.Y / GameConsole.CharSize.Y < Terrain.CamMinPos.Y)
+				{
+					currentCamera.Y = Terrain.CamMinPos.Y * GameConsole.CharSize.Y;
+				}
+				if (currentCamera.X / GameConsole.CharSize.X + GameConsole.W > Terrain.CamMaxPos.X)
+				{
+					currentCamera.X = (Terrain.CamMaxPos.X - GameConsole.W) * GameConsole.CharSize.X;
+				}
+				if (currentCamera.Y  / GameConsole.CharSize.Y + GameConsole.H> Terrain.CamMaxPos.Y)
+				{
+					currentCamera.Y = (Terrain.CamMaxPos.Y - GameConsole.H) * GameConsole.CharSize.Y;
+				}
+
 				#endregion Camera 
 			}
 		}
-
 
 
 		public override void Draw()

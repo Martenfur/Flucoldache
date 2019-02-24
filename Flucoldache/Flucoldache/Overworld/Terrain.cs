@@ -16,6 +16,8 @@ namespace Flucoldache.Overworld
 	{
 		public static int VerCamBorder = 15;
 		public static int HorCamBorder = 45;
+		public static Vector2 CamMinPos;
+		public static Vector2 CamMaxPos;
 
 		public Tile[,] TileMap;
 		
@@ -25,6 +27,9 @@ namespace Flucoldache.Overworld
 
 		public Terrain(int w, int h)
 		{
+			CamMinPos = new Vector2(1000000, 1000000);
+			CamMaxPos = new Vector2(-1000000, -1000000);
+
 			DefaultTile = new Tile();
 			
 			TileMap = new Tile[w, h];

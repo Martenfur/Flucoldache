@@ -102,7 +102,9 @@ namespace Flucoldache.Battle
 			{
 				if (_skipTurn)
 				{
-					_attackDialogue = new Dialogue(new string[]{""}, new string[]{Name + " чувствует себя очень плохо и пропускает свой ход."});
+					var dialogueString = Strings.EnemySkipTurn
+						.Replace("{0}", Name);
+					_attackDialogue = new Dialogue(new string[]{""}, new string[]{dialogueString});
 					_skipTurn = false;
 				}
 				else
@@ -115,14 +117,23 @@ namespace Flucoldache.Battle
 						
 						int dmg = Attack(obj);
 						
-						_attackDialogue = new Dialogue(new string[]{""}, 
-						new string[]{"В приступе бешенства " + Name.ToLower() + " атакует " + obj.Name1.ToLower() + " и наносит " + dmg + " урона."});
+						
+						var dialogueString = Strings.EnemyRabid
+							.Replace("{0}", Name.ToLower())
+							.Replace("{1}", obj.Name1.ToLower())
+							.Replace("{2}", dmg.ToString());
+
+						_attackDialogue = new Dialogue(new string[]{""}, new string[] {dialogueString});
 					}
 					else
 					{
 						int dmg = Attack((ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0));
+						
+						var dialogueString = Strings.EnemyAttack
+							.Replace("{0}", Name)
+							.Replace("{1}", dmg.ToString());
 					
-						_attackDialogue = new Dialogue(new string[]{""}, new string[]{Name + " атакует и наносит " + dmg + " урона."});
+						_attackDialogue = new Dialogue(new string[]{""}, new string[]{dialogueString});
 					}
 				}
 			}

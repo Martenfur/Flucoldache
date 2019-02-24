@@ -13,12 +13,6 @@ namespace Flucoldache.Overworld
 {
 	public class Bonfire : OverworldObj
 	{
-		string[] _lines = 
-		{
-			"Вы присели у огня, немного передохнули и приготовили зелья.",
-			"Почитав фолиант, Вы узнали, как варить ",
-			"Игра сохранена."
-		};
 		
 		double[] _colors = new double[5];
 		int[] _colorDirections = new int[5];
@@ -66,9 +60,34 @@ namespace Flucoldache.Overworld
 			}
 			// Refilling potions.
 
-			GameplayController.SaveGame();
+			if (Argument != "")
+			{
+				inv.AddPotion(Argument, 9999);
+				var line2 = 
+				new Dialogue(
+					new string[]{"", "", ""}, 
+					new string[]
+					{
+						Strings.BonfireLine1, 
+						Strings.BonfireLine2.Replace("{0}",Inventory.ItemPool[Argument].Name.ToLower()), 
+						Strings.BonfireLine3
+					}
+				);
+				Argument = "";
+			}
+			else
+			{
+				new Dialogue(
+					new string[]{"", "", ""}, 
+					new string[]
+					{
+						Strings.BonfireLine1,
+						Strings.BonfireLine3
+					}
+				);
+			}
 
-			new Dialogue(new string[]{"", "", ""}, new string[]{_lines[0], _lines[2]});
+			GameplayController.SaveGame();
 
 			return true;
 		}

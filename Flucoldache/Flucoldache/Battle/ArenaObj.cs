@@ -182,24 +182,27 @@ namespace Flucoldache.Battle
 
 		public void AddStatEffect(StatEffect effect, int stage)
 		{
-			foreach(StatEffect myEffect in Effects)
+			if (effect != null)
 			{
-				if (myEffect.Token == effect.Token)
+				foreach(StatEffect myEffect in Effects)
 				{
-					myEffect.Duration = effect.Duration; // Renewing effect.
-					myEffect.InfectionStage = stage;
-					return;
+					if (myEffect.Token == effect.Token)
+					{
+						myEffect.Duration = effect.Duration; // Renewing effect.
+						myEffect.InfectionStage = stage;
+						return;
+					}
 				}
-			}
 
-			foreach(StatEffect myEffect in NewEffects)
-			{
-				if (myEffect.Token == effect.Token)
+				foreach(StatEffect myEffect in NewEffects)
 				{
-					return;
+					if (myEffect.Token == effect.Token)
+					{
+						return;
+					}
 				}
+				NewEffects.Add(new StatEffect(effect, this, stage));
 			}
-			NewEffects.Add(new StatEffect(effect, this, stage));
 		}
 	}
 }
