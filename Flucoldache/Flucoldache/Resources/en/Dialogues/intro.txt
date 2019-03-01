@@ -1,0 +1,24 @@
+﻿Jacob
+My lord... Villagers are here.
+Von Neumann
+Tell those bucketheads to go away. I don't want to listen to their babble\again.
+Jacob
+This time they came with axes and torches. Seems like they're going to break\the gate.
+Von Neumann
+Goddamn idiots, they just have to always poke their noses into things that\are none of their business. How many are them?
+Jacob
+About thirty. Also one hundred of soldies has arrived in the village a couple\of hours ago. 
+Von Neumann
+Bad. Very, very bad. I didn't want to do that, but sometimes science requires\sacrifice.
+Von Neumann
+Take my glasses with diseases. I have only modified cold on me, but I think, you'll be able\to make some more yourself along the way.
+Von Neumann
+There are also miniature laboratory and my book in the corner. Take everything and go to the\village. Infect them, poison them, do anything, but don't let them take the mansion. 
+Von Neumann
+I need just a couple of hours - and then my magnum opus will be complete.
+Jacob
+Are you telling me... to kill them all?
+Von Neumann
+They left us no choice. I'm not going to abandon twelve years of hard work because of a\bunch of dumb cowards. 
+[CONTROLS]
+Arrows - movement\Z - select/action\X - inventory\Esc - menu
