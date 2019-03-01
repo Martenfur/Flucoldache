@@ -15,7 +15,7 @@ namespace Flucoldache.Overworld
 		public override void Draw()
 		{		
 			GameConsole.ForegroundColor = Color.Yellow;
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 			GameConsole.DrawChar(myChar, Pos);
 		}
 
@@ -35,7 +35,7 @@ namespace Flucoldache.Overworld
 			
 			Tile tile1 = terr.GetTile(Pos);
 			tile1.Char = '/';
-			tile1.BackgroundColor = Color.Black;
+			tile1.BackgroundColor = GameConsole.BaseBackgroundColor;
 			tile1.ForegroundColor = Color.Yellow;
 
 			Objects.Destroy(this);

@@ -35,6 +35,12 @@ namespace Monofoxe.Engine
 
 		
 		/// <summary>
+		/// Matrix for offsetting, scaling and rotating canvas contents.
+		/// </summary>
+		public static Matrix CanvasMatrix = Matrix.CreateTranslation(Vector3.Zero); //We need zero matrix here, or else mouse position will derp out.
+		
+
+		/// <summary>
 		/// Current drawing color. Affects shapes and primitives.
 		/// </summary>
 		public static Color CurrentColor;
@@ -248,6 +254,7 @@ namespace Monofoxe.Engine
 			
 			var depthSortedObjects = Objects.GameObjects.OrderByDescending(o => o.Depth);
 			
+			
 			// Main draw events.
 			foreach(Camera camera in Cameras)
 			{
@@ -294,19 +301,50 @@ namespace Monofoxe.Engine
 			}
 			// Main draw events.
 
+
+			
+			// Scales display to match canvas, but keeps aspect ratio.
+			var windowManager = GameCntrl.WindowManager;
+
+			var backbufferSize = new Vector2(
+				windowManager.PreferredBackBufferWidth,
+				windowManager.PreferredBackBufferHeight
+			);
+			float ratio,
+				offsetX = 0,
+				offsetY = 0;
+
+			float backbufferRatio = windowManager.PreferredBackBufferWidth / (float)windowManager.PreferredBackBufferHeight;
+			float canvasRatio = windowManager.CanvasWidth / windowManager.CanvasHeight;
+
+			if (canvasRatio > backbufferRatio)
+			{
+				ratio = windowManager.PreferredBackBufferWidth / (float)windowManager.CanvasWidth;
+				offsetY = (windowManager.PreferredBackBufferHeight - (windowManager.CanvasHeight * ratio)) / 2;
+			}
+			else
+			{
+				ratio = windowManager.PreferredBackBufferHeight / (float)windowManager.CanvasHeight;
+				offsetX = (windowManager.PreferredBackBufferWidth - (windowManager.CanvasWidth * ratio)) / 2;
+			}
+					
+			CanvasMatrix = Matrix.CreateScale(new Vector3(ratio, ratio, 1)) * Matrix.CreateTranslation(new Vector3(offsetX, offsetY, 0));		
+			// Scales display to match canvas, but keeps aspect ratio.
+
+
 			
 			// Resetting camera and transform matrix.
 			CurrentCamera = null;
-			CurrentTransformMatrix = Matrix.CreateTranslation(0, 0, 0);
+			CurrentTransformMatrix = CanvasMatrix;//Matrix.CreateTranslation(0, 0, 0);
 			BasicEffect.View = CurrentTransformMatrix;
-			BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, Game1.WindowW, Game1.WindowH, 0, 0, 1); // TODO: Set actual backbuffer size here.
+			BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, windowManager.PreferredBackBufferWidth, windowManager.PreferredBackBufferHeight, 0, 0, 1); // TODO: Set actual backbuffer size here.
 			// Resetting camera and transform matrix.
 			
 
 			// Drawing camera surfaces.
 			Device.Clear(Color.TransparentBlack);
 			
-			Batch.Begin();
+			Batch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, CurrentTransformMatrix);
 			foreach(Camera camera in Cameras)
 			{
 				if (camera.Autodraw && camera.Enabled)

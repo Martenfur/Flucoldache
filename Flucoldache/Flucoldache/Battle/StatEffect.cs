@@ -75,7 +75,7 @@ namespace Flucoldache.Battle
 			ProcChance = effect.ProcChance;
 		}
 
-		public Color Color = Color.Black;
+		public Color Color = GameConsole.BaseBackgroundColor;
 
 		public string[] Update()
 		{

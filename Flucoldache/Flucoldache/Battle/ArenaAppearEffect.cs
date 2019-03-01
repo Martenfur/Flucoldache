@@ -54,7 +54,7 @@ namespace Flucoldache.Battle
 			{
 				DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 				GameConsole.ForegroundColor = Color.White;
-				GameConsole.BackgroundColor = Color.Black;
+				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 				GameConsole.DrawRectangle(0, 0, GameConsole.W, GameConsole.H);
 				DrawCntrl.ResetTransformMatrix();

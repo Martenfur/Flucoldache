@@ -44,7 +44,7 @@ namespace Flucoldache.Overworld
 		public override void Draw()
 		{
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			GameConsole.DrawRectangle(0, 0, GameConsole.W, GameConsole.H);
 			DrawCntrl.ResetTransformMatrix();

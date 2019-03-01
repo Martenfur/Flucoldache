@@ -131,8 +131,8 @@ namespace Flucoldache
 			if (_currentSelectionMenu != null)
 			{
 				DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
-				GameConsole.BackgroundColor = Color.Black;
-				GameConsole.ForegroundColor = Color.Gray;
+				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
+				GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
 				GameConsole.DrawRectangle(Dialogue.Pos, Dialogue.Size);
 				GameConsole.DrawFrame(Dialogue.Pos - Vector2.One, Dialogue.Size + Vector2.One * 2);
 				

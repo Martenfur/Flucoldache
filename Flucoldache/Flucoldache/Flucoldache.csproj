@@ -85,6 +85,7 @@
     <Compile Include="Engine\GameObj.cs" />
     <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\Objects.cs" />
+    <Compile Include="Engine\WindowMgr.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameplayController.cs" />
@@ -237,23 +238,38 @@
     <Content Include="Resources\Arenas\test_arena.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Dialogues\final.txt">
+    <Content Include="Resources\en\Dialogues\final.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Dialogues\intro.txt">
+    <Content Include="Resources\en\Dialogues\intro.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Dialogues\knights.txt">
+    <Content Include="Resources\en\Dialogues\knights.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Dialogues\mansion_crowd.txt">
+    <Content Include="Resources\en\Dialogues\mansion_crowd.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Dialogues\master_go.txt">
+    <Content Include="Resources\en\Dialogues\master_go.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\en\InventoryItems.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Dialogues\final.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Dialogues\intro.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Dialogues\knights.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Dialogues\mansion_crowd.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ru\Dialogues\master_go.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\ru\Strings.txt">

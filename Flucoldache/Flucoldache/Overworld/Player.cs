@@ -232,8 +232,8 @@ namespace Flucoldache.Overworld
 			{
 				DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 				Inventory inv = (Inventory)Objects.ObjFind<Inventory>(0);
-				GameConsole.ForegroundColor = Color.Gray;
-				GameConsole.BackgroundColor = Color.Black;
+				GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
+				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 				GameConsole.DrawText("HP: " + inv.Health.ToString().PadLeft(3) + "/" + inv.MaxHealth, _menuPos + Vector2.UnitY * 4);
 
 				GameConsole.ForegroundColor = Color.Red;

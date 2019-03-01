@@ -31,7 +31,7 @@ namespace Flucoldache.Overworld
 		{
 			if (EditorMode)
 			{
-				GameConsole.ForegroundColor = Color.Black;
+				GameConsole.ForegroundColor = GameConsole.BaseBackgroundColor;
 				GameConsole.BackgroundColor = Color.Pink;
 				GameConsole.DrawChar('S', Pos);
 			}

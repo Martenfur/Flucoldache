@@ -13,7 +13,7 @@ namespace Flucoldache
 	public class Dialogue : GameObj
 	{
 		
-		static string _rootDir = "Resources/Dialogues/";
+		static string _rootDir;
 		static string _newLineSeparator = "\\";
 		public static Vector2 Size = new Vector2(GameConsole.W - 2, 8);
 		public static Vector2 Pos = new Vector2(1, GameConsole.H - Size.Y - 1);
@@ -30,6 +30,7 @@ namespace Flucoldache
 
 		public Dialogue(string[] dialogueNames, string[] dialogueLines)
 		{
+			_rootDir = "Resources/" + Strings.Localization + "/Dialogues/";
 			Controls.Enabled = false;
 			
 			_dialogueLines = new string[dialogueLines.Length];
@@ -41,6 +42,8 @@ namespace Flucoldache
 
 		public Dialogue(string fileName)
 		{
+			_rootDir = "Resources/" + Strings.Localization + "/Dialogues/";
+			
 			Controls.Enabled = false;
 			
 			// Loading dialogue file.
@@ -114,8 +117,8 @@ namespace Flucoldache
 
 		public override void DrawEnd()
 		{
-			GameConsole.BackgroundColor = Color.Black;
-			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
+			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
 
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 			GameConsole.DrawRectangle(Pos, Size);

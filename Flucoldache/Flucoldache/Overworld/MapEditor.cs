@@ -80,7 +80,7 @@ namespace Flucoldache.Overworld
 			Objects
 		}
 
-		Color UIFgColor = Color.Gray;
+		Color UIFgColor = GameConsole.BaseForegroundColor;
 		Color UIBgColor = new Color(45, 61, 61);
 		Color UIImportantColor = Color.White;
 
@@ -95,10 +95,10 @@ namespace Flucoldache.Overworld
 		
 		Color[][] Palettes = 
 		{
-			new Color[]{Color.Gray, Color.Black},
-			new Color[]{Color.Black, Color.Gray},
+			new Color[]{GameConsole.BaseForegroundColor, GameConsole.BaseBackgroundColor},
+			new Color[]{GameConsole.BaseBackgroundColor, GameConsole.BaseForegroundColor},
 			new Color[]{Color.White, new Color(175, 93, 35)},
-			new Color[]{Color.White, Color.Black},
+			new Color[]{Color.White, GameConsole.BaseBackgroundColor},
 		};
 
 		int CurrentPalette = 0;
@@ -724,8 +724,8 @@ namespace Flucoldache.Overworld
 			GameConsole.DrawFrame(ObjArgumentMenuPos - Vector2.One, ObjArgumentMenuSize + new Vector2(2, 2));
 			GameConsole.DrawText(CurrentObject.ArgumentName + ":", (int)ObjArgumentMenuPos.X, (int)ObjArgumentMenuPos.Y - 1);
 
-			GameConsole.ForegroundColor = Color.Gray;
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 			GameConsole.DrawRectangle(ObjArgumentMenuPos, ObjArgumentMenuSize);
 			GameConsole.DrawText(CurrentObject.Argument, (int)ObjArgumentMenuPos.X, (int)ObjArgumentMenuPos.Y);
 		}
@@ -984,7 +984,8 @@ namespace Flucoldache.Overworld
 					terrain.TileMap[x, y].BackgroundColor = new Color(ReadUInt(buffer, ref pointer));
 				}
 			}
-
+			
+			terrain.FixColors();
 			#endregion Loading terrain
 			
 

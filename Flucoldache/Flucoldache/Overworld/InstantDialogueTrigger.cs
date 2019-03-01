@@ -24,8 +24,8 @@ namespace Flucoldache.Overworld
 		{
 			if (EditorMode)
 			{
-				GameConsole.ForegroundColor = Color.Black;
-				GameConsole.BackgroundColor = Color.AliceBlue;
+				GameConsole.ForegroundColor = GameConsole.BaseBackgroundColor;
+				GameConsole.BackgroundColor = GameConsole.BaseForegroundColor;
 				GameConsole.DrawChar('I', Pos);
 			}
 		}

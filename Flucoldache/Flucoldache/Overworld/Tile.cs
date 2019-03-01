@@ -24,8 +24,8 @@ namespace Flucoldache.Overworld
 		{
 			Char = ch;
 			Type = type;
-			ForegroundColor = Color.Gray;
-			BackgroundColor = Color.Black;
+			ForegroundColor = GameConsole.BaseForegroundColor;
+			BackgroundColor = GameConsole.BaseBackgroundColor;
 		}
 
 		public bool IsPassable()		

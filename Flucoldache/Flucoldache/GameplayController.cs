@@ -28,7 +28,7 @@ namespace Flucoldache
 		{
 			GameConsole.Init(Fonts.Font, 96, 32);
 
-			GameConsole.Camera.BackgroundColor = Color.Black;
+			GameConsole.Camera.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			RasterizerState rasterizerState = new RasterizerState();
 			rasterizerState.CullMode = CullMode.None; 

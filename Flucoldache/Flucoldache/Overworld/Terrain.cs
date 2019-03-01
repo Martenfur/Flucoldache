@@ -42,6 +42,21 @@ namespace Flucoldache.Overworld
 			}
 		}
 
+		public void FixColors()
+		{
+			for(var x = 0; x < TileMap.GetLength(0); x += 1)
+			{
+				for(var y = 0; y < TileMap.GetLength(1); y += 1)
+				{	
+					if (TileMap[x, y].BackgroundColor == Color.Black && TileMap[x, y].ForegroundColor == Color.Gray)
+					{
+						TileMap[x, y].BackgroundColor = GameConsole.BaseBackgroundColor;
+						TileMap[x, y].ForegroundColor = GameConsole.BaseForegroundColor;
+					}
+				}
+			}
+		}
+
 		public override void DrawBegin()
 		{
 			int startX = Math.Max(0, (int)(DrawCntrl.CurrentCamera.X / GameConsole.CharSize.X));

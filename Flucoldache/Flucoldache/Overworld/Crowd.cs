@@ -48,7 +48,7 @@ namespace Flucoldache.Overworld
 		public override void Draw()
 		{		
 			GameConsole.ForegroundColor = Color.White;
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			GameConsole.DrawChar('M', Pos);
 			GameConsole.DrawChar('M', Pos + Vector2.UnitX * 3);

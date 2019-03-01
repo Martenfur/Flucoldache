@@ -111,7 +111,7 @@ namespace Flucoldache.Overworld
 				if (tile.Char == ' ' || tile.Char == ';')
 				{
 					tile.ForegroundColor = Color.Lerp(Color.Orange, Color.OrangeRed, (float)_colors[i]);
-					tile.BackgroundColor = Color.Black;
+					tile.BackgroundColor = GameConsole.BaseBackgroundColor;
 					tile.Char = ';';
 				}
 

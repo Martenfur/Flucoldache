@@ -21,7 +21,7 @@ namespace Flucoldache.Battle
 			MaxAttack = 25;
 			Defence = 30;
 			Speed = 5;
-			ForegroundColor = Color.Black;
+			ForegroundColor = GameConsole.BaseBackgroundColor;
 			BackgroundColor = Color.LightGray;
 		}
 

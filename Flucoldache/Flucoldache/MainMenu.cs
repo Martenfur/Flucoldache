@@ -57,8 +57,8 @@ namespace Flucoldache
 		public override void Draw()
 		{
 			
-			GameConsole.ForegroundColor = Color.Gray;
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 			string itemStr;

@@ -165,8 +165,8 @@ namespace Flucoldache.Battle
 
 		public override void Draw()
 		{
-			GameConsole.BackgroundColor = Color.Black;
-			GameConsole.ForegroundColor = Color.Gray;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
+			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
 			GameConsole.DrawFrame(Dialogue.Pos - Vector2.One, Dialogue.Size + Vector2.One * 2);
 			GameConsole.DrawRectangle(Dialogue.Pos, Dialogue.Size);
 
@@ -175,8 +175,8 @@ namespace Flucoldache.Battle
 
 			if (player != null)
 			{
-				GameConsole.ForegroundColor = Color.Gray;
-				GameConsole.BackgroundColor = Color.Black;
+				GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
+				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 				
 				GameConsole.DrawText("HP: " + player.Health.ToString().PadLeft(3) + "/" + player.MaxHealth, Dialogue.Pos - Vector2.UnitY * 2);
 
@@ -190,7 +190,7 @@ namespace Flucoldache.Battle
 
 		public override void DrawEnd()
 		{
-			GameConsole.BackgroundColor = new Color(Color.Black, _blackscreenAlpha);
+			GameConsole.BackgroundColor = new Color(GameConsole.BaseBackgroundColor, _blackscreenAlpha);
 			GameConsole.DrawRectangle(0, 0, GameConsole.W, GameConsole.H);
 		}
 

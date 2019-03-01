@@ -36,7 +36,7 @@ namespace Monofoxe.Engine
 		
 
 		public static Game MyGame = null;	
-		public static GameWindow Window = null;
+		public static WindowMgr WindowManager = null;
 
 		public static double ElapsedTimeTotal {get; private set;} = 0;
 		public static double ElapsedTime {get; private set;} = 0;
@@ -133,7 +133,7 @@ namespace Monofoxe.Engine
 		public static void Init(Game game)
 		{
 			MyGame = game;
-			Window = game.Window;
+			WindowManager = new WindowMgr(game);
 		}
 
 

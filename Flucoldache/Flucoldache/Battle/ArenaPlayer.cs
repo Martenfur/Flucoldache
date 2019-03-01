@@ -273,8 +273,8 @@ namespace Flucoldache.Battle
 
 			GameConsole.DrawChar('@', Pos);
 
-			GameConsole.ForegroundColor = Color.Gray;
-			GameConsole.BackgroundColor = Color.Black;
+			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
+			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			if (Mode == Modes.ChoosingEnemy)
 			{

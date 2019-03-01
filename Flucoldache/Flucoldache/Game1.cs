@@ -16,13 +16,13 @@ namespace Monofoxe
 	/// </summary>
 	public class Game1 : Game
 	{
-		public GraphicsDeviceManager graphics;
+		//public GraphicsDeviceManager graphics;
 		public static readonly int WindowW = 768;
 		public static readonly int WindowH = 512;
 
 		public Game1()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			GameCntrl.Init(this);
 			Content.RootDirectory = GameCntrl.ContentDir;
 		}
 
@@ -34,18 +34,18 @@ namespace Monofoxe
 		/// </summary>
 		protected override void Initialize()
 		{
-			GameCntrl.Init(this);
 			GameCntrl.MaxGameSpeed = 60.0;
 			
-			graphics.PreferredBackBufferWidth = WindowW;
-			graphics.PreferredBackBufferHeight = WindowH;
-			graphics.ApplyChanges();
-			
-			Window.TextInput += Input.TextInput;
+			GameCntrl.WindowManager.CanvasWidth = WindowW;
+			GameCntrl.WindowManager.CanvasHeight = WindowH;
+			GameCntrl.WindowManager.SetFullScreen(false);
+			GameCntrl.WindowManager.CenterWindow();
+			GameCntrl.WindowManager.ApplyChanges();
 
+			Window.TextInput += Input.TextInput;
 			base.Initialize();
 		}
-
+		
 		/// <summary>
 		/// LoadContent will be called once per game and is the place to load
 		/// all of your content.
@@ -75,7 +75,10 @@ namespace Monofoxe
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-		
+			if (Input.KeyboardCheckPress(Keys.F4))
+			{
+				GameCntrl.WindowManager.SetFullScreen(!GameCntrl.WindowManager.IsFullScreen);
+			}
 			GameCntrl.Update(gameTime);
 			
 			base.Update(gameTime);
@@ -88,7 +91,7 @@ namespace Monofoxe
 		protected override void Draw(GameTime gameTime)
 		{
 			GameCntrl.UpdateFps(gameTime);
-			DrawCntrl.Update(gameTime);
+			DrawCntrl.Update(gameTime);		
 
 			base.Draw(gameTime);
 		}

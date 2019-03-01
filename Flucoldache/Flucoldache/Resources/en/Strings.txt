@@ -23,7 +23,7 @@ You've rested near the bonfire and refilled your potions.
 After reading the folio you've learned how to brew {0}.
 Game saved.
 You've opened {0}.
-Inside were: 
+Inside you found: 
 You've opened {0}, but there was nothing inside.
 Arrows - change target, Z - select, X - back.
 Attack
@@ -38,8 +38,8 @@ Rabid {0} attacks {1} and deals {2} damage.
 {0} attacks and deals {1} damage.
 Bear
 Bear
-Knight
-Knight
+Soldier
+Soldier
 Exuberant rabbit
 Exuberant rabbit
 Villager

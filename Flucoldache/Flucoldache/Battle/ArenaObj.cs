@@ -23,13 +23,13 @@ namespace Flucoldache.Battle
 		public int Defence;
 		public int Speed;
 
-		public Color ForegroundColor = Color.Gray;
-		public Color BackgroundColor = Color.Black;
+		public Color ForegroundColor = GameConsole.BaseForegroundColor;
+		public Color BackgroundColor = GameConsole.BaseBackgroundColor;
 
 		
 		public bool DmgAnim = false;
-		Color[] _dmgFgColor = {Color.Black, Color.White};
-		Color[] _dmgBgColor = {Color.Gray, Color.White};
+		Color[] _dmgFgColor = {GameConsole.BaseBackgroundColor, Color.White};
+		Color[] _dmgBgColor = {GameConsole.BaseForegroundColor, Color.White};
 		double _dmgFrame = 0;
 		int _dmgMaxFrame = 2;
 		double _dmgAnimSpd = 8f;
@@ -120,7 +120,7 @@ namespace Flucoldache.Battle
 			if (Initiative)
 			{
 				GameConsole.ForegroundColor = Color.Yellow;
-				GameConsole.BackgroundColor = Color.Black;
+				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 				GameConsole.DrawChar('!', Pos - Vector2.UnitY);
 			}

@@ -41,8 +41,11 @@ namespace Flucoldache
 
 		private static int _fillerFrame = 205;
 
-		public static Color ForegroundColor = Color.Gray;
-		public static Color BackgroundColor = Color.Black;
+		public static Color BaseForegroundColor = new Color(122, 83, 104);
+		public static Color BaseBackgroundColor = new Color(9, 2, 9);
+
+		public static Color ForegroundColor = BaseForegroundColor;
+		public static Color BackgroundColor = BaseBackgroundColor;
 
 		private static char[] _frameBorders = {'╔', '╗', '╚', '╝', '═', '║'};	
 		
