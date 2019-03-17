@@ -46,8 +46,14 @@ namespace Flucoldache.Battle
 		bool _lose = false;
 		Dialogue _loseDialogue;
 
+		ArenaBackground _bkg;
+
 		public Arena(string fileName)
 		{
+			SoundController.PlaySong(SoundController.Battle);
+
+			_bkg = new ArenaBackground();
+				
 			DrawCntrl.Cameras[0].X = 0;
 			DrawCntrl.Cameras[0].Y = 0;
 
@@ -144,6 +150,8 @@ namespace Flucoldache.Battle
 		public override void Destroy()
 		{
 			base.Destroy();
+
+			Objects.Destroy(_bkg);
 			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
 			{
 				obj.Active = true;
@@ -152,6 +160,7 @@ namespace Flucoldache.Battle
 			{
 				obj.Active = true;
 			}
+			SoundController.PlaySong(SoundController.Overworld);
 
 			foreach(ArenaObj obj in Objects.GetList<ArenaObj>())
 			{
@@ -169,27 +178,25 @@ namespace Flucoldache.Battle
 			GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
 			GameConsole.DrawFrame(Dialogue.Pos - Vector2.One, Dialogue.Size + Vector2.One * 2);
 			GameConsole.DrawRectangle(Dialogue.Pos, Dialogue.Size);
+		}
 
+		public override void DrawEnd()
+		{
 			ArenaPlayer player = (ArenaPlayer)Objects.ObjFind<ArenaPlayer>(0);
-			Inventory inv = (Inventory)Objects.ObjFind<Inventory>(0);
-
+			
 			if (player != null)
 			{
 				GameConsole.ForegroundColor = GameConsole.BaseForegroundColor;
 				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 				
-				GameConsole.DrawText("HP: " + player.Health.ToString().PadLeft(3) + "/" + player.MaxHealth, Dialogue.Pos - Vector2.UnitY * 2);
+				GameConsole.DrawText("HP: " + player.Health.ToString().PadLeft(3) + "/" + player.MaxHealth, Dialogue.Pos - Vector2.UnitY * 1);
 
 				GameConsole.ForegroundColor = Color.Red;
 				GameConsole.BackgroundColor = new Color(32, 0, 0);
-				GameConsole.DrawRectangle((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 2, 16, 1);
-				GameConsole.DrawProgressBar((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 2, 16, ((float)player.Health) / ((float)player.MaxHealth));
-				
+				GameConsole.DrawRectangle((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 1, 16, 1);
+				GameConsole.DrawProgressBar((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 1, 16, ((float)player.Health) / ((float)player.MaxHealth));
 			}
-		}
 
-		public override void DrawEnd()
-		{
 			GameConsole.BackgroundColor = new Color(GameConsole.BaseBackgroundColor, _blackscreenAlpha);
 			GameConsole.DrawRectangle(0, 0, GameConsole.W, GameConsole.H);
 		}

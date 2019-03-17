@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Monofoxe
+namespace Flucoldache
 {
 	/// <summary>
 	/// The main class.

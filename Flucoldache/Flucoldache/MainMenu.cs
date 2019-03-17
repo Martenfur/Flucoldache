@@ -23,7 +23,8 @@ namespace Flucoldache
 				Strings.MenuLoadMap, 
 				Strings.MenuExit
 			};
-		
+
+			SoundController.PlaySong(SoundController.Title);
 		}
 
 		public override void Update()

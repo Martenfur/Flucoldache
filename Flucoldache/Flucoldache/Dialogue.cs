@@ -7,6 +7,7 @@ using Monofoxe.Engine;
 using System.IO;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using Flucoldache.Battle;
 
 namespace Flucoldache
 {
@@ -18,6 +19,7 @@ namespace Flucoldache
 		public static Vector2 Size = new Vector2(GameConsole.W - 2, 8);
 		public static Vector2 Pos = new Vector2(1, GameConsole.H - Size.Y - 1);
 		
+		public bool Borderless = false;
 
 		string[] _dialogueNames;
 		string[] _dialogueLines;
@@ -69,6 +71,11 @@ namespace Flucoldache
 
 		public override void Update()
 		{
+			if (Objects.Count<Arena>() > 0)
+			{
+				Borderless = true;
+			}
+
 			if (Input.KeyboardCheckPress(Controls.KeyA) || Input.KeyboardCheckPress(Controls.KeyB))
 			{
 				if (_dialogueLines[LineId].Length != _typedText.ToString().Length)
@@ -122,8 +129,11 @@ namespace Flucoldache
 
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
 			GameConsole.DrawRectangle(Pos, Size);
-			GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
-			
+			if (!Borderless)
+			{
+				GameConsole.DrawFrame(Pos - Vector2.One, Size + Vector2.One * 2);
+			}
+
 			GameConsole.DrawText(_dialogueNames[LineId], Pos + new Vector2(1, -1));
 			GameConsole.DrawText(_typedText.ToString(), Pos);
 			DrawCntrl.ResetTransformMatrix();

@@ -25,3 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Atlasses/texture_0.png
 
+#begin Music/Battle.ogg
+/copy:Music/Battle.ogg
+
+#begin Music/Finalbattle.ogg
+/copy:Music/Finalbattle.ogg
+
+#begin Music/House.ogg
+/copy:Music/House.ogg
+
+#begin Music/Title.ogg
+/copy:Music/Title.ogg
+
+#begin Music/Overworld.ogg
+/copy:Music/Overworld.ogg
+

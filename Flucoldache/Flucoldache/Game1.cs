@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-//using System.Windows.Forms;
 using System.Diagnostics;
 using System;
 using Monofoxe.Engine;
 using Monofoxe.Engine.Drawing;
 using System.Collections.Generic;
 using System.IO;
+using Monofoxe.FMODAudio;
 
-namespace Monofoxe
+namespace Flucoldache
 {
 	/// <summary>
 	/// This is the main type for your game.
@@ -43,6 +43,9 @@ namespace Monofoxe
 			GameCntrl.WindowManager.ApplyChanges();
 
 			Window.TextInput += Input.TextInput;
+
+			AudioMgr.Init("");
+
 			base.Initialize();
 		}
 		
@@ -55,7 +58,9 @@ namespace Monofoxe
 			GameCntrl.LoadGraphics(Content);	
 			Fonts.Load(Content);
 			DrawCntrl.Init(GraphicsDevice);
-			
+
+			SoundController.Init(Content);
+
 			GameCntrl.Begin();
 		}
 
@@ -66,6 +71,7 @@ namespace Monofoxe
 		protected override void UnloadContent()
 		{
 			// TODO: Unload any non ContentManager content here
+			AudioMgr.Unload();
 		}
 
 		/// <summary>
@@ -79,6 +85,7 @@ namespace Monofoxe
 			{
 				GameCntrl.WindowManager.SetFullScreen(!GameCntrl.WindowManager.IsFullScreen);
 			}
+			AudioMgr.Update();
 			GameCntrl.Update(gameTime);
 			
 			base.Update(gameTime);
