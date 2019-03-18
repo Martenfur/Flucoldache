@@ -12,6 +12,17 @@ namespace Flucoldache
 		public int SelectedItem = 0;
 		public Vector2 Pos = new Vector2(1, 24);
 		
+		private bool _controlsBlock = false;
+		private bool _newGameAnimation = false;
+
+		private int _newGameAlarm = -1;
+		private int _newGameTime = 5;
+		private int _newGameAnimationStage = 0;
+		
+		private Color _bufferBg = GameConsole.BaseBackgroundColor;
+		private Color _bufferFg = GameConsole.BaseForegroundColor;
+
+
 		public MainMenu()
 		{
 			Strings.Load("en");
@@ -29,29 +40,70 @@ namespace Flucoldache
 
 		public override void Update()
 		{
-			if (Input.KeyboardCheckPress(Controls.KeyUp))
+			if (!_controlsBlock)
 			{
-				SelectedItem -= 1;
-			}
-			if (Input.KeyboardCheckPress(Controls.KeyDown))
-			{
-				SelectedItem += 1;
+				if (Input.KeyboardCheckPress(Controls.KeyUp))
+				{
+					SelectedItem -= 1;	
+					SoundController.PlaySound(SoundController.Blip);
+				}
+				if (Input.KeyboardCheckPress(Controls.KeyDown))
+				{
+					SelectedItem += 1;
+					SoundController.PlaySound(SoundController.Blip);
+				}
+
+				// Wrapping cursor.
+				if (SelectedItem < 0)
+				{
+					SelectedItem += Items.Length;
+				}
+				if (SelectedItem >= Items.Length)
+				{
+					SelectedItem -= Items.Length;
+				}
+				// Wrapping cursor.
+
+				if (Input.KeyboardCheckPress(Controls.KeyA))
+				{
+					ItemActivate();
+				}
 			}
 
-			// Wrapping cursor.
-			if (SelectedItem < 0)
-			{
-				SelectedItem += Items.Length;
-			}
-			if (SelectedItem >= Items.Length)
-			{
-				SelectedItem -= Items.Length;
-			}
-			// Wrapping cursor.
 
-			if (Input.KeyboardCheckPress(Controls.KeyA))
+
+
+			if (_newGameAnimation)
 			{
-				ItemActivate();
+
+				_newGameAlarm -= 1;
+
+				if (_newGameAlarm == 0)
+				{
+					switch(_newGameAnimationStage)
+					{
+						case 0:
+							GameConsole.BaseBackgroundColor = _bufferFg;
+							GameConsole.BaseForegroundColor = _bufferFg;
+						break;
+						case 1:
+							GameConsole.BaseBackgroundColor = _bufferFg;
+							GameConsole.BaseForegroundColor = _bufferBg;
+						break;
+						case 2:
+							GameConsole.BaseBackgroundColor = _bufferBg;
+							GameConsole.BaseForegroundColor = _bufferFg;
+						break;
+					}
+
+					_newGameAnimationStage += 1;
+					_newGameAlarm = _newGameTime;
+				}
+
+				if (!SoundController.NewGame.IsPlaying)
+				{
+					StartNewGame();
+				}
 			}
 		}
 
@@ -62,6 +114,9 @@ namespace Flucoldache
 			GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 
 			DrawCntrl.SetTransformMatrix(Matrix.CreateTranslation(Vector3.Zero));
+
+			GameConsole.DrawRectangle(Vector2.Zero, new Vector2(GameConsole.W, GameConsole.H));
+
 			string itemStr;
 			for(var i = 0; i < Items.Length; i += 1)
 			{
@@ -85,14 +140,23 @@ namespace Flucoldache
 		
 		}
 
+		void StartNewGame()
+		{		
+			MapEditor.LoadMap(Environment.CurrentDirectory + "/Resources/Maps/mansion_room0.map", false);
+			new Inventory();
+			Objects.Destroy(this);
+		}
+
 		void ItemActivate()
 		{
 			// New game.
 			if (SelectedItem == 0)
 			{
-				MapEditor.LoadMap(Environment.CurrentDirectory + "/Resources/Maps/mansion_room0.map", false);
-				new Inventory();
-				Objects.Destroy(this);
+				SoundController.CurrentSong.Stop();
+				SoundController.PlaySound(SoundController.NewGame);
+				_controlsBlock = true;
+				_newGameAlarm = _newGameTime;
+				_newGameAnimation = true;
 			}
 			// New game.
 

@@ -104,6 +104,8 @@ namespace Flucoldache.Overworld
 				lootStr.Append(".");
 				lines[0] = (Strings.OpenChestLine1 + Environment.NewLine + Strings.OpenChestLine2).Replace("{0}", _name) + lootStr;
 				_loot = null;
+				SoundController.PlaySound(SoundController.OpenChest);
+
 			}
 			else
 			{

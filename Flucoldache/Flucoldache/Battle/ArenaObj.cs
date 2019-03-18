@@ -88,7 +88,7 @@ namespace Flucoldache.Battle
 			else
 			{
 				GameConsole.ForegroundColor = ForegroundColor;
-				Color color = BackgroundColor;
+				Color color = Color.Transparent;
 				foreach(StatEffect effect in Effects)
 				{
 					color = Color.Lerp(color, effect.Color, 0.5f);
@@ -119,8 +119,8 @@ namespace Flucoldache.Battle
 		{
 			if (Initiative)
 			{
-				GameConsole.ForegroundColor = Color.Yellow;
-				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
+				GameConsole.ForegroundColor = new Color(216, 166, 0);
+				GameConsole.BackgroundColor = Color.Transparent;
 
 				GameConsole.DrawChar('!', Pos - Vector2.UnitY);
 			}
@@ -128,6 +128,7 @@ namespace Flucoldache.Battle
 
 		public int Attack(ArenaObj obj)
 		{
+			
 			int buffAttack = 0;
 			foreach(StatEffect effect in Effects)
 			{
@@ -148,9 +149,14 @@ namespace Flucoldache.Battle
 			);
 
 			obj.Health -= resDmg;
-			if (obj.Health < 0)
+			if (obj.Health <= 0)
 			{
 				obj.Health = 0;
+				SoundController.PlaySound(SoundController.Death);
+			}
+			else
+			{
+				SoundController.PlaySound(SoundController.Hit);
 			}
 			obj.DmgAnim = true;
 			return resDmg;

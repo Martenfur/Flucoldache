@@ -112,7 +112,7 @@ namespace Flucoldache.Battle
 					if (_rabies)
 					{
 						int objId = (int)(GameplayController.Random.NextDouble() * (float)Objects.Count<ArenaObj>());
-						Debug.WriteLine(objId);
+						
 						ArenaObj obj = (ArenaObj)Objects.ObjFind<ArenaObj>(objId);
 						
 						int dmg = Attack(obj);

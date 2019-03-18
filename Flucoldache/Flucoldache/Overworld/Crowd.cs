@@ -27,6 +27,7 @@ namespace Flucoldache.Overworld
 				if (_dialogue == null)
 				{
 					_dialogue = new Dialogue("mansion_crowd.txt");
+					_dialogue.Voiceless = false;
 				}
 				else
 				{

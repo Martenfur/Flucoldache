@@ -137,6 +137,7 @@ namespace Flucoldache.Battle
 							_inv.Potions[CurrentStatEffect.Token].Amount += 1;
 						}
 						_attacking = false;
+						SoundController.PlaySound(SoundController.Back);
 					}
 
 					Vector2 direction = Vector2.Zero;
@@ -144,18 +145,22 @@ namespace Flucoldache.Battle
 					if (Controls.KeyCheckPress(Controls.KeyUp))
 					{
 						direction = -Vector2.UnitY;
+						SoundController.PlaySound(SoundController.Blip);
 					}
 					if (Controls.KeyCheckPress(Controls.KeyDown))
 					{
 						direction = Vector2.UnitY;
+						SoundController.PlaySound(SoundController.Blip);
 					}
 					if (Controls.KeyCheckPress(Controls.KeyLeft))
 					{
 						direction = -Vector2.UnitX;
+						SoundController.PlaySound(SoundController.Blip);
 					}
 					if (Controls.KeyCheckPress(Controls.KeyRight))
 					{
 						direction = Vector2.UnitX;
+						SoundController.PlaySound(SoundController.Blip);
 					}
 
 					if (direction != Vector2.Zero)
@@ -233,6 +238,7 @@ namespace Flucoldache.Battle
 					{
 						if (_waitingDialogue == null && CurrentStatEffect != null)
 						{
+							SoundController.PlaySound(SoundController.Potion);
 							ChoiceResult.AddStatEffect(CurrentStatEffect, 0);
 							_waitingForDialogue = true;
 							var dialogueString = Strings.PlayerPotionDialogue

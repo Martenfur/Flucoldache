@@ -164,6 +164,9 @@ namespace Flucoldache.Overworld
 						case 1:	
 						inv.ShowPotions();
 						break;
+						case 2:
+						SoundController.PlaySound(SoundController.Back);
+						break;
 					}
 					_menu = null;
 				}
@@ -236,8 +239,8 @@ namespace Flucoldache.Overworld
 				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 				GameConsole.DrawText("HP: " + inv.Health.ToString().PadLeft(3) + "/" + inv.MaxHealth, _menuPos + Vector2.UnitY * 4);
 
-				GameConsole.ForegroundColor = Color.Red;
-				GameConsole.BackgroundColor = new Color(32, 0, 0);
+				GameConsole.ForegroundColor = GameConsole.HealthForegroundColor;
+				GameConsole.BackgroundColor = GameConsole.HealthBackgroundColor;
 				GameConsole.DrawRectangle((int)_menuPos.X, (int)_menuPos.Y + 5, (int)_menuSize.X, 1);
 				GameConsole.DrawProgressBar((int)_menuPos.X, (int)_menuPos.Y + 5, (int)_menuSize.X, ((float)inv.Health) / ((float)inv.MaxHealth));
 				DrawCntrl.ResetTransformMatrix();

@@ -40,3 +40,39 @@
 #begin Music/Overworld.ogg
 /copy:Music/Overworld.ogg
 
+#begin Sounds/Back.wav
+/copy:Sounds/Back.wav
+
+#begin Sounds/Blip.wav
+/copy:Sounds/Blip.wav
+
+#begin Sounds/Death.wav
+/copy:Sounds/Death.wav
+
+#begin Sounds/Hit.wav
+/copy:Sounds/Hit.wav
+
+#begin Sounds/ArenaAppearEffect.wav
+/copy:Sounds/ArenaAppearEffect.wav
+
+#begin Sounds/Voice.wav
+/copy:Sounds/Voice.wav
+
+#begin Sounds/OpenGate.wav
+/copy:Sounds/OpenGate.wav
+
+#begin Sounds/OpenChest.wav
+/copy:Sounds/OpenChest.wav
+
+#begin Sounds/Heal.wav
+/copy:Sounds/Heal.wav
+
+#begin Sounds/NewGame.wav
+/copy:Sounds/NewGame.wav
+
+#begin Sounds/Win.wav
+/copy:Sounds/Win.wav
+
+#begin Sounds/Potion.wav
+/copy:Sounds/Potion.wav
+

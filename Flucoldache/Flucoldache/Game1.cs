@@ -85,8 +85,8 @@ namespace Flucoldache
 			{
 				GameCntrl.WindowManager.SetFullScreen(!GameCntrl.WindowManager.IsFullScreen);
 			}
-			AudioMgr.Update();
 			GameCntrl.Update(gameTime);
+			AudioMgr.Update();
 			
 			base.Update(gameTime);
 		}

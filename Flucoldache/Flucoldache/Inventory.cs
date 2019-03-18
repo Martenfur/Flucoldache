@@ -70,6 +70,7 @@ namespace Flucoldache
 						Objects.Destroy(_currentSelectionMenu);
 						_currentSelectionMenu = null;
 						_currentInventory = null;
+						SoundController.PlaySound(SoundController.Back);
 						// Back button.
 					}
 					else
@@ -378,6 +379,7 @@ namespace Flucoldache
 					Health = MaxHealth;
 				}
 			}
+
 			return true;
 		}
 
@@ -440,6 +442,7 @@ namespace Flucoldache
 
 			if (RestoreHealth(health))
 			{	
+				SoundController.PlaySound(SoundController.Heal);
 				lines = new string[]{Strings.EatingFood.Replace("{0}", item.Name1.ToLower())};
 			}
 			else

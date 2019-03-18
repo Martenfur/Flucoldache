@@ -47,6 +47,9 @@ namespace Flucoldache
 		public static Color ForegroundColor = BaseForegroundColor;
 		public static Color BackgroundColor = BaseBackgroundColor;
 
+		public static Color HealthForegroundColor = new Color(165, 21, 33);
+		public static Color HealthBackgroundColor = new Color(67, 7, 12);
+		
 		private static char[] _frameBorders = {'╔', '╗', '╚', '╝', '═', '║'};	
 		
 		private static char[] _progressBarChars = {'░', '▒', '▓', '█'};

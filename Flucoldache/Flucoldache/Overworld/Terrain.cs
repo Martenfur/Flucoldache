@@ -27,9 +27,7 @@ namespace Flucoldache.Overworld
 
 		public Terrain(int w, int h)
 		{
-			//SoundController.QueueSong(SoundController.Overworld);
-			SoundController.PlaySong(SoundController.House);
-
+			SoundController.PlaySong(SoundController.Overworld);
 
 			CamMinPos = new Vector2(1000000, 1000000);
 			CamMaxPos = new Vector2(-1000000, -1000000);

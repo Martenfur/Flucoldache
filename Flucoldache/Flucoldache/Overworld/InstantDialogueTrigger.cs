@@ -1,6 +1,4 @@
-﻿using System;
-using Monofoxe.Engine;
-using Microsoft.Xna.Framework;
+﻿using Monofoxe.Engine;
 
 namespace Flucoldache.Overworld
 {
@@ -15,7 +13,8 @@ namespace Flucoldache.Overworld
 		{
 			if (!EditorMode)
 			{
-				new Dialogue(Argument);
+				var d = new Dialogue(Argument);
+				d.Voiceless = false;
 				Objects.Destroy(this);
 			}
 		}

@@ -1,8 +1,4 @@
-﻿using System;
-using Monofoxe.Engine;
-using Microsoft.Xna.Framework;
-
-namespace Flucoldache.Overworld
+﻿namespace Flucoldache.Overworld
 {
 	class DialogueTrigger : OverworldObj
 	{
@@ -23,7 +19,8 @@ namespace Flucoldache.Overworld
 
 		public override bool TriggerAction()
 		{
-			new Dialogue(Argument);
+			var d = new Dialogue(Argument);
+			d.Voiceless = false;
 			return true;
 		}
 	}

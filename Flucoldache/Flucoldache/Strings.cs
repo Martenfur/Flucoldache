@@ -67,8 +67,17 @@ namespace Flucoldache
 		private static int _index = 0; 
 		private static string[] _strings;
 
+		private static bool _loaded = false;
+
 		public static void Load(string localization)
 		{
+			if (_loaded)
+			{
+				return;
+			}
+
+			_loaded = true;
+
 			Localization = localization;
 			_strings = File.ReadAllLines(Environment.CurrentDirectory + "/Resources/" + Localization + "/Strings.txt");
 			

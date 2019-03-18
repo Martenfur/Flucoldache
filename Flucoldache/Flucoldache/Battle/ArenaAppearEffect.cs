@@ -15,14 +15,16 @@ namespace Flucoldache.Battle
 		string _arenaArg;
 		int _mode = 0;
 		bool _drawWhiteScreen = true;
-		float _alarmTime = 0.2f;
+		float _alarmTime = 0.15f;
 
 		public ArenaAppearEffect(string arenaArg)
 		{
+			SoundController.CurrentSong.Stop();
 			_alarm.Set(_alarmTime);
 			_arenaArg = arenaArg;
 			Controls.Enabled = false;
-
+			
+			SoundController.PlaySound(SoundController.ArenaAppearEffect);
 			Depth = -990000;
 		}
 
@@ -44,6 +46,7 @@ namespace Flucoldache.Battle
 				else
 				{
 					_drawWhiteScreen = !_drawWhiteScreen;
+					SoundController.PlaySound(SoundController.ArenaAppearEffect);
 				}
 			}
 		}

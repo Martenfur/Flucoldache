@@ -26,6 +26,8 @@ namespace Flucoldache
 
 		public int LineId = 0;
 		
+		public bool Voiceless = true;
+
 		StringBuilder _typedText = new StringBuilder();
 		Alarm _typeAlarm = new Alarm();
 		float _typeSpeed = 1f / 20f;
@@ -105,6 +107,11 @@ namespace Flucoldache
 				}
 				if (_typeAlarm.Triggered)
 				{
+					if (!Voiceless)
+					{
+						SoundController.PlaySound(SoundController.Voice);
+					}
+
 					_typedText.Append(_dialogueLines[LineId].ElementAt(_typedText.Length));
 					if (_dialogueLines[LineId].Length - 1 > _typedText.Length)
 					{

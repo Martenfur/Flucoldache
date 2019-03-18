@@ -11,77 +11,85 @@ namespace Flucoldache.Battle
 
 		private Color[,] _colorGrid;
 			
-		private float anim = 0;
+		private float _animation = 0;
 
-		Vector2 offset = Vector2.Zero;
+		private Vector2 _offset = Vector2.Zero;
 
-		int timer = 0;
-		int time = 5;
+		private int _timer = 0;
+		private int _time = 5;
 
-		float _colorIntensivity = 0.1f;
+		private int _backgroundType;
+		
+		private float _colorIntensivity = 0.1f;
 
-		bool invert = false;
+		private bool invert = false;
 
-		int _circleYInvert;
-		int _circleXInvert;
-		float _circleDistanceDivider;
+		private int _circleYInvert;
+		private int _circleXInvert;
+		private float _circleDistanceDivider;
 
-		int _linesMode;
-		float _linesDistanceDivider;
+		private int _linesMode;
+		private float _linesDistanceDivider;
+
 
 
 		public ArenaBackground()
 		{
 			_colorGrid = new Color[_width, _height];
+
+			_backgroundType = GameplayController.Random.Next(3);
 			InitCircle();
 			InitLines();
 			InitSin();
 		}
+
 		public override void Update()
 		{	
 			
-			if (Input.KeyboardCheckPress(Microsoft.Xna.Framework.Input.Keys.G))
-			{
-				InitCircle();
-				InitLines();
-				InitSin();
-			}
-
-			timer -= 1;
-			if (timer > 0)
+			_timer -= 1;
+			if (_timer > 0)
 			{
 				return;
 			}
 			else
 			{
-				timer = time;
+				_timer = _time;
 			}
 
-			//UpdateCircle();
-			//UpdateLines();
-			UpdateSin();
-
-			if (anim > 1)
+			switch(_backgroundType)
 			{
-				anim -= 1;
+				case 0:
+					UpdateCircle();
+				break;
+				case 1:
+					UpdateLines();
+				break;
+				case 2:
+					UpdateSin();
+				break;
 			}
 
+			if (_animation > 1)
+			{
+				_animation -= 1;
+			}
 
-			if (offset.Y < 0)
+
+			if (_offset.Y < 0)
 			{
-				offset.Y += _height;
+				_offset.Y += _height;
 			}
-			if (offset.X < 0)
+			if (_offset.X < 0)
 			{
-				offset.X += _width;
+				_offset.X += _width;
 			}
-			if (offset.Y >= _height)
+			if (_offset.Y >= _height)
 			{
-				offset.Y -= _height;
+				_offset.Y -= _height;
 			}
-			if (offset.X >= _width)
+			if (_offset.X >= _width)
 			{
-				offset.X -= _width;
+				_offset.X -= _width;
 			}
 			
 		}
@@ -95,7 +103,7 @@ namespace Flucoldache.Battle
 			{
 				for(var y = 0; y < _height; y += 1)
 				{
-					var pos = new Vector2(x, y) + offset;
+					var pos = new Vector2(x, y) + _offset;
 					if (pos.X < 0)
 					{
 						pos.X += _width;
@@ -154,13 +162,13 @@ namespace Flucoldache.Battle
 		
 		private void InitSin()
 		{
-		
+			
 		}
 		
 
 		private void UpdateLines()
 		{
-			anim += 0.02f;
+			_animation += 0.02f;
 		
 			for(var x = 0; x < _width; x += 1)
 			{
@@ -185,7 +193,7 @@ namespace Flucoldache.Battle
 						break;
 					}
 
-					var sinAnim = (float)Math.Cos(anim * Math.PI * 2 + dist / _circleDistanceDivider);
+					var sinAnim = (float)Math.Cos(_animation * Math.PI * 2 + dist / _circleDistanceDivider);
 					
 					_colorGrid[x, y] = Color.Lerp(
 						GameConsole.BaseBackgroundColor, 
@@ -200,7 +208,7 @@ namespace Flucoldache.Battle
 
 		private void UpdateCircle()
 		{
-			anim += 0.02f;
+			_animation += 0.02f;
 			
 			
 			for(var x = 0; x < _width; x += 1)
@@ -211,7 +219,7 @@ namespace Flucoldache.Battle
 					var yy = y - _height / 2;
 
 					var dist =  xx * xx / 4f * _circleXInvert + yy * yy * _circleYInvert;
-					var sinAnim = (float)Math.Sin(anim * Math.PI * 2 + dist / _circleDistanceDivider);
+					var sinAnim = (float)Math.Sin(_animation * Math.PI * 2 + dist / _circleDistanceDivider);
 					
 					_colorGrid[x, y] = Color.Lerp(
 						GameConsole.BaseBackgroundColor, 
@@ -225,12 +233,12 @@ namespace Flucoldache.Battle
 
 		private void UpdateSin()
 		{
-			anim += 0.02f;
+			_animation += 0.02f;
 			
-			offset.Y += 0.5f;
-			offset.X += 0.5f;
+			_offset.Y += 0.5f;
+			_offset.X += 0.5f;
 
-			var sinAnim = (float)Math.Sin(anim * Math.PI * 2);
+			var sinAnim = (float)Math.Sin(_animation * Math.PI * 2);
 
 			for(var x = 0; x < _width; x += 1)
 			{
@@ -239,7 +247,6 @@ namespace Flucoldache.Battle
 					var l = (float)(Math.Sin((y / (float)_height) * Math.PI * 2 * 2) + 1) * 0.5f;
 					var l1 = (float)(Math.Sin((x * 2 / (float)_width) * Math.PI * 2 * 2) + 1) * 0.5f;
 					
-
 					float value = MathHelper.Lerp(l, l1, l);
 
 					if (!invert)

@@ -36,10 +36,12 @@ namespace Flucoldache
 				if (Input.KeyboardCheckPress(Controls.KeyUp))
 				{
 					SelectedItem -= 1;
+					SoundController.PlaySound(SoundController.Blip);
 				}
 				if (Input.KeyboardCheckPress(Controls.KeyDown))
 				{
 					SelectedItem += 1;
+					SoundController.PlaySound(SoundController.Blip);
 				}
 			}
 

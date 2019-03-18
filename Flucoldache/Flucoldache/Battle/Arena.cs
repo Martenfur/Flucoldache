@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Monofoxe.Engine;
-using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using Monofoxe.Engine.Drawing;
 using System.Xml;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
 using Flucoldache.Overworld;
+using Microsoft.Xna.Framework;
+using Monofoxe.Engine;
 
 namespace Flucoldache.Battle
 {
@@ -50,7 +44,14 @@ namespace Flucoldache.Battle
 
 		public Arena(string fileName)
 		{
-			SoundController.PlaySong(SoundController.Battle);
+			if (fileName.Contains("final"))
+			{
+				SoundController.PlaySong(SoundController.FinalBattle);
+			}
+			else
+			{
+				SoundController.PlaySong(SoundController.Battle);
+			}
 
 			_bkg = new ArenaBackground();
 				
@@ -110,11 +111,27 @@ namespace Flucoldache.Battle
 		{
 			Units.RemoveAll(o => o.Destroyed);
 
+			if (Input.KeyboardCheckPress(Microsoft.Xna.Framework.Input.Keys.W))
+			{
+				// TODO: Remove!
+				_win = true;
+			}
+
+			if (Input.KeyboardCheckPress(Microsoft.Xna.Framework.Input.Keys.L))
+			{
+				// TODO: Remove!
+				_lose = true;
+			}
+
+
 			if (_win)
 			{
 				UnitTurnOrderList[CurrentUnit].Initiative = false;
 				if (_winDialogue == null)
 				{
+					SoundController.CurrentSong.Stop();
+					SoundController.PlaySound(SoundController.Win);
+
 					_winDialogue = new Dialogue(new string[]{""}, new string[]{Strings.BattleWin});
 				}
 				else
@@ -131,6 +148,10 @@ namespace Flucoldache.Battle
 			if (_lose)
 			{
 				_blackscreenActivated = true;
+				SoundController.CurrentSong.Volume = 1 - Math.Max(0, Math.Min(1, _blackscreenAlpha));
+
+				Console.WriteLine(_blackscreenAlpha);
+
 				if (_loseDialogue == null)
 				{
 					_loseDialogue = new Dialogue(new string[]{""}, new string[]{Strings.BattleDefeat});
@@ -190,9 +211,9 @@ namespace Flucoldache.Battle
 				GameConsole.BackgroundColor = GameConsole.BaseBackgroundColor;
 				
 				GameConsole.DrawText("HP: " + player.Health.ToString().PadLeft(3) + "/" + player.MaxHealth, Dialogue.Pos - Vector2.UnitY * 1);
-
-				GameConsole.ForegroundColor = Color.Red;
-				GameConsole.BackgroundColor = new Color(32, 0, 0);
+				
+				GameConsole.ForegroundColor = GameConsole.HealthForegroundColor;
+				GameConsole.BackgroundColor = GameConsole.HealthBackgroundColor;
 				GameConsole.DrawRectangle((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 1, 16, 1);
 				GameConsole.DrawProgressBar((int)Dialogue.Pos.X + 12, (int)Dialogue.Pos.Y - 1, 16, ((float)player.Health) / ((float)player.MaxHealth));
 			}

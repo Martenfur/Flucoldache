@@ -97,7 +97,7 @@ namespace Flucoldache.Overworld
 		{
 			new Color[]{GameConsole.BaseForegroundColor, GameConsole.BaseBackgroundColor},
 			new Color[]{GameConsole.BaseBackgroundColor, GameConsole.BaseForegroundColor},
-			new Color[]{Color.White, new Color(175, 93, 35)},
+			new Color[]{new Color(216, 176, 91), new Color(145, 75, 29)},
 			new Color[]{Color.White, GameConsole.BaseBackgroundColor},
 		};
 
