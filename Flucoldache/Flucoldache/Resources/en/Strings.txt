@@ -1,4 +1,4 @@
-﻿Flucoldache
+﻿Flu In A Bottle
 New game
 Load
 Map editor
@@ -6,7 +6,7 @@ Load map
 Exit
 Arrows \ Z \ X
 gn Fur - Hellroom Jam #9
-Music by Brodux 
+Music by Joshua "Brodux" Tomes
 Menu
 Inventory
 Potions
@@ -46,3 +46,7 @@ Villager
 Villager
 Wolf
 Wolf
+Continue
+Fullscreen
+Windowed
+Exit

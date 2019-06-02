@@ -19,7 +19,7 @@ namespace Flucoldache.Overworld
 				inv.AddPotion("cold", 999);
 				inv.AddItem("book", 1);
 				inv.AddItem("lab", 1);
-				inv.AddItem("bread", 10);
+				inv.AddItem("bread", 5);
 
 				Objects.Destroy(this);
 

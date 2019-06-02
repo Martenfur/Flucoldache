@@ -3,6 +3,7 @@ using System.IO;
 using Flucoldache.Overworld;
 using Microsoft.Xna.Framework;
 using Monofoxe.Engine;
+using System.Globalization;
 
 namespace Flucoldache
 {
@@ -25,8 +26,17 @@ namespace Flucoldache
 
 		public MainMenu()
 		{
-			Strings.Load("en");
-
+			if (CultureInfo.CurrentUICulture.Name.Contains("ru"))
+			{
+				Strings.Load("ru");
+			}
+			else
+			{
+				Strings.Load("en");
+			}
+			//Strings.Load("en");
+			
+			
 			Items = new string[]{
 				Strings.MenuNewGame, 
 				Strings.MenuLoad, 
@@ -100,7 +110,8 @@ namespace Flucoldache
 					_newGameAlarm = _newGameTime;
 				}
 
-				if (!SoundController.NewGame.IsPlaying)
+				// Shitcoding my way to victory.
+				if (_newGameAnimationStage > 40 && !SoundController.NewGame.IsPlaying)
 				{
 					StartNewGame();
 				}
@@ -136,7 +147,7 @@ namespace Flucoldache
 
 			GameConsole.DrawText(Strings.MenuControls, new Vector2(1, GameConsole.H - 2));
 			GameConsole.DrawText(Strings.MenuCredits1, new Vector2(70, GameConsole.H - 3));
-			GameConsole.DrawText(Strings.MenuCredits2, new Vector2(70, GameConsole.H - 2));
+			GameConsole.DrawText(Strings.MenuCredits2, new Vector2(64, GameConsole.H - 2));
 		
 		}
 

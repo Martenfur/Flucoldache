@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Flucoldache.Overworld
 {
-	class Endgame : OverworldObj
+	public class Endgame : OverworldObj
 	{
 		Dialogue _dialogue;
 
@@ -12,6 +12,8 @@ namespace Flucoldache.Overworld
 		{
 			ArgumentName = "none";
 			Depth = -99;
+			DrawCntrl.Cameras[0].X = 0;
+			DrawCntrl.Cameras[0].Y = 0;
 		}
 		
 		public override void UpdateEnd()

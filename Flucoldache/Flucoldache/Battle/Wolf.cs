@@ -17,9 +17,9 @@ namespace Flucoldache.Battle
 
 			MaxHealth = 20;
 			Health = MaxHealth;
-			MinAttack = 8;
-			MaxAttack = 13;
-			Defence = 2;
+			MinAttack = 10;
+			MaxAttack = 15;
+			Defence = 3;
 			Speed = 20;
 			ForegroundColor = Color.Gray;
 		}

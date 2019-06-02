@@ -75,8 +75,12 @@ namespace Flucoldache
 			}
 		}
 		
-		public static void PlaySound(Sound sound) =>
-			sound.Play(_channelGroup);
+		public static Sound PlaySound(Sound sound)
+		{
+			var s = AudioMgr.PlaySound(sound, _channelGroup);
+			s.Loops = 0;
+			return s;
+		}
 		
 		public static void Unload()
 		{

@@ -61,8 +61,13 @@ namespace Flucoldache
 			VillagerName1,
 			VillagerName2,
 			WolfName1,
-			WolfName2
-			;
+			WolfName2,
+
+			Continue,
+			FullscreenOn,
+			FullscreenOff,
+			Exit
+		;
 
 		private static int _index = 0; 
 		private static string[] _strings;
@@ -76,7 +81,7 @@ namespace Flucoldache
 				return;
 			}
 
-			_loaded = true;
+			//_loaded = true;
 
 			Localization = localization;
 			_strings = File.ReadAllLines(Environment.CurrentDirectory + "/Resources/" + Localization + "/Strings.txt");
@@ -136,6 +141,13 @@ namespace Flucoldache
 			VillagerName2 = NextString();
 			WolfName1 = NextString();
 			WolfName2 = NextString();
+
+			Continue = NextString();
+			FullscreenOn = NextString();
+			FullscreenOff = NextString();
+			Exit = NextString();
+
+			_index = 0;
 		}
 
 		private static string NextString()

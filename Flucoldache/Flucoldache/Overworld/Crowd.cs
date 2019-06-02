@@ -21,6 +21,12 @@ namespace Flucoldache.Overworld
 		
 		public override void Update()
 		{
+			if (Input.KeyboardCheckPress(Microsoft.Xna.Framework.Input.Keys.B))
+			{
+				SoundController.PlaySound(SoundController.Win);
+			}
+
+
 			Player player = (Player)Objects.ObjFind<Player>(0);
 			if (player.Pos.Y >= Pos.Y - 2)
 			{

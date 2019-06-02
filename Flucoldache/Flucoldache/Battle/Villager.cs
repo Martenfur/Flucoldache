@@ -15,7 +15,7 @@ namespace Flucoldache.Battle
 			Name = Strings.VillagerName1;
 			Name1 = Strings.VillagerName2;
 
-			MaxHealth = 30;
+			MaxHealth = 25;
 			Health = MaxHealth;
 			MinAttack = 10;
 			MaxAttack = 15;

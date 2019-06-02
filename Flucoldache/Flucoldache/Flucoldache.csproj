@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flucoldache</RootNamespace>
-    <AssemblyName>Flucoldache</AssemblyName>
+    <AssemblyName>Flu In A Bottle</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -91,6 +91,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameplayController.cs" />
+    <Compile Include="Pause.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="MainMenu.cs" />

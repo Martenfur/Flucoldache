@@ -146,6 +146,11 @@ namespace Flucoldache.Overworld
 				}
 
 				#region Menu
+				if (Controls.KeyCheckPress(Microsoft.Xna.Framework.Input.Keys.Escape))
+				{
+					new Pause();
+				}
+
 				if (Controls.KeyCheckPress(Controls.KeyB))
 				{
 					_menu = new SelectionMenu(Strings.PlayerMenu, _menuOptions, _menuPos, _menuSize);

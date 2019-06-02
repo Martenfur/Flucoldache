@@ -148,7 +148,7 @@ namespace Flucoldache.Battle
 			effect.Name = Inventory.ItemPool[effect.Token].Name;
 			effect.Duration = 3;
 			effect.DefenceBuff = -10;
-			effect.AttackBuff = -10;
+			effect.AttackBuff = -5;
 			effect.Color = Color.MediumBlue;
 			effect.IsInfective = true;
 			effect.InfectionChance = 0.99f;

@@ -42,7 +42,6 @@ namespace Flucoldache.Overworld
 
 			if (_alarm.Update())
 			{
-				new Endgame();
 				Objects.Destroy(this);
 			}
 		}

@@ -26,7 +26,8 @@ namespace Flucoldache.Battle
 		public Color ForegroundColor = GameConsole.BaseForegroundColor;
 		public Color BackgroundColor = GameConsole.BaseBackgroundColor;
 
-		
+		public bool PreserveBackground = false;
+
 		public bool DmgAnim = false;
 		Color[] _dmgFgColor = {GameConsole.BaseBackgroundColor, Color.White};
 		Color[] _dmgBgColor = {GameConsole.BaseForegroundColor, Color.White};
@@ -89,6 +90,10 @@ namespace Flucoldache.Battle
 			{
 				GameConsole.ForegroundColor = ForegroundColor;
 				Color color = Color.Transparent;
+				if (PreserveBackground)
+				{
+					color = BackgroundColor;
+				}
 				foreach(StatEffect effect in Effects)
 				{
 					color = Color.Lerp(color, effect.Color, 0.5f);

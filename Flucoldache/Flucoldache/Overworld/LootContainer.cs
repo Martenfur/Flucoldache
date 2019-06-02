@@ -59,7 +59,7 @@ namespace Flucoldache.Overworld
 				xml.Load(_rootDir + Argument);
 			}
 			
-			_name = xml.DocumentElement.Attributes["name"].Value;
+			_name = xml.DocumentElement.Attributes["name_" + Strings.Localization].Value;
 
 			XmlNodeList nodes = xml.DocumentElement.SelectNodes("loot");
 			_loot = new string[nodes.Count];

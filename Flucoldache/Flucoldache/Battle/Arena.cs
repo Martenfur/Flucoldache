@@ -5,6 +5,7 @@ using System.Xml;
 using Flucoldache.Overworld;
 using Microsoft.Xna.Framework;
 using Monofoxe.Engine;
+using Monofoxe.FMODAudio;
 
 namespace Flucoldache.Battle
 {
@@ -42,11 +43,16 @@ namespace Flucoldache.Battle
 
 		ArenaBackground _bkg;
 
+		Sound WinSound;
+
+		bool _isFinalBattle = false;
+
 		public Arena(string fileName)
 		{
 			if (fileName.Contains("final"))
 			{
 				SoundController.PlaySong(SoundController.FinalBattle);
+				_isFinalBattle = true;
 			}
 			else
 			{
@@ -105,6 +111,16 @@ namespace Flucoldache.Battle
 			{
 				_win = true;
 			}
+
+			if (CurrentUnit >= UnitTurnOrderList.Count || UnitTurnOrderList[CurrentUnit].Destroyed)
+			{
+				//CurrentUnit = 0;
+				Units[0].Initiative = true;
+				
+				Units[0].ReceiveInitiative();
+			}
+			//Console.WriteLine(CurrentUnit + " " + UnitTurnOrderList[CurrentUnit].Waiting);
+
 		}
 
 		public override void UpdateEnd()
@@ -130,14 +146,16 @@ namespace Flucoldache.Battle
 				if (_winDialogue == null)
 				{
 					SoundController.CurrentSong.Stop();
-					SoundController.PlaySound(SoundController.Win);
+					WinSound = SoundController.PlaySound(SoundController.Win);
 
 					_winDialogue = new Dialogue(new string[]{""}, new string[]{Strings.BattleWin});
+					_winDialogue.Locked = true;
 				}
 				else
 				{
-					if (_winDialogue.Destroyed)
+					if (!WinSound.IsPlaying)
 					{
+						Objects.Destroy(_winDialogue);
 						Objects.Destroy(this);
 					}
 				}
@@ -149,8 +167,6 @@ namespace Flucoldache.Battle
 			{
 				_blackscreenActivated = true;
 				SoundController.CurrentSong.Volume = 1 - Math.Max(0, Math.Min(1, _blackscreenAlpha));
-
-				Console.WriteLine(_blackscreenAlpha);
 
 				if (_loseDialogue == null)
 				{
@@ -173,13 +189,22 @@ namespace Flucoldache.Battle
 			base.Destroy();
 
 			Objects.Destroy(_bkg);
-			foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+			Controls.Enabled = true;
+
+			if (_isFinalBattle)
 			{
-				obj.Active = true;
+				new Endgame();
 			}
-			foreach(Terrain obj in Objects.GetList<Terrain>())
+			else
 			{
-				obj.Active = true;
+				foreach(OverworldObj obj in Objects.GetList<OverworldObj>())
+				{
+					obj.Active = true;
+				}
+				foreach(Terrain obj in Objects.GetList<Terrain>())
+				{
+					obj.Active = true;
+				}
 			}
 			SoundController.PlaySong(SoundController.Overworld);
 
@@ -188,6 +213,10 @@ namespace Flucoldache.Battle
 				Objects.Destroy(obj);
 			}						
 			foreach(Dialogue obj in Objects.GetList<Dialogue>())
+			{
+				Objects.Destroy(obj);
+			}
+			foreach(SelectionMenu obj in Objects.GetList<SelectionMenu>())
 			{
 				Objects.Destroy(obj);
 			}

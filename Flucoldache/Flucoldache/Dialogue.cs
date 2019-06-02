@@ -32,6 +32,8 @@ namespace Flucoldache
 		Alarm _typeAlarm = new Alarm();
 		float _typeSpeed = 1f / 20f;
 
+		public bool Locked = false;
+
 		public Dialogue(string[] dialogueNames, string[] dialogueLines)
 		{
 			_rootDir = "Resources/" + Strings.Localization + "/Dialogues/";
@@ -86,14 +88,17 @@ namespace Flucoldache
 				}
 				else
 				{
-					LineId += 1;
-					_typedText.Clear();
-					if (LineId >= _dialogueLines.Length)
+					if (!Locked)
 					{
-						LineId = _dialogueLines.Length - 1;
-						Controls.Enabled = true;
-						Objects.Destroy(this);
-						Input.KeyboardClear();
+						LineId += 1;
+						_typedText.Clear();
+						if (LineId >= _dialogueLines.Length)
+						{
+							LineId = _dialogueLines.Length - 1;
+							Controls.Enabled = true;
+							Objects.Destroy(this);
+							Input.KeyboardClear();
+						}
 					}
 				}
 			}

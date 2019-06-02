@@ -18,7 +18,7 @@ namespace Flucoldache
 		Vector2 _listPos;
 		
 		/// <summary>
-		/// Contatins samples of each inventory item.
+		/// Contains samples of each inventory item.
 		/// </summary>
 		public static Dictionary<string, InventoryItem> ItemPool;
 

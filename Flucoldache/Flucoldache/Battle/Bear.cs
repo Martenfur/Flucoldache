@@ -15,7 +15,7 @@ namespace Flucoldache.Battle
 			Name = Strings.BearName1;
 			Name1 = Strings.BearName2;
 
-			MaxHealth = 60;
+			MaxHealth = 75;
 			Health = MaxHealth;
 			MinAttack = 30;
 			MaxAttack = 40;

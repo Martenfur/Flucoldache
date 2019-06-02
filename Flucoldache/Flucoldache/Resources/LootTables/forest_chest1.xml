@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<Container name="cундук">
+<Container name_ru="cундук" name_en="the chest">
 	<loot token="kingfood" amount="3"/>
 </Container>

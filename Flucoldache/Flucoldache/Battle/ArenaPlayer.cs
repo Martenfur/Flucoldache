@@ -71,6 +71,8 @@ namespace Flucoldache.Battle
 
 			_inv.Health = Health;
 
+			
+
 			if (Initiative && !Waiting)
 			{
 				if (Mode == Modes.Menu)
@@ -264,6 +266,8 @@ namespace Flucoldache.Battle
 					_waitingDialogue = null;
 					Arena arena = (Arena)Objects.ObjFind<Arena>(0);
 					arena.GiveInitiative();
+					Mode = Modes.Menu;
+					_attacking = false;
 				}
 			}
 
