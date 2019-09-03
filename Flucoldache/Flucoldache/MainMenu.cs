@@ -34,7 +34,7 @@ namespace Flucoldache
 			{
 				Strings.Load("en");
 			}
-			//Strings.Load("en");
+			Strings.Load("en");
 			
 			
 			Items = new string[]{

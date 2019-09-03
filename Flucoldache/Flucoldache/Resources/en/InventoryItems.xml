@@ -42,6 +42,7 @@ description - Item description.
 		<type>spendable</type>
 		<stack>99</stack>
 		<description>
+			Goes well with every meal.
 			Restores 25 HP.
 		</description>
 	</item>

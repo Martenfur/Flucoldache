@@ -46,6 +46,8 @@ namespace Flucoldache
 
 			AudioMgr.Init("");
 
+			GameCntrl.WindowManager.SetFullScreen(true);
+
 			base.Initialize();
 		}
 		

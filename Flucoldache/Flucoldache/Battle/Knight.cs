@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Monofoxe.Engine;
+﻿using Microsoft.Xna.Framework;
 
 namespace Flucoldache.Battle
 {
@@ -17,8 +11,8 @@ namespace Flucoldache.Battle
 
 			MaxHealth = 60;
 			Health = MaxHealth;
-			MinAttack = 18;
-			MaxAttack = 22;
+			MinAttack = 17;
+			MaxAttack = 20;
 			Defence = 30;
 			Speed = 5;
 			ForegroundColor = GameConsole.BaseBackgroundColor;

@@ -126,7 +126,7 @@ namespace Flucoldache.Battle
 		public override void UpdateEnd()
 		{
 			Units.RemoveAll(o => o.Destroyed);
-
+			/*
 			if (Input.KeyboardCheckPress(Microsoft.Xna.Framework.Input.Keys.W))
 			{
 				// TODO: Remove!
@@ -137,7 +137,7 @@ namespace Flucoldache.Battle
 			{
 				// TODO: Remove!
 				_lose = true;
-			}
+			}*/
 
 
 			if (_win)

@@ -12,6 +12,10 @@ namespace Flucoldache.Overworld
 		int[] _lootAmount;
 		string _name;
 
+		string _nameRU;
+		string _nameEN;
+
+
 		static string _rootDir = "Resources/LootTables/";
 		
 		/// <summary>
@@ -60,6 +64,9 @@ namespace Flucoldache.Overworld
 			}
 			
 			_name = xml.DocumentElement.Attributes["name_" + Strings.Localization].Value;
+			_nameRU = xml.DocumentElement.Attributes["name_ru"].Value;
+			_nameEN = xml.DocumentElement.Attributes["name_en"].Value;
+
 
 			XmlNodeList nodes = xml.DocumentElement.SelectNodes("loot");
 			_loot = new string[nodes.Count];
@@ -126,7 +133,9 @@ namespace Flucoldache.Overworld
 		{
 			XmlDocument xml = new XmlDocument();
 			XmlElement root = xml.CreateElement("Container");
-			root.SetAttribute("name", _name);
+			root.SetAttribute("name_ru", _nameRU);
+			root.SetAttribute("name_en", _nameEN);
+
 
 			if (_loot != null)
 			{
